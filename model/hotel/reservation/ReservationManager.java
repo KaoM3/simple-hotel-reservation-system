@@ -2,8 +2,6 @@ package model.hotel.reservation;
 
 import java.util.*;
 
-import model.hotel.PriceModifier;
-
 public class ReservationManager {
     private double              baseRate;
     private List<Reservation>   reservationList;

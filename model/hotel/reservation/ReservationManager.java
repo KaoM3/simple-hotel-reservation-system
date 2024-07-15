@@ -2,9 +2,12 @@ package model.hotel.reservation;
 
 import java.util.*;
 
+import model.hotel.PriceModifier;
+
 public class ReservationManager {
     private double              baseRate;
     private List<Reservation>   reservationList;
+    private PriceModifier       priceModifier;
 
     /**
      * Constructor class for ReservationManager
@@ -12,6 +15,7 @@ public class ReservationManager {
     public ReservationManager() {
         this.baseRate = 1299;
         this.reservationList = new ArrayList<>();
+        this.priceModifier = new PriceModifier();
     }
 
     /**
@@ -51,5 +55,12 @@ public class ReservationManager {
      */
     public List<Reservation> getReservationList() {
         return this.reservationList;
+    }
+
+    /**
+     * @return this reservation manager's price modifier
+     */
+    public PriceModifier getPriceModifier() {
+        return this.priceModifier;
     }
 }

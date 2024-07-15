@@ -1,4 +1,4 @@
-import room.*;
+import model.room.*;
 
 public class Driver {
     

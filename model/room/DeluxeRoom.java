@@ -1,4 +1,4 @@
-package room;
+package model.room;
 
 public class DeluxeRoom extends Room {
     

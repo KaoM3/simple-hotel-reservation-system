@@ -1,4 +1,4 @@
-package room;
+package model.room;
 
 public abstract class Room {
     protected String name;

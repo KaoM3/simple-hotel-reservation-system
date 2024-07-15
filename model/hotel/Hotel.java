@@ -8,6 +8,9 @@ public class Hotel {
     private String              name;
     private List<Room>          roomList;
     private ReservationManager  reservationManager;
+    private PriceModifier       priceModifier;
+
+
 }
 
 

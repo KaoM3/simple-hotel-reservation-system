@@ -1,4 +1,4 @@
-package model.room;
+package model.hotel.room;
 
 public class StandardRoom extends Room {
     

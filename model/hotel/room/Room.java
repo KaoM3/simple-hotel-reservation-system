@@ -1,4 +1,4 @@
-package model.room;
+package model.hotel.room;
 
 /**
  * This abstract class contains the basic functionalities of a room.

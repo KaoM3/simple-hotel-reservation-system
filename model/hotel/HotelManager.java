@@ -1,7 +1,7 @@
 package model.hotel;
 
-import model.hotel.reservation.*;
-import model.room.*;
+import model.hotel.room.*;
+import model.reservation.*;
 
 public class HotelManager {
     private Hotel hotel;

@@ -1,8 +1,9 @@
 package model.hotel;
 
 import java.util.*;
-import model.room.*;
-import model.hotel.reservation.*;
+
+import model.hotel.room.*;
+import model.reservation.*;
 
 public class Hotel {
     private String              name;

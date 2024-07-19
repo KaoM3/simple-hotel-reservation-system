@@ -1,4 +1,4 @@
-package model.hotel.reservation;
+package model.reservation;
 
 import java.util.HashMap;
 

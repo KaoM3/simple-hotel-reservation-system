@@ -1,6 +1,7 @@
-package model.hotel.reservation;
+package model.reservation;
 
-import model.room.*;
+import model.hotel.room.*;
+import model.pricemodifier.Guest;
 
 public class Reservation {
     private Guest   guest;

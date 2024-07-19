@@ -1,4 +1,4 @@
-package model.room;
+package model.hotel.room;
 
 public class DeluxeRoom extends Room {
 

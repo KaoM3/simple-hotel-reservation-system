@@ -1,4 +1,4 @@
-package model.hotel.reservation;
+package model.pricemodifier;
 
 public class Guest {
     private String name;

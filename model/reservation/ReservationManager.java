@@ -1,4 +1,4 @@
-package model.hotel.reservation;
+package model.reservation;
 
 import java.util.*;
 
@@ -30,7 +30,7 @@ public class ReservationManager {
     public void addReservation(Reservation reservation) {
         reservationList.add(reservation);
 
-        //TODO: Update add reservation to include price modifiers using class PriceModifier
+        // TODO: Update add reservation to include price modifiers using class PriceModifier
     }
 
     /**

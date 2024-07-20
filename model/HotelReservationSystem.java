@@ -2,6 +2,7 @@ package model;
 
 import java.util.*;
 import model.hotel.*;
+import service.HotelManager;
 
 public class HotelReservationSystem {
     private List<Hotel>     hotelList;

@@ -2,6 +2,8 @@ package model.reservation;
 
 import java.util.*;
 
+import model.pricemodifier.PriceModifier;
+
 public class ReservationManager {
     private double              baseRate;
     private List<Reservation>   reservationList;
@@ -21,24 +23,6 @@ public class ReservationManager {
      */
     public void setBaseRate(double baseRate) {
         this.baseRate = baseRate;
-    }
-
-    /**
-     * Adds a Reservation to this.reservationList and calculates its price (applies price modifiers)
-     * @param reservation is the reservation to be added
-     */
-    public void addReservation(Reservation reservation) {
-        reservationList.add(reservation);
-
-        // TODO: Update add reservation to include price modifiers using class PriceModifier
-    }
-
-    /**
-     * Removes a specific reservation from this.reservationList
-     * @param index is the index of the reservation to be deleted
-     */
-    public void removeReservation(int index) {
-        reservationList.remove(index);
     }
 
     /**

@@ -1,4 +1,4 @@
-package model.reservation;
+package model.pricemodifier;
 
 import java.util.HashMap;
 
@@ -45,9 +45,8 @@ public class PriceModifier {
      * Gets a valid discount code
      * @return valid discount code
      */
-    public double applyDiscountCode() {
-        // TODO: Implement getDiscountCode
-        double price = 0;
-        return price;
+    public void getDiscountCodes() {
+        // TODO: Implement getDiscountCodes
+        // TODO: Determine if this is better off as applying a discount code instead
     }
 }

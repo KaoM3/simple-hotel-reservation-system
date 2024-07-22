@@ -5,6 +5,7 @@ import model.hotel.*;
 public class HotelManagerService {
     private HotelManager hotelManager;
 
+    /** Constructor for class HotelManagerService */
     public HotelManagerService(HotelManager hotelManager) {
         this.hotelManager = hotelManager;
     }

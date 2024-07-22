@@ -16,9 +16,10 @@ public class HotelService {
 
     /**
      * Creates and adds a new room to this hotel's room list
+     * @param room is the room object to be added
      */
-    public void createAndAddRoom() {
-        // TODO: Implement createAndAddRoom
+    public void createAndAddRoom(Room room) {
+        this.hotel.getRoomList().add(room);
     }
 
     /**
@@ -26,7 +27,7 @@ public class HotelService {
      * @param room is the room to be removed
      */
     public void removeRoom(Room room) {
-        this.hotel.removeRoom(room);
+        this.hotel.getRoomList().remove(room);
     }
 
     /**

@@ -14,7 +14,10 @@ public class Driver {
         // System.out.printf("%s %.2f\n", d.getName(), d.getBasePrice());
         // System.out.printf("%s %.2f\n", e.getName(), e.getBasePrice());
 
-        new Mainframe();
+        // new Mainframe();
+        UserInterface ui = new UserInterface();
+        ui.setPanel(new MenuPanel());
+        ui.setPanel(new CreatePanel());
     }
 
 }

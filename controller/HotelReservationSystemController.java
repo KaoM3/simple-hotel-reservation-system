@@ -1,15 +1,19 @@
 package controller;
 
+import model.hotel.*;
+import view.*;
 import service.*;
 
 public class HotelReservationSystemController {
-    HotelManagerService hotelManagerService;
+    private HotelManager hotelManager;
+    private MainFrame mainframe;
 
-    public HotelReservationSystemController(HotelManagerService hotelManagerService) {
-        this.hotelManagerService = hotelManagerService;
+    public HotelReservationSystemController(HotelManager hotelManager, MainFrame mainframe) {
+        this.hotelManager = hotelManager;
+        this.mainframe = mainframe;
     }
-
-    public void createHotel() {
+    
+    public void addAndCreateHotel() {
         
     }
 

@@ -2,6 +2,10 @@ package service;
 
 import model.hotel.*;
 
+/**
+ * Contains all the business logic for editing the data inside a {@code HotelManager} object.
+ * This class should be instantiated to manipulate the data of this.hotelManager.
+ */
 public class HotelManagerService {
     private HotelManager hotelManager;
 

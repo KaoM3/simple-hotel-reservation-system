@@ -4,6 +4,12 @@ import java.util.*;
 
 import model.pricemodifier.PriceModifier;
 
+/**
+ * Contains a hotel's list of reservations and date price modifier.
+ * Does not contain setter methods. When updating the reservationList,
+ * first instantiate a {@code ReservationManagerService} object then pass this
+ * {@code ReservationManager} object.
+ */
 public class ReservationManager {
     private List<Reservation>   reservationList;
     private PriceModifier       priceModifier;

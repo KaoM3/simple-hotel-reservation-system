@@ -3,6 +3,10 @@ package service;
 import model.hotel.room.*;
 import model.reservation.*;
 
+/**
+ * Contains all the business logic for editing the data inside a {@code ReservationManager} object.
+ * This class should be instantiated to manipulate the data of this.reservationManager.
+ */
 public class ReservationManagerService {
     ReservationManager reservationManager;
 

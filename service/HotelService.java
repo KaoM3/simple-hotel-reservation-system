@@ -2,7 +2,12 @@ package service;
 
 import model.hotel.Hotel;
 import model.hotel.room.*;
+import model.reservation.Reservation;
 
+/**
+ * Contains all the business logic for editing the data inside a {@code Hotel} object.
+ * This class should be instantiated to manipulate the data of this.hotel.
+ */
 public class HotelService {
     private Hotel hotel;
     public static final int STANDARD = 1;
@@ -57,11 +62,18 @@ public class HotelService {
     }
 
     /**
-     * Removes the {@code room} object from this hotel's room list
+     * Removes the {@code room} object from this hotel's room list if the room has no reservations
      * @param room is the room to be removed
      * @return true if successful, false otherwise
      */
     public boolean removeRoom(Room room) {
+
+        for(Reservation reservation : this.hotel.getReservationManager().getReservationList()) {
+            if(reservation.getRoom().getName().contentEquals(room.getName())) {
+                return false;
+            }
+        }
+
         try {
             return this.hotel.getRoomList().remove(room);
         } catch (NullPointerException error) {

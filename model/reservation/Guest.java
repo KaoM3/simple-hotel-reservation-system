@@ -1,5 +1,8 @@
 package model.reservation;
 
+/**
+ * Object representation of a guest. Contains the guest name.
+ */
 public class Guest {
     private String name;
 

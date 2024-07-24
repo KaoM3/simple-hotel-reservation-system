@@ -1,7 +1,6 @@
 package service;
 
 import model.hotel.room.*;
-import model.pricemodifier.PriceModifier;
 import model.reservation.*;
 
 public class ReservationManagerService {
@@ -30,10 +29,12 @@ public class ReservationManagerService {
             totalPrice += room.getTotalPrice() * priceModifier.getPriceModifier(date);
         }
 
-        // Apply discount code
+        // Apply discount code if discount code is valid
         double firstDayPrice = room.getTotalPrice() * priceModifier.getPriceModifier(checkIn);
-        totalPrice = priceModifier.getDiscountCode(discountCode)
-                                    .applyDiscount(checkIn, checkOut, totalPrice, firstDayPrice);
+        if(priceModifier.getDiscountCode(discountCode) != null) {
+            totalPrice = priceModifier.getDiscountCode(discountCode)
+                                        .applyDiscount(checkIn, checkOut, totalPrice, firstDayPrice);
+        }
 
         // Add new reservation to system
         this.reservationManager.getReservationList()

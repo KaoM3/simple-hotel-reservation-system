@@ -21,7 +21,7 @@ public class Driver {
 
         testing.createNewRoom(hotel1, room1, HotelService.DELUXE);
         testing.createNewRoom(hotel1, room2, HotelService.STANDARD);
-        testing.createNewRoom(hotel2, room2, HotelService.STANDARD);
+        testing.createNewRoom(hotel2, room2, HotelService.EXECUTIVE);
 
         String guest1 = "Adrian";
         String guest2 = "Rafael";

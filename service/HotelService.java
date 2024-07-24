@@ -62,6 +62,31 @@ public class HotelService {
     }
 
     /**
+     * Creates and adds a new room to this hotel's room list with basePrice equal to this hotel's base rate
+     * @param roomName is the name of the new room
+     * @param roomType is the type of the new room
+     * @return true if room can be created, false otherwise
+     */
+    public boolean createAndAddRoom(String roomName, String roomType) {
+        Room    newRoom;
+        double basePriceOfRoom = this.hotel.getBaseRate();
+
+        if(roomType == null) {
+            return false;
+        }
+
+        for(RoomType type : RoomType.values()) {
+            if(type.name().contentEquals(roomType)) {
+                newRoom = type.constructRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Removes the {@code room} object from this hotel's room list if the room has no reservations
      * @param room is the room to be removed
      * @return true if successful, false otherwise

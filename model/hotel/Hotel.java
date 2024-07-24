@@ -5,6 +5,12 @@ import java.util.*;
 import model.hotel.room.*;
 import model.reservation.*;
 
+/**
+ * Object representation of a hotel. Contains its information such as the hotel's name,
+ * list of rooms, and reservation manager. Does not contain setter methods. When setting
+ * new values for the data, first instantiate a {@code HotelService} object then pass this
+ * {@code Hotel} object.
+ */
 public class Hotel {
     private String              name;
     private List<Room>          roomList;

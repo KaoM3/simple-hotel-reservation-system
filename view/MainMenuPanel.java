@@ -76,7 +76,6 @@ public class MainMenuPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == addHotel) {
             System.out.println("Add hotel button");
-            controller.
         }
         else if(event.getSource() == removeHotel) {
             System.out.println("Remove hotel button");

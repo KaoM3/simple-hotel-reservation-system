@@ -2,12 +2,16 @@ package model.reservation;
 
 import model.hotel.room.*;
 
+/**
+ * Object representation of a reservation. All required information should be set upon
+ * creation.
+ */
 public class Reservation {
-    private Guest   guest;
-    private Room    room;
-    private int     checkIn;
-    private int     checkOut;
-    private double  totalPrice;
+    private final Guest   guest;
+    private final Room    room;
+    private final int     checkIn;
+    private final int     checkOut;
+    private final double  totalPrice;
 
     /**
      * Constructor for class Reservation

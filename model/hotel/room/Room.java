@@ -3,7 +3,8 @@ package model.hotel.room;
 /**
  * This abstract class contains the basic functionalities of a room.
  * Note that when setting the basePrice of a room, the price multiplier is set after the
- * function call to {@code setBasePrice}. When getting the basePrice, multiplier is already applied.
+ * function call to {@code setBasePrice}. When getting the basePrice, multiplier is not applied.
+ * Instead, use {@code getTotalPrice()} to get {@code basePrice * multiplier}.
  */
 public abstract class Room {
     protected String name;

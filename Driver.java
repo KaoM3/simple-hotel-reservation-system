@@ -13,10 +13,9 @@ public class Driver {
 
         MainFrame view = new MainFrame();
 
-        HotelReservationSystemController controller = new HotelReservationSystemController(model, view)
+        HotelReservationSystemController controller = new HotelReservationSystemController(model, view);
 
         view.setController(controller);
-        view.initialize();
 
         /**
          * TESTING OF MAINFRAME

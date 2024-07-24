@@ -12,21 +12,30 @@ public class HotelManagerService {
 
     /**
      * Creates and adds a new hotel with name {@code hotelName} to this hotelManager's hotel list
+     * @param hotelName is the name of the new hotel
+     * @return true if hotel was successfully created, false otherwise
      */
-    public void createAndAddHotel(String hotelName) {
-        Hotel newHotel = new Hotel(hotelName);
-
+    public boolean createAndAddHotel(String hotelName) {
         if(getHotelByName(hotelName) == null) {
+            Hotel newHotel = new Hotel(hotelName);
             this.hotelManager.getHotelList().add(newHotel);
+            return true;
         }
+        return false;
     }
 
     /**
-     * Removes the {@code room} instance from this hotel's room list
-     * @param room is the room to be removed
+     * Removes the {@code hotel} object from this hotel manager's hotel list
+     * @param hotelName is the name of the hotel to be removed
+     * @return true if successful, false otherwise
      */
-    public void removeHotel(String hotelName) {
-        this.hotelManager.getHotelList().remove(getHotelByName(hotelName));
+    public boolean removeHotel(String hotelName) {
+        try {
+            return this.hotelManager.getHotelList().remove(getHotelByName(hotelName));
+        } catch (NullPointerException error) {
+            System.out.println(error);
+            return false;
+        }
     }
 
     /**

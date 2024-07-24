@@ -6,9 +6,9 @@ import model.reservation.*;
 
 public class HotelService {
     private Hotel hotel;
-    public static int STANDARD = 1;
-    public static int DELUXE = 2;
-    public static int EXECUTIVE = 3;
+    public static final int STANDARD = 1;
+    public static final int DELUXE = 2;
+    public static final int EXECUTIVE = 3;
 
     /**
      * Constructor for class HotelService
@@ -18,7 +18,7 @@ public class HotelService {
     }
 
     /**
-     * Creates and adds a new room to this hotel's room list
+     * Creates and adds a new room to this hotel's room list with basePrice equal to this hotel's base rate
      * @param roomName is the name of the new room
      * @param roomType is the type of the new room
      * You must specify the room type:
@@ -60,9 +60,15 @@ public class HotelService {
     /**
      * Removes the {@code room} object from this hotel's room list
      * @param room is the room to be removed
+     * @return true if successful, false otherwise
      */
-    public void removeRoom(Room room) {
-        this.hotel.getRoomList().remove(room);
+    public boolean removeRoom(Room room) {
+        try {
+            return this.hotel.getRoomList().remove(room);
+        } catch (NullPointerException error) {
+            System.out.println(error);
+            return false;
+        }
     }
 
     /**

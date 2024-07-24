@@ -43,6 +43,10 @@ public class HotelService {
         Room    newRoom;
         double  basePriceOfRoom = this.hotel.getBaseRate();
 
+        if(this.hotel.getRoomByName(roomName) != null) {
+            return false;
+        }
+
         if(roomType == STANDARD) {
             newRoom = new StandardRoom(roomName, basePriceOfRoom);
             this.hotel.getRoomList().add(newRoom);
@@ -71,7 +75,7 @@ public class HotelService {
         Room    newRoom;
         double basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(roomType == null) {
+        if(roomType == null || this.hotel.getRoomByName(roomName) != null) {
             return false;
         }
 

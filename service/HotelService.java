@@ -2,7 +2,6 @@ package service;
 
 import model.hotel.Hotel;
 import model.hotel.room.*;
-import model.reservation.*;
 
 public class HotelService {
     private Hotel hotel;

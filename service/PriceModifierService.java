@@ -46,6 +46,10 @@ public class PriceModifierService {
      * @return DiscountCode object if match can be found, null otherwise
      */
     public DiscountCode getDiscountCode(String inputCode) {
+        if(inputCode == null) {
+            return null;
+        }
+
         // Check if discount code matches with enum
         for(DiscountCode discountCode : DiscountCode.values()) {
             if(discountCode.name().contentEquals(inputCode)) {

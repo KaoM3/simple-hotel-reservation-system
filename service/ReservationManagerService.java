@@ -57,17 +57,15 @@ public class ReservationManagerService {
     }
 
     /**
-     * Sets the base rate of this.reservationManager if {@code baseRate} is valid
-     * @param baseRate is the new base rate (baseRate >= 100)
-     * @return true if baseRate is valid, false otherwise
+     * @return Total price of all the Reservations in this hotel
      */
-    public boolean updateBaseRate(double baseRate) {
-        
-        if(baseRate < 100) {
-            return false;
+    public double getHotelEarnings() {
+        double totalEarnings = 0;
+
+        for(Reservation reservation : this.reservationManager.getReservationList()) {
+            totalEarnings += reservation.getTotalPrice();
         }
-        
-        this.reservationManager.setBaseRate(baseRate);
-        return true;
+
+        return totalEarnings;
     }
 }

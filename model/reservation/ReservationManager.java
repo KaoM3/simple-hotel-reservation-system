@@ -5,7 +5,6 @@ import java.util.*;
 import model.pricemodifier.PriceModifier;
 
 public class ReservationManager {
-    private double              baseRate;
     private List<Reservation>   reservationList;
     private PriceModifier       priceModifier;
 
@@ -13,23 +12,8 @@ public class ReservationManager {
      * Constructor class for ReservationManager
      */
     public ReservationManager() {
-        this.baseRate = 1299;
         this.reservationList = new ArrayList<>();
         this.priceModifier = new PriceModifier();
-    }
-
-    /**
-     * @param baseRate new Base Rate (not including price modifiers)
-     */
-    public void setBaseRate(double baseRate) {
-        this.baseRate = baseRate;
-    }
-
-    /**
-     * @return the base rate of the reservations for this hotel
-     */
-    public double getBaseRate() {
-        return this.baseRate;
     }
 
     /**

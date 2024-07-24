@@ -37,7 +37,7 @@ public class HotelService {
      */
     public boolean createAndAddRoom(String roomName, int roomType) {
         Room    newRoom;
-        double  basePriceOfRoom = this.hotel.getReservationManager().getBaseRate();
+        double  basePriceOfRoom = this.hotel.getBaseRate();
 
         if(roomType == STANDARD) {
             newRoom = new StandardRoom(roomName, basePriceOfRoom);
@@ -102,18 +102,25 @@ public class HotelService {
         return this.hotel.getRoomList().get(index);
     }
 
-    /**
-     * @return Total price of all the Reservations in this hotel
-     */
-    public double getHotelEarnings() {
-        double totalEarnings = 0;
 
-        for(Reservation reservation : this.hotel.getReservationManager().getReservationList()) {
-            totalEarnings += reservation.getTotalPrice();
+    /**
+     * Sets the base rate of this.hotel if {@code baseRate} is valid and updates the base price of all rooms
+     * in this.hotel
+     * @param baseRate is the new base rate (baseRate >= 100)
+     * @return true if baseRate is valid, false otherwise
+     */
+    public boolean updateBaseRate(double baseRate) {
+        
+        if(baseRate < 100) {
+            return false;
+        }
+        
+        this.hotel.setBaseRate(baseRate);
+        for(Room room : this.hotel.getRoomList()) {
+            room.setBasePrice(baseRate);
         }
 
-        return totalEarnings;
+        return true;
     }
-
     
 }

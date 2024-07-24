@@ -12,14 +12,30 @@ import model.reservation.*;
  * {@code Hotel} object.
  */
 public class Hotel {
+    private double              baseRate;
     private String              name;
     private List<Room>          roomList;
     private ReservationManager  reservationManager;
 
     public Hotel(String name) {
+        this.baseRate = 1299;
         this.name = name;
         this.reservationManager = new ReservationManager();
         this.roomList = new ArrayList<>();
+    }
+
+    /**
+     * @param baseRate new Base Rate (not including price modifiers)
+     */
+    public void setBaseRate(double baseRate) {
+        this.baseRate = baseRate;
+    }
+
+    /**
+     * @return the base rate of the rooms for this hotel
+     */
+    public double getBaseRate() {
+        return this.baseRate;
     }
 
     /**

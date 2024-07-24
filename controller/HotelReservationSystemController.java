@@ -14,7 +14,8 @@ public class HotelReservationSystemController {
     }
     
     public void addAndCreateHotel() {
-        
+        HotelService hs = new HotelService(null);
+        hs.createAndAddRoom(null, HotelService.DELUXE);
     }
 
 }

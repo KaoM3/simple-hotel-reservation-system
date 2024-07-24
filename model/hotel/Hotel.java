@@ -65,6 +65,30 @@ public class Hotel {
     public ReservationManager getReservationManager() {
         return this.reservationManager;
     }
+
+    /**
+     * Returns a room in this hotel that matches the given room name
+     * @param roomName is the name of the room
+     * @return Room that matches {@code roomName}, null if no matches
+     */
+    public Room getRoomByName(String roomName) {
+        for(Room room : this.roomList) {
+            if(room.getName().contentEquals(roomName)) {
+                return room;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns a room in this hotel's room list with the specified index
+     * @param index is the index of the room
+     * @return Room at index {@code index}
+     */
+    public Room getRoomByIndex(int index) {
+        return this.roomList.get(index);
+    }
+
 }
 
 

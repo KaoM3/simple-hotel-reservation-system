@@ -33,14 +33,6 @@ public class PriceModifierService {
     }
 
     /**
-     * Gets the price modifier associated with {@code date}
-     * @param date of the price modifier
-     */
-    public double getPriceModifier(Integer date) {
-        return this.priceModifier.getDatePriceModifier().get(date);
-    }
-
-    /**
      * Returns an enum object in DiscountCode if it matches the input code
      * @param inputCode is the input code
      * @return DiscountCode object if match can be found, null otherwise

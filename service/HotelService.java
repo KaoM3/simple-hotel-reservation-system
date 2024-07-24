@@ -91,30 +91,6 @@ public class HotelService {
     }
 
     /**
-     * Returns a room in this hotel that matches the given room name
-     * @param roomName is the name of the room
-     * @return Room that matches {@code roomName}, null if no matches
-     */
-    public Room getRoomByName(String roomName) {
-        for(Room room : this.hotel.getRoomList()) {
-            if(room.getName().contentEquals(roomName)) {
-                return room;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns a room in this hotel's room list with the specified index
-     * @param index is the index of the room
-     * @return Room at index {@code index}
-     */
-    public Room getRoomByIndex(int index) {
-        return this.hotel.getRoomList().get(index);
-    }
-
-
-    /**
      * Sets the base rate of this.hotel if {@code baseRate} is valid and updates the base price of all rooms
      * in this.hotel
      * @param baseRate is the new base rate (baseRate >= 100)

@@ -18,53 +18,40 @@ public class ModelTesting {
         HotelManagerService modelService = new HotelManagerService(this.model);
 
         if(modelService.createAndAddHotel(hotelName)) {
-            System.out.printf("Created Hotel %s, call create new room.\n", modelService.getHotelByName(hotelName).getName());
+            System.out.printf("Created Hotel %s, call create new room.\n", this.model.getHotelByName(hotelName).getName());
         }
         
     }
 
     public void createNewRoom(String hotelName, String roomName, int roomType) {
-        // Initialize neccessary services
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        HotelService hotelService = new HotelService(modelService.getHotelByName(hotelName));
-
-        // Add room to hotel
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
         hotelService.createAndAddRoom(roomName, roomType);
         
     }
 
     public void removeRoom(String hotelName, String roomName) {
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        HotelService hotelService = new HotelService(modelService.getHotelByName(hotelName));
-
-        hotelService.removeRoom(hotelService.getRoomByName(roomName));
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
+        hotelService.removeRoom(this.model.getHotelByName(hotelName).getRoomByName(roomName));
     }
 
     public void createNewReservation(String hotelName, String roomName, String guestName, int checkIn, int checkOut, String discount) {
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        HotelService hotelService = new HotelService(modelService.getHotelByName(hotelName));
-        ReservationManagerService reservationService = new ReservationManagerService(modelService.getHotelByName(hotelName).getReservationManager());
-        
-        reservationService.createAndAddReservation(guestName, hotelService.getRoomByName(roomName), checkIn, checkOut, discount);
+        ReservationManagerService reservationService = new ReservationManagerService(this.model.getHotelByName(hotelName).getReservationManager());
+        reservationService.createAndAddReservation(guestName, this.model.getHotelByName(hotelName).getRoomByName(roomName), checkIn, checkOut, discount);
     }
+
     public void removeReservation(String hotelName, int index) {
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        ReservationManagerService reservationService = new ReservationManagerService(modelService.getHotelByName(hotelName).getReservationManager());
+        ReservationManagerService reservationService = new ReservationManagerService(this.model.getHotelByName(hotelName).getReservationManager());
 
         reservationService.removeReservation(index);
     }
     
     public void updateBaseRate(String hotelName, double baseRate) {
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        HotelService hotelService = new HotelService(modelService.getHotelByName(hotelName));
-        
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
         hotelService.updateBaseRate(baseRate);
     }
     
     public void updateHashMap(String hotelName, int date, double multiplier) {
-        HotelManagerService modelService = new HotelManagerService(this.model);
-        PriceModifierService priceService = new PriceModifierService(modelService.getHotelByName(hotelName).getReservationManager().getPriceModifier());
-
+        PriceModifierService priceService = new PriceModifierService(this.model.getHotelByName(hotelName).getReservationManager().getPriceModifier());
         priceService.updateDatePriceModifier(date, multiplier);
     }
 

@@ -28,4 +28,12 @@ public class PriceModifier {
     public HashMap<Integer, Double> getDatePriceModifier() {
         return datePriceModifier;
     }
+
+    /**
+     * Gets the price multiplier associated with {@code date}
+     * @param date of the price modifier
+     */
+    public double getMultiplier(Integer date) {
+        return this.datePriceModifier.get(date);
+    }
 }

@@ -25,18 +25,18 @@ public class ReservationManagerService {
     public void createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
 
         // Instantiate Necessary Services
-        PriceModifierService priceModifier = new PriceModifierService(this.reservationManager.getPriceModifier());
+        PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
 
         // Calculate base price (rooms total price per night multiplied by date price modifier)
         double totalPrice = 0;
         for(int date = checkIn; date < checkOut; date++) {
-            totalPrice += room.getTotalPrice() * priceModifier.getPriceModifier(date);
+            totalPrice += room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date);
         }
 
         // Apply discount code if discount code is valid
-        double firstDayPrice = room.getTotalPrice() * priceModifier.getPriceModifier(checkIn);
-        if(priceModifier.getDiscountCode(discountCode) != null) {
-            totalPrice = priceModifier.getDiscountCode(discountCode)
+        double firstDayPrice = room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(checkIn);
+        if(priceModifierService.getDiscountCode(discountCode) != null) {
+            totalPrice = priceModifierService.getDiscountCode(discountCode)
                                         .applyDiscount(checkIn, checkOut, totalPrice, firstDayPrice);
         }
 

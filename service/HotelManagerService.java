@@ -20,7 +20,7 @@ public class HotelManagerService {
      * @return true if hotel was successfully created, false otherwise
      */
     public boolean createAndAddHotel(String hotelName) {
-        if(getHotelByName(hotelName) == null) {
+        if(this.hotelManager.getHotelByName(hotelName) == null) {
             Hotel newHotel = new Hotel(hotelName);
             this.hotelManager.getHotelList().add(newHotel);
             return true;
@@ -35,34 +35,10 @@ public class HotelManagerService {
      */
     public boolean removeHotel(String hotelName) {
         try {
-            return this.hotelManager.getHotelList().remove(getHotelByName(hotelName));
+            return this.hotelManager.getHotelList().remove(this.hotelManager.getHotelByName(hotelName));
         } catch (NullPointerException error) {
             System.out.println(error);
             return false;
         }
     }
-
-    /**
-     * Returns a hotel object from this.hotelManager's hotelList with name matching {@code hotelName}
-     * @param hotelName is the name of the hotel
-     * @return hotel object with name {@code hotelname}, null if no matches
-     */
-    public Hotel getHotelByName(String hotelName) {
-        for(Hotel hotel : this.hotelManager.getHotelList()) {
-            if(hotel.getName().contentEquals(hotelName)) {
-                return hotel;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Returns a hotel object at the specified index of this.hotelManager's hotelList
-     * @param index is the index of the hotel
-     * @return
-     */
-    public Hotel getHotelByIndex(int index) {
-        return this.hotelManager.getHotelList().get(index);
-    }
-
 }

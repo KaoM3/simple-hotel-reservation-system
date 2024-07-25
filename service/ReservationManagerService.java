@@ -22,7 +22,11 @@ public class ReservationManagerService {
      * @param checkOut is the check out date
      * @param discountCode is the discount code used
      */
-    public void createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
+    public boolean createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
+
+        if(guestName.length() < 3 || guestName.length() > 20 || room == null) {
+            return false;
+        }
 
         // Instantiate Necessary Services
         PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
@@ -43,6 +47,8 @@ public class ReservationManagerService {
         // Add new reservation to system
         this.reservationManager.getReservationList()
                                 .add(new Reservation(guestName, room, checkIn, checkOut, totalPrice));
+
+        return true;
     }
 
     /**

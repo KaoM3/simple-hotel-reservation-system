@@ -20,6 +20,11 @@ public class HotelManagerService {
      * @return true if hotel was successfully created, false otherwise
      */
     public boolean createAndAddHotel(String hotelName) {
+
+        if(hotelName.length() < 3 || hotelName.length() > 20) {
+            return false;
+        }
+
         if(this.hotelManager.getHotelByName(hotelName) == null) {
             Hotel newHotel = new Hotel(hotelName);
             this.hotelManager.getHotelList().add(newHotel);

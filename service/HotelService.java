@@ -47,6 +47,10 @@ public class HotelService {
             return false;
         }
 
+        if(roomName.length() < 3 || roomName.length() > 20) {
+            return false;
+        }
+
         if(roomType == STANDARD) {
             newRoom = new StandardRoom(roomName, basePriceOfRoom);
             this.hotel.getRoomList().add(newRoom);
@@ -76,6 +80,10 @@ public class HotelService {
         double basePriceOfRoom = this.hotel.getBaseRate();
 
         if(roomType == null || this.hotel.getRoomByName(roomName) != null) {
+            return false;
+        }
+
+        if(roomName.length() < 3 || roomName.length() > 20) {
             return false;
         }
 

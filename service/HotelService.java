@@ -114,9 +114,14 @@ public class HotelService {
     /**
      * Renames {@code this.hotel} to {@code name}
      * @param name is the new name
+     * @return true if successful, false otherwise
      */
-    public void renameHotel(String name) {
-        this.hotel.setName(name);
+    public boolean renameHotel(String name) {
+        if(isRoomNameValid(name)) {
+            this.hotel.setName(name);
+            return true;
+        }
+        return false;
     }
 
     /**

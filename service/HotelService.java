@@ -75,7 +75,7 @@ public class HotelService {
         Room    newRoom;
         double basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(roomType == null || this.hotel.getRoomByName(roomName) != null || isRoomNameValid(roomName)) {
+        if(roomType == null || this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
             return false;
         }
 

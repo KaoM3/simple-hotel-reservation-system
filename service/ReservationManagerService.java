@@ -24,7 +24,7 @@ public class ReservationManagerService {
      */
     public boolean createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
 
-        if(!isGuestNameValid(guestName) || room == null) {
+        if(!isGuestNameValid(guestName) || room == null || checkIn >= checkOut) {
             return false;
         }
 

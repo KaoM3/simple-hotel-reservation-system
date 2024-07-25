@@ -25,6 +25,10 @@ public class PriceModifierService {
      */
     public boolean updateDatePriceModifier(Integer date, Double modifier) {
         
+        if(modifier == null) {
+            return false;
+        }
+
         if(this.priceModifier.getDatePriceModifier().containsKey(date)) {
             this.priceModifier.getDatePriceModifier().replace(date, modifier);
             return true;

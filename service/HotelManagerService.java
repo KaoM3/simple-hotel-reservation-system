@@ -21,11 +21,7 @@ public class HotelManagerService {
      */
     public boolean createAndAddHotel(String hotelName) {
 
-        if(hotelName.length() < 3 || hotelName.length() > 20) {
-            return false;
-        }
-
-        if(!(hotelName.matches("[a-zA-z]+"))) {
+        if(!isHotelNameValid(hotelName)) {
             return false;
         }
 
@@ -49,5 +45,27 @@ public class HotelManagerService {
             System.out.println(error);
             return false;
         }
+    }
+
+    /**
+     * Checks if a given {@code hotelName} is valid. String has no leading or trailing
+     * whitespaces. String may only contain alphabetical and numerical letters.
+     * @param hotelName is the string to be checked.
+     * @return true if string is valid, false otherwise.
+     */
+    private boolean isHotelNameValid(String hotelName) {
+        if(hotelName.charAt(0) == ' ' || hotelName.charAt(hotelName.length()-1) == ' ') {
+            return false;
+        }
+
+        else if(hotelName.length() < 3 || hotelName.length() > 20) {
+            return false;
+        }
+
+        if(hotelName.matches("[ a-zA-z0-9]+")) {
+            return true;
+        }
+
+        return false;
     }
 }

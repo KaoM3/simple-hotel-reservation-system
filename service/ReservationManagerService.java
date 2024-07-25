@@ -24,11 +24,7 @@ public class ReservationManagerService {
      */
     public boolean createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
 
-        if(guestName.length() < 3 || guestName.length() > 20 || room == null) {
-            return false;
-        }
-
-        if(!(guestName.matches("[a-zA-z]+"))) {
+        if(!isGuestNameValid(guestName) || room == null) {
             return false;
         }
 
@@ -81,5 +77,27 @@ public class ReservationManagerService {
         }
 
         return totalEarnings;
+    }
+
+    /**
+     * Checks if a given {@code guestName} is valid. String has no leading or trailing
+     * whitespaces. String may only contain alphabetical and numerical letters.
+     * @param guestName is the string to be checked.
+     * @return true if string is valid, false otherwise.
+     */
+    private boolean isGuestNameValid(String guestName) {
+        if(guestName.charAt(0) == ' ' || guestName.charAt(guestName.length()-1) == ' ') {
+            return false;
+        }
+
+        else if(guestName.length() < 3 || guestName.length() > 20) {
+            return false;
+        }
+
+        if(guestName.matches("[ a-zA-z0-9]+")) {
+            return true;
+        }
+
+        return false;
     }
 }

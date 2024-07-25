@@ -43,11 +43,7 @@ public class HotelService {
         Room    newRoom;
         double  basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(this.hotel.getRoomByName(roomName) != null) {
-            return false;
-        }
-
-        if(roomName.length() < 3 || roomName.length() > 20) {
+        if(this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
             return false;
         }
 
@@ -79,15 +75,7 @@ public class HotelService {
         Room    newRoom;
         double basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(roomType == null || this.hotel.getRoomByName(roomName) != null) {
-            return false;
-        }
-
-        if(roomName.length() < 3 || roomName.length() > 20) {
-            return false;
-        }
-
-        if(!(roomName.matches("[a-zA-z]+"))) {
+        if(roomType == null || this.hotel.getRoomByName(roomName) != null || isRoomNameValid(roomName)) {
             return false;
         }
 
@@ -151,4 +139,25 @@ public class HotelService {
         return true;
     }
     
+    /**
+     * Checks if a given {@code roomName} is valid. String has no leading or trailing
+     * whitespaces. String may only contain alphabetical and numerical letters.
+     * @param roomName is the string to be checked.
+     * @return true if string is valid, false otherwise.
+     */
+    private boolean isRoomNameValid(String roomName) {
+        if(roomName.charAt(0) == ' ' || roomName.charAt(roomName.length()-1) == ' ') {
+            return false;
+        }
+
+        else if(roomName.length() < 3 || roomName.length() > 20) {
+            return false;
+        }
+
+        if(roomName.matches("[ a-zA-z0-9]+")) {
+            return true;
+        }
+
+        return false;
+    }
 }

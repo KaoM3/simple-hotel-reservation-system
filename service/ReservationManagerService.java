@@ -28,6 +28,10 @@ public class ReservationManagerService {
             return false;
         }
 
+        if(!(guestName.matches("[a-zA-z]+"))) {
+            return false;
+        }
+
         // Instantiate Necessary Services
         PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
 

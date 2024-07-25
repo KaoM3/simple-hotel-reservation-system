@@ -25,6 +25,10 @@ public class HotelManagerService {
             return false;
         }
 
+        if(!(hotelName.matches("[a-zA-z]+"))) {
+            return false;
+        }
+
         if(this.hotelManager.getHotelByName(hotelName) == null) {
             Hotel newHotel = new Hotel(hotelName);
             this.hotelManager.getHotelList().add(newHotel);

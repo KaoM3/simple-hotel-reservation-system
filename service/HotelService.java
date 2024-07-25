@@ -87,6 +87,10 @@ public class HotelService {
             return false;
         }
 
+        if(!(roomName.matches("[a-zA-z]+"))) {
+            return false;
+        }
+
         for(RoomType type : RoomType.values()) {
             if(type.name().contentEquals(roomType)) {
                 newRoom = type.constructRoom(roomName, basePriceOfRoom);

@@ -1,5 +1,4 @@
 import java.util.HashMap;
-import java.util.Scanner;
 
 import model.hotel.*;
 import model.hotel.room.Room;
@@ -7,35 +6,60 @@ import model.reservation.Reservation;
 import service.*;
 
 public class ModelTesting {
-    Scanner sc = new Scanner(System.in);
     HotelManager model;
 
     public ModelTesting(HotelManager model) {
         this.model = model;
     }
     
+    /** Test createAndAddHotel */
     public void createNewHotel(String hotelName) {
         HotelManagerService modelService = new HotelManagerService(this.model);
-
-        if(modelService.createAndAddHotel(hotelName)) {
-            System.out.printf("Created Hotel %s, call create new room.\n", this.model.getHotelByName(hotelName).getName());
-        }
-        
+        System.out.println(modelService.createAndAddHotel(hotelName));        
     }
 
+    /** Test removeHotel */
+    public void removeHotel(String hotelName) {
+        HotelManagerService modelService;
+        modelService = new HotelManagerService(model);
+
+        System.out.println(modelService.removeHotel(hotelName));
+    }
+
+    /** Test createAndAddRoom */
     public void createNewRoom(String hotelName, String roomName, int roomType) {
         HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
-        hotelService.createAndAddRoom(roomName, roomType);
-        
+        System.out.println(hotelService.createAndAddRoom(roomName, roomType));
     }
 
+    /** Test createAndAddRoom */
+    public void createNewRoom(String hotelName, String roomName, String roomType) {
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
+        System.out.println(hotelService.createAndAddRoom(roomName, roomType));
+    }
+
+    /** Test removeRoom */
     public void removeRoom(String hotelName, String roomName) {
         HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
-        hotelService.removeRoom(this.model.getHotelByName(hotelName).getRoomByName(roomName));
+        System.out.println(hotelService.removeRoom(this.model.getHotelByName(hotelName).getRoomByName(roomName)));
+    }
+
+    /** Test renameHotel */
+    public void renameHotel(String hotelName, String newName) {
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
+        System.out.println(hotelService.renameHotel(newName));
+
+    }
+
+    /** Test updateBaseRate */
+    public void updateBaseRate(String hotelName, double baseRate) {
+        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
+        System.out.println(hotelService.updateBaseRate(baseRate));
     }
 
     public void createNewReservation(String hotelName, String roomName, String guestName, int checkIn, int checkOut, String discount) {
         ReservationManagerService reservationService = new ReservationManagerService(this.model.getHotelByName(hotelName).getReservationManager());
+        
         reservationService.createAndAddReservation(guestName, this.model.getHotelByName(hotelName).getRoomByName(roomName), checkIn, checkOut, discount);
     }
 
@@ -45,14 +69,11 @@ public class ModelTesting {
         reservationService.removeReservation(index);
     }
     
-    public void updateBaseRate(String hotelName, double baseRate) {
-        HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
-        hotelService.updateBaseRate(baseRate);
-    }
-    
-    public void updateHashMap(String hotelName, int date, double multiplier) {
+    /** Test updateDatePriceModifier */
+    public void updateHashMap(String hotelName, Integer date, Double multiplier) {
         PriceModifierService priceService = new PriceModifierService(this.model.getHotelByName(hotelName).getReservationManager().getPriceModifier());
-        priceService.updateDatePriceModifier(date, multiplier);
+        
+        System.out.println(priceService.updateDatePriceModifier(date, multiplier));
     }
 
     // PRINT FUNCTIONS

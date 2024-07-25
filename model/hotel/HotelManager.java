@@ -29,7 +29,7 @@ public class HotelManager {
      */
     public Hotel getHotelByName(String hotelName) {
         for(Hotel hotel : this.hotelList) {
-            if(hotel.getName().contentEquals(hotelName)) {
+            if(hotel.getName().equalsIgnoreCase(hotelName)) {
                 return hotel;
             }
         }

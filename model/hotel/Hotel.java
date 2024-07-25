@@ -73,7 +73,7 @@ public class Hotel {
      */
     public Room getRoomByName(String roomName) {
         for(Room room : this.roomList) {
-            if(room.getName().contentEquals(roomName)) {
+            if(room.getName().equalsIgnoreCase(roomName)) {
                 return room;
             }
         }

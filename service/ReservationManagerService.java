@@ -28,6 +28,10 @@ public class ReservationManagerService {
             return false;
         }
 
+        if(!this.reservationManager.isRoomAvailableOnDate(room.getName(), checkIn, checkOut)) {
+            return false;
+        }
+
         // Instantiate Necessary Services
         PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
 

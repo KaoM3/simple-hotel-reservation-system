@@ -46,7 +46,7 @@ public class Reservation {
     /**
      * @return check-in date
      */
-    public int getCheckin() {
+    public int getCheckIn() {
         return this.checkIn;
     }
 

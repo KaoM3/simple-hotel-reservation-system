@@ -1,6 +1,7 @@
 package model.hotel;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 import model.hotel.room.*;
 import model.reservation.*;
@@ -89,6 +90,17 @@ public class Hotel {
         return this.roomList.get(index);
     }
 
+    /**
+     * Finds all rooms within this hotel that are available within the specified check in and check out date
+     * @param checkIn check in date
+     * @param checkOut check out date
+     * @return the ArrayList of all rooms that are available within checkIn and checkOut
+     */
+    public List<Room> filterRooms(int checkIn, int checkOut) {
+        return roomList.stream()
+                .filter(room -> this.getReservationManager().isRoomAvailableOnDate(room.getName(), checkIn, checkOut))
+                .collect(Collectors.toList());
+    }
 }
 
 

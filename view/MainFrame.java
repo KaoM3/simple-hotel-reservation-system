@@ -4,20 +4,20 @@
  */
 package view;
 
-import controller.HotelReservationSystemController;
-
 import java.awt.Dimension;
 
-import javax.swing.JPanel;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import controller.HotelReservationSystemController;
 
 /**
  *
  * @author Rafael
  */
 public class MainFrame extends JFrame {
-    public static final int MAINPANEL_WIDTH = 150;
-    public static final int MAINPANEL_HEIGHT = 470;
+    public static final int MAINPANEL_WIDTH = 570;
+    public static final int MAINPANEL_HEIGHT = 480;
 
     private static final int MAINPANEL_X = 150;
     private static final int MAINPANEL_Y = 0;
@@ -42,17 +42,17 @@ public class MainFrame extends JFrame {
         sideButtons1 = new view.SideButtons(controller, this);
         mainPanel = new javax.swing.JPanel();
 
+        sideButtons1.setBounds(0, 0, 150, 480);
+        mainPanel.setBounds(MAINPANEL_X, MAINPANEL_Y, MAINPANEL_WIDTH, MAINPANEL_HEIGHT);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        // setPreferredSize(new java.awt.Dimension(720, 510));
         setResizable(false);
 
-        // setSize(new java.awt.Dimension(720, 500));
         getContentPane().setPreferredSize(new Dimension(720, 480));
         getContentPane().setLayout(null);
+
         getContentPane().add(sideButtons1);
-        sideButtons1.setBounds(0, 0, 150, 480);
         getContentPane().add(mainPanel);
-        mainPanel.setBounds(MAINPANEL_X, MAINPANEL_Y, MAINPANEL_WIDTH, MAINPANEL_HEIGHT);
 
         pack();
     }

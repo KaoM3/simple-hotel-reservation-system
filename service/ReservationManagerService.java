@@ -1,7 +1,8 @@
 package service;
 
-import model.hotel.room.*;
-import model.reservation.*;
+import model.hotel.room.Room;
+import model.reservation.Reservation;
+import model.reservation.ReservationManager;
 
 /**
  * Contains all the business logic for editing the data inside a {@code ReservationManager} object.

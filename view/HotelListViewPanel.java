@@ -4,17 +4,24 @@
  */
 package view;
 
-import controller.HotelReservationSystemController;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
+import controller.HotelReservationSystemController;
 
 /**
  *
  * @author Rafael
  */
-public class HotelListViewPanel extends javax.swing.JPanel {
+public class HotelListViewPanel extends javax.swing.JPanel implements ActionListener{
     HotelReservationSystemController controller;
+    JButton viewButton, refreshButton;
 
     /**
      * Creates new form ViewHotelPanel
@@ -35,49 +42,28 @@ public class HotelListViewPanel extends javax.swing.JPanel {
 
         hotelListScrollPane = new javax.swing.JScrollPane();
         hotelListTable = new javax.swing.JTable();
+        viewButton = new JButton();
+        refreshButton = new JButton();
 
         setPreferredSize(new java.awt.Dimension(570, 480));
         setLayout(null);
 
-        hotelListTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Hotel Name", "Base Rate", "No. of Rooms", "No. of Reservations"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Double.class, java.lang.Integer.class, java.lang.Integer.class
-            };
+        DefaultTableModel tableModel = new DefaultTableModel(0, 4);
+        String tableHeader[] = {"Hotel Name", "Base Rate", "No. of Rooms", "No. of Reservations"};
+        tableModel.setColumnIdentifiers(tableHeader);
+        
+        hotelListTable.setModel(tableModel);
 
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
-
+        // Display Hotel Details in Table
+        for(int i = 0; i < this.controller.getHotelObjects().size(); i++) {
+            tableModel.addRow(new Object[] {this.controller.getHotelObjects().get(i).getName(),
+                                            this.controller.getHotelObjects().get(i).getBaseRate(),
+                                            this.controller.getHotelObjects().get(i).getRoomList().size(),
+                                            this.controller.getHotelObjects().get(i).getReservationManager().getReservationList().size()});
+        }
+        
         // SELECTION MODEL
         hotelListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        hotelListTable.addRowSelectionInterval(0, 3);
 
         ListSelectionModel selectionModel = hotelListTable.getSelectionModel();
 
@@ -90,7 +76,18 @@ public class HotelListViewPanel extends javax.swing.JPanel {
         hotelListScrollPane.setViewportView(hotelListTable);
 
         add(hotelListScrollPane);
-        hotelListScrollPane.setBounds(20, 20, 530, 440);
+        hotelListScrollPane.setBounds(20, 20, 530, 370);
+
+
+        viewButton.setText("More Details");
+        add(viewButton);
+        viewButton.addActionListener(this);
+        viewButton.setBounds(20, 420, 250, 23);
+        
+        refreshButton.setText("Refresh Table");
+        add(refreshButton);
+        refreshButton.addActionListener(this);
+        refreshButton.setBounds(300, 420, 250, 23);
     }// </editor-fold>//GEN-END:initComponents
 
     private void handleSelection(ListSelectionEvent event) {
@@ -99,7 +96,30 @@ public class HotelListViewPanel extends javax.swing.JPanel {
         }
 
         String strSource = event.getSource().toString();
+        System.out.println(hotelListTable.getSelectedRow());
+        System.out.println(hotelListTable.getSelectedColumn());
         System.out.println(strSource);
+    }
+
+    public void actionPerformed(ActionEvent event) {
+        if(event.getSource() == viewButton) {
+            System.out.println("View button");
+            // TODO: implement view more button
+        }
+        else if(event.getSource() == refreshButton) {
+            refreshPanel();
+        }
+    }
+
+    /**
+     * Refreshes this panel.
+     */
+    private void refreshPanel() {
+        System.out.println("Refreshing Panel...");
+        this.removeAll();
+        this.initComponents();
+        this.repaint();
+        this.revalidate();
     }
 
 

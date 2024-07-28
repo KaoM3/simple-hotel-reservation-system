@@ -1,4 +1,4 @@
-package view;
+package view.sub;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,9 +12,9 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
-import model.reservation.Reservation;
+import model.hotel.room.Room;
 
-public class ReservationListPanel extends JPanel implements ActionListener {
+public class RoomListPanel extends JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
     private final int index;
     private JButton refreshButton;
@@ -22,7 +22,7 @@ public class ReservationListPanel extends JPanel implements ActionListener {
     private JLabel headerLabel;
     private JTable reservationTable;
 
-    public ReservationListPanel(HotelReservationSystemController controller, int index) {
+    public RoomListPanel(HotelReservationSystemController controller, int index) {
         this.controller = controller;
         this.index = index;
         controller.getHotelObjects().get(index);
@@ -40,19 +40,31 @@ public class ReservationListPanel extends JPanel implements ActionListener {
         setLayout(null);
 
         // Set Up Table
-        DefaultTableModel tableModel = new DefaultTableModel(0, 5);
-        String tableHeader[] = {"Room Name", "Guest", "Check In", "Check Out", "Total Price"};
+        DefaultTableModel tableModel = new DefaultTableModel(0, 4);
+        String tableHeader[] = {"Room Name", "Room Type", "Price per Night", "No. of Reservations"};
         tableModel.setColumnIdentifiers(tableHeader);
         
         reservationTable.setModel(tableModel);
+        reservationTable.setEnabled(false);
 
         // Display Hotel Details in Table
-        for(Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
-            tableModel.addRow(new Object[] {reservation.getRoom().getName(),
-                                            reservation.getGuestName(),
-                                            reservation.getCheckIn(),
-                                            reservation.getCheckOut(),
-                                            reservation.getTotalPrice()});
+        for(Room room : controller.getHotelRoomList(controller.getHotel(index))) {
+            String roomType;
+
+            if(room.getMultiplier() == 1.0) {
+                roomType = "STANDARD";
+            } else if(room.getMultiplier() == 1.2) {
+                roomType = "DELUXE";
+            } else if(room.getMultiplier() == 1.35) {
+                roomType = "EXECUTIVE";
+            } else {
+                roomType = "null";
+            }
+
+            tableModel.addRow(new Object[] {room.getName(),
+                                            roomType,
+                                            room.getTotalPrice(),
+                                            controller.getHotel(index).getReservationManager().filterReservations(room.getName()).size()});
         }
 
         
@@ -63,7 +75,7 @@ public class ReservationListPanel extends JPanel implements ActionListener {
 
         headerLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        headerLabel.setText(String.format("Viewing Reservation List: [%s]", controller.getHotel(index).getName()));
+        headerLabel.setText(String.format("Viewing Room List: [%s]", controller.getHotel(index).getName()));
         add(headerLabel);
         headerLabel.setBounds(20, 20, 560, 30);
 

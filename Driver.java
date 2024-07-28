@@ -2,6 +2,7 @@
 import controller.*;
 import model.hotel.*;
 import view.*;
+import view.main.MainFrame;
 
 public class Driver {
 

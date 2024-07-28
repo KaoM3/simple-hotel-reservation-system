@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package view;
+package view.main;
 
 import java.awt.Dimension;
 
@@ -39,7 +39,7 @@ public class MainFrame extends JFrame {
      */
     private void initComponents() {
 
-        sideButtons1 = new view.SideButtons(controller, this);
+        sideButtons1 = new view.main.SideButtons(controller, this);
         mainPanel = new javax.swing.JPanel();
 
         sideButtons1.setBounds(0, 0, 150, 480);

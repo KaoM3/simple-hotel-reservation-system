@@ -1,7 +1,11 @@
 package service;
 
 import model.hotel.Hotel;
-import model.hotel.room.*;
+import model.hotel.room.DeluxeRoom;
+import model.hotel.room.ExecutiveRoom;
+import model.hotel.room.Room;
+import model.hotel.room.RoomType;
+import model.hotel.room.StandardRoom;
 import model.reservation.Reservation;
 
 /**
@@ -155,7 +159,7 @@ public class HotelService {
             return false;
         }
 
-        else if(roomName.length() < 3 || roomName.length() > 20) {
+        else if(roomName.length() < 3 || roomName.length() > 20 || roomName == null) {
             return false;
         }
 

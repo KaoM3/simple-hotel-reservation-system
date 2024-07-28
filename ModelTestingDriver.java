@@ -78,6 +78,16 @@ public class ModelTestingDriver {
         System.out.println(pms.getDiscountCode("Payday"));
         System.out.println(pms.getDiscountCode("PAYDAY"));
         System.out.println(pms.getDiscountCode(null));
+        
+        // TESTING RESERVATIONS
+        System.out.println("===== Test PRICING =====");
+        testing.createNewReservation("New Hotel 1", "ROOM S1", "Ifrit", 2, 3, null);
+        testing.createNewReservation("New Hotel 1", "ROOM S1", "Veldora", 3, 4, null);
+        testing.updateBaseRate("New Hotel 1", 100);
+
+        testing.createNewReservation("New Hotel 1", "ROOM S1", "Ifrit", 2, 5, null);
+        testing.createNewReservation("New Hotel 1", "ROOM S1", "Veldora", 1, 10, null);
+        testing.createNewReservation("New Hotel 1", "ROOM S1", "Veldora", 6, 7, null);
     }
 
 }

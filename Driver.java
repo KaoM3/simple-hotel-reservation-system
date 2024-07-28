@@ -4,7 +4,7 @@ import model.hotel.*;
 import view.*;
 
 public class Driver {
-    
+
     public static void main(String[] args) {
         
         HotelManager model = new HotelManager();

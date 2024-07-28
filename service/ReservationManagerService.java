@@ -95,7 +95,7 @@ public class ReservationManagerService {
             return false;
         }
 
-        else if(guestName.length() < 3 || guestName.length() > 20) {
+        else if(guestName.length() < 3 || guestName.length() > 20 || guestName == null) {
             return false;
         }
 

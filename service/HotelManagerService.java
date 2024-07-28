@@ -1,6 +1,7 @@
 package service;
 
-import model.hotel.*;
+import model.hotel.Hotel;
+import model.hotel.HotelManager;
 
 /**
  * Contains all the business logic for editing the data inside a {@code HotelManager} object.
@@ -58,7 +59,7 @@ public class HotelManagerService {
             return false;
         }
 
-        else if(hotelName.length() < 3 || hotelName.length() > 20) {
+        else if(hotelName.length() < 3 || hotelName.length() > 20 || hotelName == null) {
             return false;
         }
 

@@ -82,7 +82,7 @@ public class SideButtonPanel extends javax.swing.JPanel implements ActionListene
         }
         else if(event.getSource() == bookButton) {
             // TODO: Add book
-            frame.setMainPanel(new BookingPanel());
+            frame.setMainPanel(new BookingPanel(controller));
         }
     }
 }

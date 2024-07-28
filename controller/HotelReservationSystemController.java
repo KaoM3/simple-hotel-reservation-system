@@ -4,6 +4,7 @@ import java.util.List;
 
 import model.hotel.Hotel;
 import model.hotel.HotelManager;
+import model.reservation.Reservation;
 import service.HotelManagerService;
 import service.HotelService;
 
@@ -32,7 +33,14 @@ public class HotelReservationSystemController {
             modelService.removeHotel(hotelName);
             System.out.println("Hotel has no room, deleting hotel...");
         }
+    }
 
+    public List<Reservation> getHotelReservationList(Hotel hotel) {
+        return hotel.getReservationManager().getReservationList();
+    }
+
+    public Hotel getHotel(int index) {
+        return model.getHotelByIndex(index);
     }
 
     public void createNewRoom(String hotelName, String roomName, int roomType) {

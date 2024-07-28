@@ -139,7 +139,9 @@ public class CreateHotel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == confirmButton) {
-            this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput);
+            if(!(roomNameTextField.getText().length() == 0) && !(hotelNameTextField.getText().length() == 0)) {
+                this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput);
+            }
             refreshPanel();
         }
         if(event.getSource() == cancelButton) {
@@ -176,5 +178,10 @@ public class CreateHotel extends JPanel implements ActionListener {
                     break;
             }
         }
+    }
+
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(570, 480);
     }
 }

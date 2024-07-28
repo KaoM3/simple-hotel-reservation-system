@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -19,9 +20,9 @@ import controller.HotelReservationSystemController;
  *
  * @author Rafael
  */
-public class HotelListViewPanel extends javax.swing.JPanel implements ActionListener{
+public class HotelListViewPanel extends JPanel implements ActionListener{
     HotelReservationSystemController controller;
-    JButton viewButton, refreshButton;
+    JButton viewReservationButton, refreshButton, viewRoomButton;
 
     /**
      * Creates new form ViewHotelPanel
@@ -42,8 +43,9 @@ public class HotelListViewPanel extends javax.swing.JPanel implements ActionList
 
         hotelListScrollPane = new javax.swing.JScrollPane();
         hotelListTable = new javax.swing.JTable();
-        viewButton = new JButton();
+        viewReservationButton = new JButton();
         refreshButton = new JButton();
+        viewRoomButton = new JButton();
 
         setPreferredSize(new java.awt.Dimension(570, 480));
         setLayout(null);
@@ -64,6 +66,7 @@ public class HotelListViewPanel extends javax.swing.JPanel implements ActionList
         
         // SELECTION MODEL
         hotelListTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        // hotelListTable.setCellSelectionEnabled(true);
 
         ListSelectionModel selectionModel = hotelListTable.getSelectionModel();
 
@@ -79,16 +82,21 @@ public class HotelListViewPanel extends javax.swing.JPanel implements ActionList
         hotelListScrollPane.setBounds(20, 20, 530, 370);
 
 
-        viewButton.setText("More Details");
-        add(viewButton);
-        viewButton.addActionListener(this);
-        viewButton.setBounds(20, 420, 250, 23);
+        viewReservationButton.setText("View Hotel Reservation List");
+        add(viewReservationButton);
+        viewReservationButton.addActionListener(this);
+        viewReservationButton.setBounds(20, 420, 190, 23);
         
         refreshButton.setText("Refresh Table");
         add(refreshButton);
         refreshButton.addActionListener(this);
-        refreshButton.setBounds(300, 420, 250, 23);
-    }// </editor-fold>//GEN-END:initComponents
+        refreshButton.setBounds(440, 420, 110, 23);
+
+        viewRoomButton.setText("View Hotel Room List");
+        add(viewRoomButton);
+        viewRoomButton.addActionListener(this);
+        viewRoomButton.setBounds(230, 420, 190, 23);
+    }
 
     private void handleSelection(ListSelectionEvent event) {
         if(event.getValueIsAdjusting()) {
@@ -96,18 +104,23 @@ public class HotelListViewPanel extends javax.swing.JPanel implements ActionList
         }
 
         String strSource = event.getSource().toString();
+        System.out.println(hotelListTable.getColumnName(hotelListTable.getSelectedColumn()));
         System.out.println(hotelListTable.getSelectedRow());
         System.out.println(hotelListTable.getSelectedColumn());
         System.out.println(strSource);
     }
 
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == viewButton) {
-            System.out.println("View button");
+        if(event.getSource() == viewReservationButton) {
+            System.out.println("View Reservation");
+            new SubFrame(new ReservationListPanel(controller, hotelListTable.getSelectedRow()));
             // TODO: implement view more button
         }
         else if(event.getSource() == refreshButton) {
             refreshPanel();
+        }
+        else if(event.getSource() == viewRoomButton) {
+            // TODO: add functionality here
         }
     }
 

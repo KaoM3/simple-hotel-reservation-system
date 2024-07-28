@@ -45,7 +45,7 @@ public class MainFrame extends JFrame {
         sideButtons1.setBounds(0, 0, 150, 480);
         mainPanel.setBounds(MAINPANEL_X, MAINPANEL_Y, MAINPANEL_WIDTH, MAINPANEL_HEIGHT);
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
 
         getContentPane().setPreferredSize(new Dimension(720, 480));

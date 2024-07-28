@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-
 import model.hotel.Hotel;
 import model.hotel.HotelManager;
 import service.*;

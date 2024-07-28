@@ -4,9 +4,8 @@
  */
 package view;
 
-import javax.swing.JFrame;
-
 import controller.HotelReservationSystemController;
+import java.awt.Dimension;
 /**
  *
  * @author Rafael
@@ -21,6 +20,7 @@ public class SideButtons extends javax.swing.JPanel {
     public SideButtons(HotelReservationSystemController controller, MainFrame frame) {
         this.controller = controller;
         this.frame = frame;
+        this.setPreferredSize(new Dimension(150, 480));
         initComponents();
     }
 

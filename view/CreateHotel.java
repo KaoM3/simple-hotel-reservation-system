@@ -1,6 +1,7 @@
 package view;
 
 import controller.HotelReservationSystemController;
+import java.awt.Dimension;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import javax.swing.DefaultComboBoxModel;
@@ -23,6 +24,7 @@ public class CreateHotel extends javax.swing.JPanel {
      */
     public CreateHotel(HotelReservationSystemController controller) {
         this.controller = controller;
+        setPreferredSize(new Dimension(570, 480));
         initComponents();
     }
 
@@ -55,6 +57,7 @@ public class CreateHotel extends javax.swing.JPanel {
 
         hotelListModel.setColumnIdentifiers(hotelListHeader);
         hotelListTable.setModel(hotelListModel);
+        hotelListTable.setEnabled(false);
         
         // ADD OBJECT TO TABLE
         for(int i = 0; i < controller.getHotelObjects().size(); i++) {

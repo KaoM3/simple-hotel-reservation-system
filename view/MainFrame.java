@@ -5,6 +5,7 @@
 package view;
 
 import controller.HotelReservationSystemController;
+import java.awt.Dimension;
 import javax.swing.JPanel;
 
 /**
@@ -35,9 +36,11 @@ public class MainFrame extends javax.swing.JFrame {
         mainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(720, 492));
+        // setPreferredSize(new java.awt.Dimension(720, 510));
         setResizable(false);
-        setSize(new java.awt.Dimension(720, 492));
+
+        // setSize(new java.awt.Dimension(720, 500));
+        getContentPane().setPreferredSize(new Dimension(720, 480));
         getContentPane().setLayout(null);
         getContentPane().add(sideButtons1);
         sideButtons1.setBounds(0, 0, 150, 480);

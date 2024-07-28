@@ -16,6 +16,8 @@ public class Driver {
                 new MainFrame(controller).setVisible(true);
             }
         });
+
+        System.out.println(" I RAN! ");
     }
 
 }

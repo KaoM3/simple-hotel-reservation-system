@@ -78,7 +78,7 @@ public class SideButtonPanel extends javax.swing.JPanel implements ActionListene
         }
         else if(event.getSource() == manageButton) {
             // TODO: Add Manage
-            frame.setMainPanel(new ManagePanel());
+            frame.setMainPanel(new ManagePanel(controller));
         }
         else if(event.getSource() == bookButton) {
             // TODO: Add book

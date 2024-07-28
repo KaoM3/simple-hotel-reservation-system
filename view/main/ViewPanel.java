@@ -53,6 +53,7 @@ public class ViewPanel extends JPanel implements ActionListener{
         setPreferredSize(new java.awt.Dimension(570, 480));
         setLayout(null);
 
+        // Create Table Model
         DefaultTableModel tableModel = new DefaultTableModel(0, 4);
         String tableHeader[] = {"Hotel Name", "Base Rate", "No. of Rooms", "No. of Reservations"};
         tableModel.setColumnIdentifiers(tableHeader);

@@ -4,7 +4,7 @@ import service.HotelService;
 import service.PriceModifierService;
 
 public class Driver {
-    
+
     public static void main(String[] args) {
     
     }

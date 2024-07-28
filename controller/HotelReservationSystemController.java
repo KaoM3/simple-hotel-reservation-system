@@ -1,9 +1,9 @@
 package controller;
 
 import java.util.List;
-
 import model.hotel.Hotel;
 import model.hotel.HotelManager;
+import model.hotel.room.Room;
 import model.reservation.Reservation;
 import service.HotelManagerService;
 import service.HotelService;
@@ -39,8 +39,16 @@ public class HotelReservationSystemController {
         return hotel.getReservationManager().getReservationList();
     }
 
+    public List<Reservation> getHotelReservationList(Hotel hotel, Room room) {
+        return hotel.getReservationManager().getReservationList();
+    }
+
     public Hotel getHotel(int index) {
         return model.getHotelByIndex(index);
+    }
+
+    public List<Room> getHotelRoomList(Hotel hotel) {
+        return hotel.getRoomList();
     }
 
     public void createNewRoom(String hotelName, String roomName, int roomType) {

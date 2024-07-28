@@ -120,6 +120,8 @@ public class HotelListViewPanel extends JPanel implements ActionListener{
             refreshPanel();
         }
         else if(event.getSource() == viewRoomButton) {
+            System.out.println("View Room");
+            new SubFrame(new RoomListPanel(controller, hotelListTable.getSelectedRow()));
             // TODO: add functionality here
         }
     }

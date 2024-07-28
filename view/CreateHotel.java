@@ -87,10 +87,10 @@ public class CreateHotel extends JPanel implements ActionListener {
         
         // Set up buttons
         roomNameTextField.setText("Enter Room Name");
-        roomNameTextField.setBounds(110, 350, 430, 22);
+        roomNameTextField.setBounds(110, 350, 430, 32);
         
         hotelNameTextField.setText("Enter Hotel Name");
-        hotelNameTextField.setBounds(110, 300, 430, 22);
+        hotelNameTextField.setBounds(110, 300, 430, 32);
         
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(this);

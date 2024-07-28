@@ -15,7 +15,7 @@ import controller.HotelReservationSystemController;
  *
  * @author Rafael
  */
-public class SideButtons extends javax.swing.JPanel implements ActionListener {
+public class SideButtonPanel extends javax.swing.JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
     private final MainFrame frame;
     private JButton bookButton;
@@ -26,7 +26,7 @@ public class SideButtons extends javax.swing.JPanel implements ActionListener {
     /**
      * Creates new form SideButtons
      */
-    public SideButtons(HotelReservationSystemController controller, MainFrame frame) {
+    public SideButtonPanel(HotelReservationSystemController controller, MainFrame frame) {
         this.controller = controller;
         this.frame = frame;
         this.setPreferredSize(new Dimension(150, 480));
@@ -71,16 +71,18 @@ public class SideButtons extends javax.swing.JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == createButton) {
-            frame.setMainPanel(new CreateHotel(controller));
+            frame.setMainPanel(new CreatePanel(controller));
         }
         else if(event.getSource() == viewButton) {
-            frame.setMainPanel(new HotelListViewPanel(controller));
+            frame.setMainPanel(new ViewPanel(controller));
         }
         else if(event.getSource() == manageButton) {
-            // TODO: Add manage
+            // TODO: Add Manage
+            frame.setMainPanel(new ManagePanel());
         }
         else if(event.getSource() == bookButton) {
             // TODO: Add book
+            frame.setMainPanel(new BookingPanel());
         }
     }
 }

@@ -27,7 +27,7 @@ import controller.HotelReservationSystemController;
  *
  * @author Rafael
  */
-public class CreateHotel extends JPanel implements ActionListener {
+public class CreatePanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
     private JButton cancelButton, confirmButton;
     private JScrollPane hotelListScrollPane;
@@ -40,7 +40,7 @@ public class CreateHotel extends JPanel implements ActionListener {
     /**
      * Creates new form CreateHotel
      */
-    public CreateHotel(HotelReservationSystemController controller) {
+    public CreatePanel(HotelReservationSystemController controller) {
         this.controller = controller;
         setPreferredSize(new Dimension(570, 480));
         initComponents();

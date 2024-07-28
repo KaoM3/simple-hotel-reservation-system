@@ -23,14 +23,14 @@ import view.sub.SubFrame;
  *
  * @author Rafael
  */
-public class HotelListViewPanel extends JPanel implements ActionListener{
+public class ViewPanel extends JPanel implements ActionListener{
     HotelReservationSystemController controller;
     JButton viewReservationButton, refreshButton, viewRoomButton;
 
     /**
      * Creates new form ViewHotelPanel
      */
-    public HotelListViewPanel(HotelReservationSystemController controller) {
+    public ViewPanel(HotelReservationSystemController controller) {
         this.controller = controller;
         initComponents();
     }

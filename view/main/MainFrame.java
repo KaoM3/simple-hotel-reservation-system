@@ -4,12 +4,10 @@
  */
 package view.main;
 
+import controller.HotelReservationSystemController;
 import java.awt.Dimension;
-
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import controller.HotelReservationSystemController;
 
 /**
  *
@@ -24,7 +22,7 @@ public class MainFrame extends JFrame {
 
     private final HotelReservationSystemController controller;
     private JPanel mainPanel;
-    private SideButtons sideButtons1;
+    private SideButtonPanel sideButtons1;
 
     /**
      * Creates new form MainFrame
@@ -39,7 +37,7 @@ public class MainFrame extends JFrame {
      */
     private void initComponents() {
 
-        sideButtons1 = new view.main.SideButtons(controller, this);
+        sideButtons1 = new view.main.SideButtonPanel(controller, this);
         mainPanel = new javax.swing.JPanel();
 
         sideButtons1.setBounds(0, 0, 150, 480);

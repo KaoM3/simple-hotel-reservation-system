@@ -1,7 +1,6 @@
 
-import controller.*;
-import model.hotel.*;
-import view.*;
+import controller.HotelReservationSystemController;
+import model.hotel.HotelManager;
 import view.main.MainFrame;
 
 public class Driver {

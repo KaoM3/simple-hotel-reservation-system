@@ -1,12 +1,14 @@
 package controller;
 
 import java.util.List;
+
 import model.hotel.Hotel;
 import model.hotel.HotelManager;
 import model.hotel.room.Room;
 import model.reservation.Reservation;
 import service.HotelManagerService;
 import service.HotelService;
+import service.PriceModifierService;
 
 public class HotelReservationSystemController {
     HotelManager model;
@@ -54,6 +56,11 @@ public class HotelReservationSystemController {
     public void createNewRoom(String hotelName, String roomName, int roomType) {
         HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
         System.out.println(hotelService.createAndAddRoom(roomName, roomType));
+    }
+
+    public void updateDatePrice(Hotel hotel, int date, double multiplier) {
+        PriceModifierService modifierService = new PriceModifierService(hotel.getReservationManager().getPriceModifier());
+        System.out.println(modifierService.updateDatePriceModifier(date, multiplier));
     }
     
     public List<Hotel> getHotelObjects() {

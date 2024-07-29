@@ -15,6 +15,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
+import view.sub.PriceModifierPanel;
+import view.sub.SubFrame;
 
 /**
  *
@@ -174,6 +176,9 @@ public class ManagePanel extends JPanel implements ActionListener {
         else if(event.getSource() == modifyDatePriceButton) {
             // TODO: Add implementation
             System.out.println("modifyPrice");
+            if(hotelTable.getSelectedRow() != -1) {
+                new SubFrame(new PriceModifierPanel(controller, hotelTable.getSelectedRow()));
+            }
             
         }
         else if(event.getSource() == removeReservationButton) {

@@ -34,11 +34,17 @@ public class ManagePanel extends JPanel implements ActionListener {
     private JScrollPane hotelTablePane;
     private JTable hotelTable;
 
+    /**
+     * Constructor for class ManagePanel
+     */
     public ManagePanel(HotelReservationSystemController controller) {
         this.controller = controller;
         initComponents();
     }
-                      
+    
+    /**
+     * Initializes the components of this panel
+     */
     private void initComponents() {
 
         confirmUpdateButton = new JButton("OK");
@@ -60,28 +66,8 @@ public class ManagePanel extends JPanel implements ActionListener {
 
         setLayout(null);
 
-        confirmUpdateButton.addActionListener(this);
-        add(confirmUpdateButton);
-        confirmUpdateButton.setBounds(370, 260, 170, 20);
 
-        add(newNameField);
-        newNameField.setBounds(370, 90, 170, 30);
-
-        basePriceHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        basePriceHeading.setText("No Selected Hotel.");
-        add(basePriceHeading);
-        basePriceHeading.setBounds(260, 190, 280, 20);
-
-        renameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        renameLabel.setText("Rename Hotel:");
-        add(renameLabel);
-        renameLabel.setBounds(260, 90, 100, 30);
-
-        confirmUpdateLabel.setText("Confirm Update:");
-        add(confirmUpdateLabel);
-        confirmUpdateLabel.setBounds(260, 260, 100, 16);
-
-         // Create Table Model
+        // Create Table Model
         DefaultTableModel tableModel = new DefaultTableModel(0, 1);
         String tableHeader[] = {"Select a Hotel"};
         tableModel.setColumnIdentifiers(tableHeader);
@@ -104,49 +90,76 @@ public class ManagePanel extends JPanel implements ActionListener {
     
         hotelTablePane.setViewportView(hotelTable);
 
-        add(hotelTablePane);
         hotelTablePane.setBounds(20, 30, 220, 290);
 
+        // Set up all buttons
+        confirmUpdateButton.addActionListener(this);
+        confirmUpdateButton.setBounds(370, 260, 170, 20);
+        
         deleteButton.addActionListener(this);
-        add(deleteButton);
         deleteButton.setBounds(260, 300, 280, 20);
 
         modifyRoomListButton.addActionListener(this);
-        add(modifyRoomListButton);
         modifyRoomListButton.setBounds(380, 350, 160, 90);
 
         removeReservationButton.addActionListener(this);
-        add(removeReservationButton);
         removeReservationButton.setBounds(20, 350, 160, 90);
 
         modifyDatePriceButton.addActionListener(this);
-        add(modifyDatePriceButton);
         modifyDatePriceButton.setBounds(200, 350, 160, 90);
+
+        confirmRenameButton.addActionListener(this);
+        confirmRenameButton.setBounds(370, 130, 170, 20);
+
+        // Set up all labels
+        basePriceHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        basePriceHeading.setText("No Selected Hotel.");
+        basePriceHeading.setBounds(260, 190, 280, 20);
+
+        renameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        renameLabel.setText("Rename Hotel:");
+        renameLabel.setBounds(260, 90, 100, 30);
+
+        confirmUpdateLabel.setText("Confirm Update:");
+        confirmUpdateLabel.setBounds(260, 260, 100, 16);
 
         hotelHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         hotelHeading.setText("No Selected Hotel");
-        add(hotelHeading);
         hotelHeading.setBounds(260, 40, 280, 20);
 
         updateLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         updateLabel.setText("Update Rate:");
-        add(updateLabel);
         updateLabel.setBounds(260, 220, 100, 30);
 
-        add(newPriceField);
-        newPriceField.setBounds(370, 220, 170, 30);
-
         confirmRenameLabel.setText("Confirm Rename:");
-        add(confirmRenameLabel);
         confirmRenameLabel.setBounds(260, 130, 100, 16);
 
-        confirmRenameButton.addActionListener(this);
+        // Set up all text fields
+        newPriceField.setBounds(370, 220, 170, 30);
+        newNameField.setBounds(370, 90, 170, 30);
+        
+        // Add all components to the panel
+        add(confirmUpdateButton);
+        add(newNameField);
+        add(basePriceHeading);
+        add(renameLabel);
+        add(confirmUpdateLabel);
+        add(hotelTablePane);
+        add(deleteButton);
+        add(modifyRoomListButton);
+        add(removeReservationButton);
+        add(modifyDatePriceButton);
+        add(hotelHeading);
+        add(updateLabel);
+        add(newPriceField);
+        add(confirmRenameLabel);
         add(confirmRenameButton);
-        confirmRenameButton.setBounds(370, 130, 170, 20);
     }                  
 
+    /**
+     * Updates the labels whenever a new row is selected in hotelTable
+     */
     public void handleSelection(ListSelectionEvent event) {
-        // TODO: Add Implementation
         hotelHeading.setText(String.format("Selected Hotel: %s",
                                             this.controller.getHotel(hotelTable.getSelectedRow()).getName()));
         

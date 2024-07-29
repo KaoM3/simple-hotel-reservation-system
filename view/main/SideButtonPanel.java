@@ -24,7 +24,7 @@ public class SideButtonPanel extends javax.swing.JPanel implements ActionListene
     private JButton viewButton;
 
     /**
-     * Creates new form SideButtons
+     * Constructor for class SideButtonPanel
      */
     public SideButtonPanel(HotelReservationSystemController controller, MainFrame frame) {
         this.controller = controller;

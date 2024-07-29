@@ -18,15 +18,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
 
-/*
-* Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-* Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
- */
 
-/**
- *
- * @author Rafael
- */
 public class CreatePanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
     private JButton cancelButton, confirmButton;
@@ -38,7 +30,7 @@ public class CreatePanel extends JPanel implements ActionListener {
     private Integer roomTypeInput;
 
     /**
-     * Creates new form CreateHotel
+     * Constructor for class CreatePanel
      */
     public CreatePanel(HotelReservationSystemController controller) {
         this.controller = controller;
@@ -79,20 +71,19 @@ public class CreatePanel extends JPanel implements ActionListener {
             hotelListModel.addRow(new Object[] {controller.getHotelObjects().get(i).getName()});
         }
 
+        hotelListTable.getColumnModel().getColumn(0).setResizable(false);
+        
         hotelListScrollPane.setViewportView(hotelListTable);
-        if (hotelListTable.getColumnModel().getColumnCount() > 0) {
-            hotelListTable.getColumnModel().getColumn(0).setResizable(false);
-        }
-
         hotelListScrollPane.setBounds(20, 20, 520, 250);
         
-        // Set up buttons
+        // Set up text fields
         roomNameTextField.setText("Enter Room Name");
         roomNameTextField.setBounds(110, 350, 430, 32);
         
         hotelNameTextField.setText("Enter Hotel Name");
         hotelNameTextField.setBounds(110, 300, 430, 32);
         
+        // Set up buttons
         cancelButton.setText("Cancel");
         cancelButton.addActionListener(this);
         cancelButton.setBounds(440, 410, 100, 23);
@@ -135,7 +126,7 @@ public class CreatePanel extends JPanel implements ActionListener {
     }
 
     /**
-     * Performs actions
+     * Performs button actions for this panel
      */
     @Override
     public void actionPerformed(ActionEvent event) {
@@ -162,6 +153,9 @@ public class CreatePanel extends JPanel implements ActionListener {
         this.revalidate();
     }
 
+    /**
+     *  Gets called everytime the dropdown selection is changed. Sets the room type of the created room
+     */
     private void roomTypeDropDownItemStateChanged(ItemEvent event) {
         if(event.getStateChange() == ItemEvent.SELECTED) {
             switch (roomTypeDropDown.getSelectedIndex()) {

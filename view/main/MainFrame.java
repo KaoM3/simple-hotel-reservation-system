@@ -27,7 +27,7 @@ public class MainFrame extends JFrame {
     private SideButtonPanel sideButtons1;
 
     /**
-     * Creates new form MainFrame
+     * Constructor for class MainFrame
      */
     public MainFrame(HotelReservationSystemController controller) {
         this.controller = controller;

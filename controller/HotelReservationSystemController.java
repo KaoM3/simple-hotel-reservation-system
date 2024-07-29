@@ -70,6 +70,9 @@ public class HotelReservationSystemController {
     }
     
     public boolean renameHotel(Hotel hotel, String newName) {
+        if(model.getHotelByName(newName) != null) {
+            return false;
+        }
         HotelService hotelService = new HotelService(hotel);
         return hotelService.renameHotel(newName);
     }

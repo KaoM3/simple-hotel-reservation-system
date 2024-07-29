@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -157,8 +158,8 @@ public class ManagePanel extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent event) {
         if(hotelTable.getSelectedRow() == -1) {
-            // TODO: Add Error Prompt
             System.out.println("No Hotel Selected");
+            JOptionPane.showMessageDialog(renameLabel, "No Hotel Selected");
         }
         else if(event.getSource() == confirmUpdateButton) {
             try {
@@ -168,13 +169,13 @@ public class ManagePanel extends JPanel implements ActionListener {
                                                 this.controller.getHotel(hotelTable.getSelectedRow())
                                                 .getBaseRate()));
             } catch (Exception e) {
-                // TODO: Add Error Prompt
+                JOptionPane.showMessageDialog(null, "Enter a valid double value!");
             }
             System.out.println("OK 1");
         }
         else if(event.getSource() == confirmRenameButton) {
             if(controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
-                // TODO: Add Error Prompt
+                JOptionPane.showMessageDialog(null, "Rename unsuccessful!");
             }
             refreshPanel();
             System.out.println("OK 2");

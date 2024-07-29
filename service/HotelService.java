@@ -107,6 +107,10 @@ public class HotelService {
             }
         }
 
+        if(this.hotel.getRoomList().size() == 1) {
+            return false;
+        }
+
         try {
             return this.hotel.getRoomList().remove(room);
         } catch (NullPointerException error) {

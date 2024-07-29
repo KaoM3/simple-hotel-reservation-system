@@ -1,8 +1,8 @@
 package view.main;
 
-import controller.HotelReservationSystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,6 +13,8 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import controller.HotelReservationSystemController;
 import view.sub.ModifyRoomPanel;
 import view.sub.PriceModifierPanel;
 import view.sub.ReservationDeletePanel;
@@ -154,12 +156,27 @@ public class ManagePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == confirmUpdateButton) {
-            // TODO: Add implementation
+        if(hotelTable.getSelectedRow() == -1) {
+            // TODO: Add Error Prompt
+            System.out.println("No Hotel Selected");
+        }
+        else if(event.getSource() == confirmUpdateButton) {
+            try {
+                double newPrice = Double.parseDouble(newPriceField.getText());
+                controller.updateBaseRate(controller.getHotel(hotelTable.getSelectedRow()), newPrice);
+                basePriceHeading.setText(String.format("Hotel Base Rate: %.2f",
+                                                this.controller.getHotel(hotelTable.getSelectedRow())
+                                                .getBaseRate()));
+            } catch (Exception e) {
+                // TODO: Add Error Prompt
+            }
             System.out.println("OK 1");
         }
         else if(event.getSource() == confirmRenameButton) {
-            // TODO: Add implementation
+            if(controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
+                // TODO: Add Error Prompt
+            }
+            refreshPanel();
             System.out.println("OK 2");
             
         }
@@ -170,26 +187,31 @@ public class ManagePanel extends JPanel implements ActionListener {
         }
         else if(event.getSource() == modifyRoomListButton) {
             System.out.println("modifyRoom");
-            if(hotelTable.getSelectedRow() != -1) {
-                new SubFrame(new ModifyRoomPanel(controller, hotelTable.getSelectedRow()));
-            }
+            new SubFrame(new ModifyRoomPanel(controller, hotelTable.getSelectedRow()));
         }
         else if(event.getSource() == modifyDatePriceButton) {
             System.out.println("modifyPrice");
-            if(hotelTable.getSelectedRow() != -1) {
-                new SubFrame(new PriceModifierPanel(controller, hotelTable.getSelectedRow()));
-            }
+            new SubFrame(new PriceModifierPanel(controller, hotelTable.getSelectedRow()));
         }
         else if(event.getSource() == removeReservationButton) {
             System.out.println("removeReservation");
-            if(hotelTable.getSelectedRow() != -1) {
-                new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));
-            }
+            new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));
         }
     }       
     
     @Override
     public String getName() {
         return "Manage Hotel";
+    }
+    
+    /**
+     * Refreshes this panel.
+     */
+    private void refreshPanel() {
+        System.out.println("Refreshing Panel...");
+        this.removeAll();
+        this.initComponents();
+        this.repaint();
+        this.revalidate();
     }
 }

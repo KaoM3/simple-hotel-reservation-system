@@ -71,4 +71,9 @@ public class HotelReservationSystemController {
         ReservationManagerService reservationService = new ReservationManagerService(hotel.getReservationManager());
         System.out.println(reservationService.removeReservation(index));
     }
+
+    public void deleteRoom(Hotel hotel, int index) {
+        HotelService hotelService = new HotelService(hotel);
+        hotelService.removeRoom(hotel.getRoomByIndex(index));
+    }
 }

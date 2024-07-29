@@ -35,7 +35,7 @@ public class CreatePanel extends JPanel implements ActionListener {
     private JLabel hotelNameLabel, roomNameLabel, roomTypeLabel;
     private JTextField hotelNameTextField, roomNameTextField;
     private JComboBox<String> roomTypeDropDown;
-    private Integer roomTypeInput = 1;
+    private Integer roomTypeInput;
 
     /**
      * Creates new form CreateHotel
@@ -61,6 +61,7 @@ public class CreatePanel extends JPanel implements ActionListener {
         hotelNameLabel = new JLabel();
         roomTypeDropDown = new JComboBox<>();
         roomTypeLabel = new JLabel();
+        roomTypeInput = 1;
 
         setPreferredSize(new Dimension(570, 480));
         setLayout(null);

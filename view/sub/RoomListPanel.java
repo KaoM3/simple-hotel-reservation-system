@@ -18,7 +18,7 @@ public class RoomListPanel extends JPanel implements ActionListener {
     private JButton refreshButton;
     private JScrollPane listScrollPane;
     private JLabel headerLabel;
-    private JTable reservationTable;
+    private JTable roomTable;
 
     public RoomListPanel(HotelReservationSystemController controller, int index) {
         this.controller = controller;
@@ -30,7 +30,7 @@ public class RoomListPanel extends JPanel implements ActionListener {
     private void initComponents() {
         
         listScrollPane = new javax.swing.JScrollPane();
-        reservationTable = new javax.swing.JTable();
+        roomTable = new javax.swing.JTable();
         headerLabel = new javax.swing.JLabel();
         refreshButton = new javax.swing.JButton();
 
@@ -42,8 +42,8 @@ public class RoomListPanel extends JPanel implements ActionListener {
         String tableHeader[] = {"Room Name", "Room Type", "Price per Night", "No. of Reservations"};
         tableModel.setColumnIdentifiers(tableHeader);
         
-        reservationTable.setModel(tableModel);
-        reservationTable.setEnabled(false);
+        roomTable.setModel(tableModel);
+        roomTable.setEnabled(false);
 
         // Display Hotel Details in Table
         for(Room room : controller.getHotelRoomList(controller.getHotel(index))) {
@@ -66,7 +66,7 @@ public class RoomListPanel extends JPanel implements ActionListener {
         }
 
         
-        listScrollPane.setViewportView(reservationTable);
+        listScrollPane.setViewportView(roomTable);
 
         add(listScrollPane);
         listScrollPane.setBounds(20, 60, 560, 360);

@@ -1,8 +1,8 @@
 package view.main;
 
+import controller.HotelReservationSystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -13,8 +13,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import controller.HotelReservationSystemController;
+import view.sub.ModifyRoomPanel;
 import view.sub.PriceModifierPanel;
 import view.sub.ReservationDeletePanel;
 import view.sub.SubFrame;
@@ -170,20 +169,18 @@ public class ManagePanel extends JPanel implements ActionListener {
             
         }
         else if(event.getSource() == modifyRoomListButton) {
-            // TODO: Add implementation
             System.out.println("modifyRoom");
-            
+            if(hotelTable.getSelectedRow() != -1) {
+                new SubFrame(new ModifyRoomPanel(controller, hotelTable.getSelectedRow()));
+            }
         }
         else if(event.getSource() == modifyDatePriceButton) {
-            // TODO: Add implementation
             System.out.println("modifyPrice");
             if(hotelTable.getSelectedRow() != -1) {
                 new SubFrame(new PriceModifierPanel(controller, hotelTable.getSelectedRow()));
             }
-            
         }
         else if(event.getSource() == removeReservationButton) {
-            // TODO: Add implementation
             System.out.println("removeReservation");
             if(hotelTable.getSelectedRow() != -1) {
                 new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));

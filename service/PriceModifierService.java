@@ -1,6 +1,7 @@
 package service;
 
-import model.pricemodifier.*;
+import model.pricemodifier.DiscountCode;
+import model.pricemodifier.PriceModifier;
 
 /**
  * Contains all the business logic for editing the data inside a {@code PriceModifier}
@@ -25,7 +26,7 @@ public class PriceModifierService {
      */
     public boolean updateDatePriceModifier(Integer date, Double modifier) {
         
-        if(modifier == null) {
+        if(modifier == null || modifier <= 0) {
             return false;
         }
 

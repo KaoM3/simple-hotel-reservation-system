@@ -13,6 +13,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
 
@@ -42,6 +46,7 @@ public class BookingPanel extends JPanel implements ActionListener {
     private JTextField selectedRoomTextField;
     private JTextField totalPriceField;
     private JLabel totalPriceLabel;
+    private JLabel availableRoomsLabel;
 
     /**
      * Creates new form BookingPanel
@@ -73,25 +78,28 @@ public class BookingPanel extends JPanel implements ActionListener {
         hotelHeading = new JLabel();
         selectedRoomLabel = new JLabel();
         selectedRoomTextField = new JTextField();
+        availableRoomsLabel = new JLabel();
 
         setLayout(null);
 
-        // TODO: Add Room Table Data
-        roomTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Available Rooms"
-            }
-        ));
-        roomScrollPane.setViewportView(roomTable);
+        // Initializing Empty Room Table
+        String roomTableHeader[] = {"Room", "Room Type"};
+        DefaultTableModel roomTableModel = new DefaultTableModel(0, 0);
+        roomTableModel.setColumnIdentifiers(roomTableHeader);
+        roomTable.setModel(roomTableModel);
 
+        // Adding a selection model to room table (updates every time the selection is changed)
+        ListSelectionModel roomSelectionModel = roomTable.getSelectionModel();
+        roomSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            @Override
+            public void valueChanged(ListSelectionEvent event) {
+                // TODO: Add Functionality here (Update the "Selected Room" label) 
+            }
+        });
+
+        roomScrollPane.setViewportView(roomTable);
         add(roomScrollPane);
-        roomScrollPane.setBounds(20, 160, 220, 300);
+        roomScrollPane.setBounds(20, 190, 220, 270);
 
         reservationHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         reservationHeading.setText("Reservation Information");
@@ -106,6 +114,7 @@ public class BookingPanel extends JPanel implements ActionListener {
         totalPriceField.setText("Total Price");
         add(totalPriceField);
         totalPriceField.setBounds(370, 370, 170, 30);
+        totalPriceField.setEditable(false);
 
         roomTableButton.addActionListener(this);
         roomTableButton.setText("Find Available Rooms");
@@ -125,6 +134,8 @@ public class BookingPanel extends JPanel implements ActionListener {
             }
         ));
         hotelScrollPane.setViewportView(hotelTable);
+
+        // TODO: Add Hotel Selection Model
 
         add(hotelScrollPane);
         hotelScrollPane.setBounds(20, 30, 220, 110);
@@ -183,6 +194,13 @@ public class BookingPanel extends JPanel implements ActionListener {
         selectedRoomTextField.setText("Room Name");
         add(selectedRoomTextField);
         selectedRoomTextField.setBounds(370, 330, 170, 30);
+        selectedRoomTextField.setEditable(false);
+
+        availableRoomsLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        availableRoomsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        availableRoomsLabel.setText("Available Rooms");
+        add(availableRoomsLabel);
+        availableRoomsLabel.setBounds(20, 156, 220, 30);
     }
     
     @Override

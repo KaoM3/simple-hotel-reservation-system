@@ -146,4 +146,10 @@ public class ViewPanel extends JPanel implements ActionListener{
     private javax.swing.JScrollPane hotelListScrollPane;
     private javax.swing.JTable hotelListTable;
     // End of variables declaration//GEN-END:variables
+
+    
+    @Override
+    public String getName() {
+        return "View Hotel";
+    }
 }

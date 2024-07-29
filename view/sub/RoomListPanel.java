@@ -1,17 +1,15 @@
 package view.sub;
 
+import controller.HotelReservationSystemController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import controller.HotelReservationSystemController;
 import model.hotel.room.Room;
 
 public class RoomListPanel extends JPanel implements ActionListener {
@@ -106,5 +104,10 @@ public class RoomListPanel extends JPanel implements ActionListener {
     @Override
     public Dimension getPreferredSize() {
         return new Dimension(600, 480);
+    }
+
+    @Override
+    public String getName() {
+        return "Hotel Room List";
     }
 }

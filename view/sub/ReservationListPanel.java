@@ -95,4 +95,9 @@ public class ReservationListPanel extends JPanel implements ActionListener {
     public Dimension getPreferredSize() {
         return new Dimension(600, 480);
     }
+    
+    @Override
+    public String getName() {
+        return "Hotel Reservation List";
+    }
 }

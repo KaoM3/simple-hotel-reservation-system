@@ -186,5 +186,10 @@ public class ManagePanel extends JPanel implements ActionListener {
             System.out.println("removeReservation");
             
         }
-    }                                           
+    }       
+    
+    @Override
+    public String getName() {
+        return "Manage Hotel";
+    }
 }

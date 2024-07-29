@@ -8,6 +8,7 @@ public class SubFrame extends JFrame {
 
     public SubFrame(JPanel mainPanel) {
         this.mainPanel = mainPanel;
+        setTitle(mainPanel.getName());
         initComponents();
     }
 

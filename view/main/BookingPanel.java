@@ -196,4 +196,9 @@ public class BookingPanel extends JPanel implements ActionListener {
             System.out.println("Confirm Booking");
         }
     }
+
+    @Override
+    public String getName() {
+        return "Book New Reservation";
+    }
 }

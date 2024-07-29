@@ -4,10 +4,12 @@
  */
 package view.main;
 
-import controller.HotelReservationSystemController;
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import controller.HotelReservationSystemController;
 
 /**
  *
@@ -60,6 +62,9 @@ public class MainFrame extends JFrame {
      * @param panel is the new mainPanel
      */
     public void setMainPanel(JPanel panel) {
+
+        setTitle(panel.getName());
+
         getContentPane().remove(mainPanel);
         mainPanel = panel;
         getContentPane().add(mainPanel);

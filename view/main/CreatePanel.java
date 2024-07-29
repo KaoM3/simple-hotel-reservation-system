@@ -184,4 +184,9 @@ public class CreatePanel extends JPanel implements ActionListener {
     public Dimension getPreferredSize() {
         return new Dimension(570, 480);
     }
+
+    @Override
+    public String getName() {
+        return "Create New Hotel";
+    }
 }

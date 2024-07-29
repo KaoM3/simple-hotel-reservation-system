@@ -144,4 +144,10 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         this.repaint();
         this.revalidate();
     }
+
+        
+    @Override
+    public String getName() {
+        return String.format("Edit Hotel Price Modifier");
+    }
 }

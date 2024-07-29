@@ -110,20 +110,26 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         }
     }
 
+    /** Resets all date modifier to 1 */
+    private void resetModelPrice() {
+        for(int i = 0; i < 31; i++) {
+            controller.updateDatePrice(controller.getHotel(index), i + 1, 1.0);
+        }
+    }
+
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == applyChangesButton) {
-            // TODO: Add Implementation
             System.out.println("apply");
             // This throws an exception if no value at :(
             updateModelPrice();
         }
         else if(event.getSource() == resetPriceButton) {
-            // TODO: Add Implementation
             System.out.println("reset price");
+            resetModelPrice();
+            refreshPanel();
         }
         else if(event.getSource() == refreshTableButton) {
-            // TODO: Add Implementation
             System.out.println("refresh");
             refreshPanel();
         }

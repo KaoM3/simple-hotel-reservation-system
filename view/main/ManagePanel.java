@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
 import view.sub.PriceModifierPanel;
+import view.sub.ReservationDeletePanel;
 import view.sub.SubFrame;
 
 /**
@@ -184,7 +185,9 @@ public class ManagePanel extends JPanel implements ActionListener {
         else if(event.getSource() == removeReservationButton) {
             // TODO: Add implementation
             System.out.println("removeReservation");
-            
+            if(hotelTable.getSelectedRow() != -1) {
+                new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));
+            }
         }
     }       
     

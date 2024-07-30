@@ -27,11 +27,26 @@ import view.sub.SubFrame;
  */
 public class ManagePanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
-    private JButton confirmUpdateButton, confirmRenameButton, deleteButton;
-    private JButton modifyRoomListButton, removeReservationButton, modifyDatePriceButton;
-    private JLabel basePriceHeading, renameLabel, confirmUpdateLabel, hotelHeading, updateLabel, confirmRenameLabel;
-    private JTextField newNameField, newPriceField;
+
+    private JButton confirmUpdateButton;
+    private JButton confirmRenameButton;
+    private JButton deleteButton;
+    private JButton modifyRoomListButton;
+    private JButton removeReservationButton;
+    private JButton modifyDatePriceButton;
+
+    private JLabel basePriceHeading;
+    private JLabel renameLabel;
+    private JLabel confirmUpdateLabel;
+    private JLabel hotelHeading;
+    private JLabel updateLabel;
+    private JLabel confirmRenameLabel;
+
+    private JTextField newNameField;
+    private JTextField newPriceField;
+
     private JScrollPane hotelTablePane;
+
     private JTable hotelTable;
 
     /**

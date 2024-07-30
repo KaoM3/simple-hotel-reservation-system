@@ -15,10 +15,15 @@ import model.reservation.Reservation;
 
 public class ReservationListPanel extends JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
+
     private JButton refreshButton, detailsButton;
+
     private JScrollPane listScrollPane;
+
     private JLabel headerLabel;
+
     private JTable reservationTable;
 
     public ReservationListPanel(HotelReservationSystemController controller, int index) {

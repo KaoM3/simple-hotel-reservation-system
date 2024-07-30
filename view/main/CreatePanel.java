@@ -19,15 +19,25 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
 
-
 public class CreatePanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
-    private JButton cancelButton, confirmButton;
+
+    private JButton cancelButton;
+    private JButton confirmButton;
+
     private JScrollPane hotelListScrollPane;
+
     private JTable hotelListTable;
-    private JLabel hotelNameLabel, roomNameLabel, roomTypeLabel;
-    private JTextField hotelNameTextField, roomNameTextField;
+
+    private JLabel hotelNameLabel;
+    private JLabel roomNameLabel;
+    private JLabel roomTypeLabel;
+
+    private JTextField hotelNameTextField;
+    private JTextField roomNameTextField;
+
     private JComboBox<String> roomTypeDropDown;
+
     private Integer roomTypeInput;
 
     /**

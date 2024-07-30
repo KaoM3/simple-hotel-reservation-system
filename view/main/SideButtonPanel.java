@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import controller.HotelReservationSystemController;
+
 /**
  *
  * @author Rafael
  */
 public class SideButtonPanel extends javax.swing.JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
+
     private final MainFrame frame;
+
     private JButton bookButton;
     private JButton createButton;
     private JButton manageButton;

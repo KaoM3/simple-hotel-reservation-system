@@ -23,7 +23,9 @@ public class MainFrame extends JFrame {
     private static final int MAINPANEL_Y = 0;
 
     private final HotelReservationSystemController controller;
+
     private JPanel mainPanel;
+
     private SideButtonPanel sideButtons1;
 
     /**

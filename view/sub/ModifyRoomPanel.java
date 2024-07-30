@@ -24,13 +24,26 @@ import model.hotel.room.Room;
 
 public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListener, ListSelectionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
+
     private int roomTypeInput;
-    private JButton refreshButton, createButton, deleteButton;
+
+    private JButton refreshButton;
+    private JButton createButton;
+    private JButton deleteButton;
+
     private JScrollPane listScrollPane;
-    private JLabel headerLabel, roomNameLabel, roomTypeLabel, selectedRoomLabel;
+
+    private JLabel headerLabel;
+    private JLabel roomNameLabel;
+    private JLabel roomTypeLabel;
+    private JLabel selectedRoomLabel;
+
     private JTextField roomNameTextField;
+
     private JTable roomTable;
+
     private JComboBox<String> roomTypeDropDown;
 
     public ModifyRoomPanel(HotelReservationSystemController controller, int index) {
@@ -41,6 +54,7 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
     }
 
     private void initComponents() {
+
         listScrollPane = new JScrollPane();
         roomTable = new JTable();
         headerLabel = new JLabel();

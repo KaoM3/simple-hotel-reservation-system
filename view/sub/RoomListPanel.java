@@ -14,10 +14,15 @@ import model.hotel.room.Room;
 
 public class RoomListPanel extends JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
+
     private JButton refreshButton;
+
     private JScrollPane listScrollPane;
+
     private JLabel headerLabel;
+
     private JTable roomTable;
 
     public RoomListPanel(HotelReservationSystemController controller, int index) {

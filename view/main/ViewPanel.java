@@ -16,11 +16,15 @@ import view.sub.ReservationListPanel;
 import view.sub.RoomListPanel;
 import view.sub.SubFrame;
 
-
 public class ViewPanel extends JPanel implements ActionListener{
     private HotelReservationSystemController controller;
-    private JButton viewReservationButton, refreshButton, viewRoomButton;
+
+    private JButton viewReservationButton;
+    private JButton refreshButton;
+    private JButton viewRoomButton;
+
     private JScrollPane hotelListScrollPane;
+
     private JTable hotelListTable;
 
     /**

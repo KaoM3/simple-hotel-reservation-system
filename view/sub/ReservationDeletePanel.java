@@ -19,10 +19,16 @@ import model.reservation.Reservation;
 
 public class ReservationDeletePanel extends JPanel implements ActionListener, ListSelectionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
-    private JButton refreshButton, deleteButton;
+
+    private JButton refreshButton;
+    private JButton deleteButton;
+
     private JScrollPane listScrollPane;
+
     private JLabel headerLabel;
+
     private JTable reservationTable;
 
     public ReservationDeletePanel(HotelReservationSystemController controller, int index) {

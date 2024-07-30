@@ -16,14 +16,18 @@ import controller.HotelReservationSystemController;
 
 public class PriceModifierPanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
+
     private int index;
+
     private JLabel headerLabel;
+
     private JButton applyChangesButton;
     private JButton refreshTableButton;
     private JButton resetPriceButton;
-    private JScrollPane priceScrollPane;
-    private JTable priceTable;
 
+    private JScrollPane priceScrollPane;
+
+    private JTable priceTable;
 
     /**
     * Creates new form PriceModifierPanel

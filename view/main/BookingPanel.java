@@ -7,6 +7,7 @@ package view.main;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -182,6 +183,10 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         availableRoomsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add(availableRoomsLabel);
         availableRoomsLabel.setBounds(20, 156, 220, 30);
+
+        totalPriceLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
+        add(totalPriceLabel);
+        totalPriceLabel.setBounds(260, 370, 100, 30);
     }
 
     public void handleRoomSelection(ListSelectionEvent event) {
@@ -266,7 +271,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
     }
 
     @Override
-    public void actionPerformed(ActionEvent event, boolean bookingSuccessful) {
+    public void actionPerformed(ActionEvent event) {
         if (hotelIndex == -1) {
             JOptionPane.showMessageDialog(null, "No hotel selected!");
             return;

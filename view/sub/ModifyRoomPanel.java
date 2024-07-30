@@ -19,7 +19,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import model.hotel.room.Room;
+import model.hotel.room.*;
 
 public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListener, ListSelectionListener {
     private final HotelReservationSystemController controller;
@@ -173,7 +173,6 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
 
     @Override
     public void valueChanged(ListSelectionEvent event) {
-        // TODO Auto-generated method stub
         if (event.getValueIsAdjusting()) {
             return;
         }

@@ -4,13 +4,11 @@
  */
 package view.main;
 
+import controller.HotelReservationSystemController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
-
-import controller.HotelReservationSystemController;
 
 /**
  *
@@ -80,11 +78,9 @@ public class SideButtonPanel extends javax.swing.JPanel implements ActionListene
             frame.setMainPanel(new ViewPanel(controller));
         }
         else if (event.getSource() == manageButton) {
-            // TODO: Add Manage
             frame.setMainPanel(new ManagePanel(controller));
         }
         else if (event.getSource() == bookButton) {
-            // TODO: Add book
             frame.setMainPanel(new BookingPanel(controller));
         }
     }

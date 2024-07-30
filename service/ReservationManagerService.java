@@ -59,6 +59,7 @@ public class ReservationManagerService {
         }
 
         if (!this.reservationManager.isRoomAvailableOnDate(room.getName(), checkIn, checkOut)) {
+            System.out.println("OOF OOF OOF");
             return false;
         }
 
@@ -74,14 +75,21 @@ public class ReservationManagerService {
         }
 
         // Apply discount code if discount code is valid
+        double newTotalPrice = 0;
+        double discountPrice = 0;
         if (priceModifierService.getDiscountCode(discountCode) != null) {
-            totalPrice = priceModifierService.getDiscountCode(discountCode)
+            newTotalPrice = priceModifierService.getDiscountCode(discountCode)
                                         .applyDiscount(checkIn, checkOut, totalPrice, priceBreakdown.get(checkIn));
+            discountPrice = totalPrice - newTotalPrice;
+        }
+        else {
+            discountCode = "Not Used";
+            newTotalPrice = totalPrice;
         }
 
         // Add new reservation to system
         this.reservationManager.getReservationList()
-                                .add(new Reservation(guestName, room, checkIn, checkOut, totalPrice, priceBreakdown));
+                                .add(new Reservation(guestName, room, checkIn, checkOut, newTotalPrice, priceBreakdown, discountCode, discountPrice));
 
         return true;
     }

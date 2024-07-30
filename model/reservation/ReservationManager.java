@@ -2,7 +2,6 @@ package model.reservation;
 
 import java.util.*;
 import java.util.stream.Collectors;
-
 import model.pricemodifier.PriceModifier;
 
 /**
@@ -54,7 +53,7 @@ public class ReservationManager {
      */
     public List<Reservation> filterReservations(String roomName) {
         return reservationList.stream()
-                .filter(reservation -> reservation.getRoom().getName().equals(roomName))
+                .filter(reservation -> reservation.getRoom().getName().equalsIgnoreCase(roomName))
                 .collect(Collectors.toList());
     }
 

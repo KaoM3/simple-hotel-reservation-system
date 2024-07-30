@@ -26,11 +26,11 @@ public class PriceModifierService {
      */
     public boolean updateDatePriceModifier(Integer date, Double modifier) {
         
-        if(modifier == null || modifier <= 0) {
+        if (modifier == null || modifier <= 0) {
             return false;
         }
 
-        if(this.priceModifier.getDatePriceModifier().containsKey(date)) {
+        if (this.priceModifier.getDatePriceModifier().containsKey(date)) {
             this.priceModifier.getDatePriceModifier().replace(date, modifier);
             return true;
         }
@@ -43,13 +43,13 @@ public class PriceModifierService {
      * @return DiscountCode object if match can be found, null otherwise
      */
     public DiscountCode getDiscountCode(String inputCode) {
-        if(inputCode == null) {
+        if (inputCode == null) {
             return null;
         }
 
         // Check if discount code matches with enum
-        for(DiscountCode discountCode : DiscountCode.values()) {
-            if(discountCode.name().contentEquals(inputCode)) {
+        for (DiscountCode discountCode : DiscountCode.values()) {
+            if (discountCode.name().contentEquals(inputCode)) {
                 return discountCode;
             }
         }

@@ -63,7 +63,7 @@ public class ReservationDeletePanel extends JPanel implements ActionListener, Li
         selectionModel.addListSelectionListener(this);
 
         // Display Hotel Details in Table
-        for(Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
+        for (Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
             tableModel.addRow(new Object[] {reservation.getRoom().getName(),
                                             reservation.getGuestName(),
                                             reservation.getCheckIn(),
@@ -91,11 +91,11 @@ public class ReservationDeletePanel extends JPanel implements ActionListener, Li
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
-        else if(event.getSource() == deleteButton) {
-            if(reservationTable.getSelectedRow() != -1) {
+        else if (event.getSource() == deleteButton) {
+            if (reservationTable.getSelectedRow() != -1) {
                 controller.deleteReservation(controller.getHotel(index), reservationTable.getSelectedRow());
             }
         }

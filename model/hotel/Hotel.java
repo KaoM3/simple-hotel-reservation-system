@@ -73,8 +73,8 @@ public class Hotel {
      * @return Room that matches {@code roomName}, null if no matches
      */
     public Room getRoomByName(String roomName) {
-        for(Room room : this.roomList) {
-            if(room.getName().equalsIgnoreCase(roomName)) {
+        for (Room room : this.roomList) {
+            if (room.getName().equalsIgnoreCase(roomName)) {
                 return room;
             }
         }

@@ -28,8 +28,8 @@ public class HotelManager {
      * @return hotel object with name {@code hotelname}, null if no matches
      */
     public Hotel getHotelByName(String hotelName) {
-        for(Hotel hotel : this.hotelList) {
-            if(hotel.getName().equalsIgnoreCase(hotelName)) {
+        for (Hotel hotel : this.hotelList) {
+            if (hotel.getName().equalsIgnoreCase(hotelName)) {
                 return hotel;
             }
         }

@@ -21,7 +21,6 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import model.hotel.room.Room;
 
-
 public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListener, ListSelectionListener {
     private final HotelReservationSystemController controller;
 
@@ -80,17 +79,14 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
         roomTable.setEnabled(true);
 
         // Display Hotel Details in Table
-        for(Room room : controller.getHotelRoomList(controller.getHotel(index))) {
-            String roomType;
-
-            if(room.getMultiplier() == 1.0) {
+        for (Room room : controller.getHotelRoomList(controller.getHotel(index))) {
+            String roomType = "ERROR";
+            if (room instanceof StandardRoom) {
                 roomType = "STANDARD";
-            } else if(room.getMultiplier() == 1.2) {
+            } else if (room instanceof DeluxeRoom) {
                 roomType = "DELUXE";
-            } else if(room.getMultiplier() == 1.35) {
+            } else if (room instanceof ExecutiveRoom) {
                 roomType = "EXECUTIVE";
-            } else {
-                roomType = "null";
             }
 
             tableModel.addRow(new Object[] {room.getName(),
@@ -157,7 +153,7 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
 
     @Override
     public void itemStateChanged(ItemEvent event) {
-        if(event.getStateChange() == ItemEvent.SELECTED) {
+        if (event.getStateChange() == ItemEvent.SELECTED) {
             switch (roomTypeDropDown.getSelectedIndex()) {
                 case 0:
                     this.roomTypeInput = 1;
@@ -178,7 +174,7 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
     @Override
     public void valueChanged(ListSelectionEvent event) {
         // TODO Auto-generated method stub
-        if(event.getValueIsAdjusting()) {
+        if (event.getValueIsAdjusting()) {
             return;
         }
 
@@ -188,23 +184,23 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
-        else if(event.getSource() == createButton) {
+        else if (event.getSource() == createButton) {
             System.out.println(roomNameTextField.getText());
-            if(!(roomNameTextField.getText().length() == 0)) {
+            if (!(roomNameTextField.getText().length() == 0)) {
                 controller.createNewRoom(controller.getHotel(index).getName(),
                                             roomNameTextField.getText(),
                                             roomTypeInput);
             }
             refreshPanel();
         }
-        else if(event.getSource() == deleteButton) {
-            if(controller.getHotel(index).getRoomList().size() == 1) {
+        else if (event.getSource() == deleteButton) {
+            if (controller.getHotel(index).getRoomList().size() == 1) {
                 JOptionPane.showMessageDialog(null, "Hotel needs at least 1 room!");
             }
-            else if(roomTable.getSelectedRow() != -1) {
+            else if (roomTable.getSelectedRow() != -1) {
                 deleteButtonFunction();
             } else {
                 JOptionPane.showMessageDialog(null, "No Room Selected!");
@@ -222,8 +218,8 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
                                                         "Confirm Room Deletion",
                                                         JOptionPane.YES_NO_OPTION);
 
-        if(confirmation == JOptionPane.YES_OPTION) {
-            if(controller.deleteRoom(controller.getHotel(index), roomTable.getSelectedRow())) {
+        if (confirmation == JOptionPane.YES_OPTION) {
+            if (controller.deleteRoom(controller.getHotel(index), roomTable.getSelectedRow())) {
                 refreshPanel();
             }
             else {

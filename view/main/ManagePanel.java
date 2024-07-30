@@ -90,7 +90,7 @@ public class ManagePanel extends JPanel implements ActionListener {
         hotelTable.setModel(tableModel);
 
         // Display Hotel Details in Table
-        for(int i = 0; i < this.controller.getHotelObjects().size(); i++) {
+        for (int i = 0; i < this.controller.getHotelObjects().size(); i++) {
             tableModel.addRow(new Object[] {this.controller.getHotelObjects().get(i).getName()});
         }
         
@@ -185,11 +185,11 @@ public class ManagePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(hotelTable.getSelectedRow() == -1) {
+        if (hotelTable.getSelectedRow() == -1) {
             System.out.println("No Hotel Selected");
             JOptionPane.showMessageDialog(null, "No Hotel Selected");
         }
-        else if(event.getSource() == confirmUpdateButton) {
+        else if (event.getSource() == confirmUpdateButton) {
             System.out.println("Confirm Update Price Button");
             try {
                 double newPrice = Double.parseDouble(newPriceField.getText());
@@ -200,23 +200,23 @@ public class ManagePanel extends JPanel implements ActionListener {
                 newPriceField.setText("");
             }
         }
-        else if(event.getSource() == confirmRenameButton) {
+        else if (event.getSource() == confirmRenameButton) {
             System.out.println("Confirm Rename Button");
             confirmRenameButtonFunction();
         }
-        else if(event.getSource() == deleteButton) {
+        else if (event.getSource() == deleteButton) {
             System.out.println("delete");
             deleteButtonFunction();
         }
-        else if(event.getSource() == modifyRoomListButton) {
+        else if (event.getSource() == modifyRoomListButton) {
             System.out.println("modifyRoom");
             new SubFrame(new ModifyRoomPanel(controller, hotelTable.getSelectedRow()));
         }
-        else if(event.getSource() == modifyDatePriceButton) {
+        else if (event.getSource() == modifyDatePriceButton) {
             System.out.println("modifyPrice");
             new SubFrame(new PriceModifierPanel(controller, hotelTable.getSelectedRow()));
         }
-        else if(event.getSource() == removeReservationButton) {
+        else if (event.getSource() == removeReservationButton) {
             System.out.println("removeReservation");
             new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));
         }
@@ -227,7 +227,7 @@ public class ManagePanel extends JPanel implements ActionListener {
      */
     private void confirmUpdateButtonFunction(double newPrice) {
 
-        if(newPrice < 100) {
+        if (newPrice < 100) {
             JOptionPane.showMessageDialog(null, "New rate cannot be less than 100.");
         }
         else {
@@ -251,11 +251,11 @@ public class ManagePanel extends JPanel implements ActionListener {
                                         "Confirm Hotel Rename",
                                         JOptionPane.YES_NO_OPTION);
 
-        if(confirmation == JOptionPane.NO_OPTION) {
+        if (confirmation == JOptionPane.NO_OPTION) {
             return;
         }
 
-        if(controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
+        if (controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
             JOptionPane.showMessageDialog(null, "Invalid Name!");
         }
         refreshPanel();
@@ -270,8 +270,8 @@ public class ManagePanel extends JPanel implements ActionListener {
                                         "Confirm Hotel Deletion",
                                         JOptionPane.YES_NO_OPTION);
 
-        if(confirmation == JOptionPane.OK_OPTION) {
-            if(controller.deleteHotel(controller.getHotel(hotelTable.getSelectedRow())) == false) {
+        if (confirmation == JOptionPane.OK_OPTION) {
+            if (controller.deleteHotel(controller.getHotel(hotelTable.getSelectedRow())) == false) {
                 JOptionPane.showMessageDialog(null, "Hotel cannot be deleted!");
             } else {
                 JOptionPane.showMessageDialog(null, "Hotel successfully deleted!");                

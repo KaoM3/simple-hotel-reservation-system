@@ -266,7 +266,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
     }
 
     @Override
-    public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event, boolean bookingSuccessful) {
         if (hotelIndex == -1) {
             JOptionPane.showMessageDialog(null, "No hotel selected!");
             return;
@@ -290,14 +290,15 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
             Room    room = hotel.getRoomList().get(roomIndex);
             String  discountCode = discountCodeTextField.getText();
 
-            boolean bookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
+            boolean isBookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
 
-            if (bookingSuccessful) {
-                JOptionPane.showMessageDialog(null, "Reservation booking successful!");
-                refreshPanel();
-            } else {
+            if (!isBookingSuccessful) {
                 JOptionPane.showMessageDialog(null, "Reservation booking failed!\nPlease double check your inputs.");
+                return;
             }
+
+            JOptionPane.showMessageDialog(null, "Reservation booking successful!");
+            refreshPanel();
         }
     }
 

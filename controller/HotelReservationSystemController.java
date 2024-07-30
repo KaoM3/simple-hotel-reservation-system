@@ -23,7 +23,7 @@ public class HotelReservationSystemController {
         HotelManagerService modelService = new HotelManagerService(this.model);
         hotelCreation = modelService.createAndAddHotel(hotelName);
 
-        if(hotelCreation == true) {
+        if (hotelCreation == true) {
             HotelService hotelService = new HotelService(this.model.getHotelByName(hotelName));
             roomCreation = hotelService.createAndAddRoom(roomName, roomType);
         }
@@ -31,7 +31,7 @@ public class HotelReservationSystemController {
         System.out.println(String.format("Creation of hotel %s: %b", hotelName, hotelCreation));
         System.out.println(String.format("Creation of room %s with room type %d: %b", roomName, roomType, roomCreation));
         
-        if(hotelCreation == true && roomCreation == false) {
+        if (hotelCreation == true && roomCreation == false) {
             modelService.removeHotel(hotelName);
             System.out.println("Hotel has no room, deleting hotel...");
         }
@@ -71,7 +71,7 @@ public class HotelReservationSystemController {
     }
     
     public boolean renameHotel(Hotel hotel, String newName) {
-        if(model.getHotelByName(newName) != null) {
+        if (model.getHotelByName(newName) != null) {
             return false;
         }
         HotelService hotelService = new HotelService(hotel);

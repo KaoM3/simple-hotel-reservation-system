@@ -52,7 +52,7 @@ public class ReservationListPanel extends JPanel implements ActionListener {
         reservationTable.setModel(tableModel);
 
         // Display Hotel Details in Table
-        for(Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
+        for (Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
             tableModel.addRow(new Object[] {reservation.getRoom().getName(),
                                             reservation.getGuestName(),
                                             reservation.getCheckIn(),
@@ -85,13 +85,13 @@ public class ReservationListPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
-        else if(reservationTable.getSelectedRow() == -1) {
+        else if (reservationTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "No Reservation Selected!");
         }
-        else if(event.getSource() == detailsButton) {
+        else if (event.getSource() == detailsButton) {
             new SubFrame(new ReservationDetailsPanel(controller, index, reservationTable.getSelectedRow()));
         }
     }

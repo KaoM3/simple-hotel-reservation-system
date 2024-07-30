@@ -4,11 +4,13 @@
  */
 package view.main;
 
+import java.util.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -19,6 +21,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
+import model.hotel.*;
+import model.hotel.room.*;
 
 /**
  *
@@ -47,6 +51,7 @@ public class BookingPanel extends JPanel implements ActionListener {
     private JTextField totalPriceField;
     private JLabel totalPriceLabel;
     private JLabel availableRoomsLabel;
+    private DefaultTableModel roomTableModel;
 
     /**
      * Creates new form BookingPanel
@@ -79,21 +84,20 @@ public class BookingPanel extends JPanel implements ActionListener {
         selectedRoomLabel = new JLabel();
         selectedRoomTextField = new JTextField();
         availableRoomsLabel = new JLabel();
+        roomTableModel = new DefaultTableModel(0, 0);
 
         setLayout(null);
 
         // Initializing Empty Room Table
         String roomTableHeader[] = {"Room", "Room Type"};
-        DefaultTableModel roomTableModel = new DefaultTableModel(0, 0);
         roomTableModel.setColumnIdentifiers(roomTableHeader);
         roomTable.setModel(roomTableModel);
 
         // Adding a selection model to room table (updates every time the selection is changed)
         ListSelectionModel roomSelectionModel = roomTable.getSelectionModel();
         roomSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            @Override
             public void valueChanged(ListSelectionEvent event) {
-                // TODO: Add Functionality here (Update the "Selected Room" label) 
+                handleRoomSelection(event);
             }
         });
 
@@ -121,21 +125,28 @@ public class BookingPanel extends JPanel implements ActionListener {
         add(roomTableButton);
         roomTableButton.setBounds(370, 260, 170, 23);
 
-        // TODO: Add Hotel Table Data
-        hotelTable.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null},
-                {null},
-                {null},
-                {null}
-            },
-            new String [] {
-                "Selected Hotel"
-            }
-        ));
-        hotelScrollPane.setViewportView(hotelTable);
+        // Initializing Empty Hotel Table
+        String hotelNameHeader[] = {"Select a Hotel"};
+        DefaultTableModel hotelListModel = new DefaultTableModel(0, 1);
 
-        // TODO: Add Hotel Selection Model
+        hotelListModel.setColumnIdentifiers(hotelNameHeader);
+        hotelTable.setModel(hotelListModel);
+        hotelTable.setEnabled(true);
+
+        // Add Objects to Table
+        for (int i = 0; i < controller.getHotelObjects().size(); i++) {
+            hotelListModel.addRow(new Object[] {controller.getHotelObjects().get(i).getName()});
+        }
+
+        hotelTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        ListSelectionModel hotelSelectionModel = hotelTable.getSelectionModel();
+        hotelSelectionModel.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                handleHotelSelection(event);
+            }
+        });
+
+        hotelScrollPane.setViewportView(hotelTable);
 
         add(hotelScrollPane);
         hotelScrollPane.setBounds(20, 30, 220, 110);
@@ -182,7 +193,7 @@ public class BookingPanel extends JPanel implements ActionListener {
         confirmReservationButton.setBounds(370, 430, 170, 23);
 
         hotelHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        hotelHeading.setText("Selected Hotel: [Hotel Name]");
+        hotelHeading.setText("No Selected Hotel");
         add(hotelHeading);
         hotelHeading.setBounds(260, 40, 280, 20);
 
@@ -202,14 +213,89 @@ public class BookingPanel extends JPanel implements ActionListener {
         add(availableRoomsLabel);
         availableRoomsLabel.setBounds(20, 156, 220, 30);
     }
+
+    /**
+     * Updates the labels whenever a new row is selected in roomTable
+     */
+    public void handleRoomSelection(ListSelectionEvent event) {
+        // Display room selected
+        int hotelIndex = hotelTable.getSelectedRow();
+        Hotel hotel = controller.getHotel(hotelIndex);
+        int roomIndex = roomTable.getSelectedRow();
+        Room room = hotel.getRoomList().get(roomIndex);
+        selectedRoomTextField.setText(room.getName());
+
+        // Display total price
+        int checkIn, checkOut;
+        String discountCode;
+        try {
+            checkIn = Integer.parseInt(checkInTextField.getText());
+            checkOut = Integer.parseInt(checkOutTextField.getText());
+            discountCode = discountCodeTextField.getText();
+            double totalPrice = controller.getTotalReservationPrice(hotel, room, checkIn, checkOut, discountCode);
+            totalPriceField.setText(Double.toString(totalPrice));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid date!");
+        }
+    }
+
+    /**
+     * Updates the labels whenever a new row is selected in hotelTable
+     */
+    public void handleHotelSelection(ListSelectionEvent event) {
+        hotelHeading.setText("Selected Hotel: " + this.controller.getHotel(hotelTable.getSelectedRow()).getName());
+    }
+
+    public void updateRoomList(Hotel hotel, int checkIn, int checkOut) {
+        List<Room> availableRooms = hotel.filterRooms(checkIn, checkOut);
+
+        roomTableModel.setRowCount(0);
+
+        for (Room r : availableRooms) {
+            String roomType = "ERROR";
+
+            if (r instanceof StandardRoom) {
+                roomType = "STANDARD";
+            } else if (r instanceof DeluxeRoom) {
+                roomType = "DELUXE";
+            } else if (r instanceof ExecutiveRoom) {
+                roomType = "EXECUTIVE";
+            }
+
+            roomTableModel.addRow(new Object[] {r.getName(),
+                                                roomType});
+
+            System.out.println(r.getName() + " " + roomType);
+        }
+
+        String roomTableHeader[] = {"Room", "Room Type"};
+        roomTableModel.setColumnIdentifiers(roomTableHeader);
+        roomTable.setModel(roomTableModel);
+    }
     
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == roomTableButton) {
-            // TODO: Add Implementation
+        if (hotelTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "No hotel selected!");
+            return;
+        }
+
+        if (event.getSource() == roomTableButton) {
+            int hotelIndex = hotelTable.getSelectedRow();
+            Hotel hotel = controller.getHotel(hotelIndex);
+            int checkIn, checkOut;
+
+            try {
+                checkIn = Integer.parseInt(checkInTextField.getText());
+                checkOut = Integer.parseInt(checkOutTextField.getText());
+                updateRoomList(hotel, checkIn, checkOut);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Invalid date1!");
+            }
+
             System.out.println("Refresh room table");
         }
-        else if(event.getSource() == confirmReservationButton) {
+        else if (event.getSource() == confirmReservationButton) {
             // TODO: Add Implementation
             System.out.println("Confirm Booking");
         }

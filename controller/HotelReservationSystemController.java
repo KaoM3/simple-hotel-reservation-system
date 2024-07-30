@@ -96,4 +96,9 @@ public class HotelReservationSystemController {
         HotelManagerService hotelManagerService = new HotelManagerService(model);
         return hotelManagerService.removeHotel(hotel.getName());
     }
+
+    public double getTotalReservationPrice(Hotel hotel, Room room, int checkIn, int checkOut, String discountCode) {
+        ReservationManagerService reservationService = new ReservationManagerService(hotel.getReservationManager());
+        return reservationService.calculateReservationCost(room, checkIn, checkOut, discountCode);
+    }
 }

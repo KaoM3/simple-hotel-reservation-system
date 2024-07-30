@@ -1,12 +1,15 @@
 package model.reservation;
 
-import model.hotel.room.*;
+import java.util.HashMap;
+
+import model.hotel.room.Room;
 
 /**
  * Object representation of a reservation. All required information should be set upon
  * creation.
  */
 public class Reservation {
+    private final HashMap<Integer, Double> priceBreakdown;
     private final Guest   guest;
     private final Room    room;
     private final int     checkIn;
@@ -21,12 +24,13 @@ public class Reservation {
      * @param checkOut  is the check-out date (int)
      * @param totalPrice    is the total price of the stay after discount codes and date price modifiers
      */
-    public Reservation(String guestName, Room room, int checkIn, int checkOut, double totalPrice) {
+    public Reservation(String guestName, Room room, int checkIn, int checkOut, double totalPrice, HashMap<Integer, Double> priceBreakdown) {
         this.guest = new Guest(guestName);
         this.room = room;
         this.checkIn = checkIn;
         this.checkOut = checkOut;
         this.totalPrice = totalPrice;
+        this.priceBreakdown = priceBreakdown;
     }
 
     /**
@@ -62,5 +66,12 @@ public class Reservation {
      */
     public double getTotalPrice() {
         return this.totalPrice;
+    }
+
+    /**
+     * @return price per night of the reservation
+     */
+    public HashMap<Integer, Double> getPriceBreakdown() {
+        return this.priceBreakdown;
     }
 }

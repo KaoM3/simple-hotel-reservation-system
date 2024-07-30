@@ -1,5 +1,7 @@
 package service;
 
+import java.util.HashMap;
+
 import model.hotel.room.Room;
 import model.reservation.Reservation;
 import model.reservation.ReservationManager;
@@ -37,21 +39,22 @@ public class ReservationManagerService {
         PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
 
         // Calculate base price (rooms total price per night multiplied by date price modifier)
+        HashMap<Integer, Double> priceBreakdown = new HashMap<>();
         double totalPrice = 0;
         for(int date = checkIn; date < checkOut; date++) {
+            priceBreakdown.put(date, room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date));
             totalPrice += room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date);
         }
 
         // Apply discount code if discount code is valid
-        double firstDayPrice = room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(checkIn);
         if(priceModifierService.getDiscountCode(discountCode) != null) {
             totalPrice = priceModifierService.getDiscountCode(discountCode)
-                                        .applyDiscount(checkIn, checkOut, totalPrice, firstDayPrice);
+                                        .applyDiscount(checkIn, checkOut, totalPrice, priceBreakdown.get(checkIn));
         }
 
         // Add new reservation to system
         this.reservationManager.getReservationList()
-                                .add(new Reservation(guestName, room, checkIn, checkOut, totalPrice));
+                                .add(new Reservation(guestName, room, checkIn, checkOut, totalPrice, priceBreakdown));
 
         return true;
     }

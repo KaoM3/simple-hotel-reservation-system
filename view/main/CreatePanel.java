@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -132,13 +133,23 @@ public class CreatePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == confirmButton) {
             if(!(roomNameTextField.getText().length() == 0) && !(hotelNameTextField.getText().length() == 0)) {
-                this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput);
+                confirmButtonFunction();
             }
             refreshPanel();
         }
         if(event.getSource() == cancelButton) {
-            refreshPanel();
             System.out.println("CancelButton");
+            refreshPanel();
+        }
+    }
+
+    /**
+     * Implementation of create new hotel functionality
+     */
+    public void confirmButtonFunction() {
+        String failString = "Creation of hotel failed! Your hotel name may be a duplicate or invalid.\nNames should be 3 to 20 characters long, no special characters.\nPlease double check your inputs.";
+        if(!this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput)) {
+            JOptionPane.showMessageDialog(null, failString);
         }
     }
 

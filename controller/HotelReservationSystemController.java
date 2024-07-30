@@ -18,7 +18,7 @@ public class HotelReservationSystemController {
         this.model = model;
     }
 
-    public void createNewHotel(String hotelName, String roomName, int roomType) {
+    public boolean createNewHotel(String hotelName, String roomName, int roomType) {
         boolean hotelCreation, roomCreation = false;
 
         HotelManagerService modelService = new HotelManagerService(this.model);
@@ -36,6 +36,8 @@ public class HotelReservationSystemController {
             modelService.removeHotel(hotelName);
             System.out.println("Hotel has no room, deleting hotel...");
         }
+
+        return (hotelCreation && roomCreation);
     }
 
     public List<Reservation> getHotelReservationList(Hotel hotel) {
@@ -86,9 +88,9 @@ public class HotelReservationSystemController {
         System.out.println(reservationService.removeReservation(index));
     }
 
-    public void deleteRoom(Hotel hotel, int index) {
+    public boolean deleteRoom(Hotel hotel, int index) {
         HotelService hotelService = new HotelService(hotel);
-        hotelService.removeRoom(hotel.getRoomByIndex(index));
+        return hotelService.removeRoom(hotel.getRoomByIndex(index));
     }
 
     public void deleteHotel(Hotel hotel) {

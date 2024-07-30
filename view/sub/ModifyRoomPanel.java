@@ -10,6 +10,7 @@ import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -186,9 +187,33 @@ public class ModifyRoomPanel extends JPanel implements ActionListener, ItemListe
             refreshPanel();
         }
         else if(event.getSource() == deleteButton) {
-            if(roomTable.getSelectedRow() != -1) {
-                controller.deleteRoom(controller.getHotel(index), roomTable.getSelectedRow());
+            if(controller.getHotel(index).getRoomList().size() == 1) {
+                JOptionPane.showMessageDialog(null, "Hotel needs at least 1 room!");
+            }
+            else if(roomTable.getSelectedRow() != -1) {
+                deleteButtonFunction();
+            } else {
+                JOptionPane.showMessageDialog(null, "No Room Selected!");
+            }
+        }
+    }
+
+    /**
+     * Implementation for room deletion
+     */
+    private void deleteButtonFunction() {
+        String confirmationString = String.format("Delete room: [%s]?", controller.getHotel(index).getRoomByIndex(roomTable.getSelectedRow()).getName());
+        int confirmation = JOptionPane.showConfirmDialog(null,
+                                                        confirmationString,
+                                                        "Confirm Room Deletion",
+                                                        JOptionPane.YES_NO_OPTION);
+
+        if(confirmation == JOptionPane.YES_OPTION) {
+            if(controller.deleteRoom(controller.getHotel(index), roomTable.getSelectedRow())) {
                 refreshPanel();
+            }
+            else {
+                JOptionPane.showMessageDialog(null, "Deletion failed!");
             }
         }
     }

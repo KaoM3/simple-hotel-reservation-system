@@ -51,7 +51,7 @@ public class HotelService {
             return false;
         }
         
-        if(this.hotel.getRoomList().size() == 50) {
+        if(this.hotel.getRoomList().size() >= 50) {
             return false;
         }
 
@@ -87,7 +87,7 @@ public class HotelService {
             return false;
         }
 
-        if(this.hotel.getRoomList().size() == 50) {
+        if(this.hotel.getRoomList().size() >= 50) {
             return false;
         }
 

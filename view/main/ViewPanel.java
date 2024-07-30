@@ -16,11 +16,15 @@ import view.sub.ReservationListPanel;
 import view.sub.RoomListPanel;
 import view.sub.SubFrame;
 
-
 public class ViewPanel extends JPanel implements ActionListener{
     private HotelReservationSystemController controller;
-    private JButton viewReservationButton, refreshButton, viewRoomButton;
+
+    private JButton viewReservationButton;
+    private JButton refreshButton;
+    private JButton viewRoomButton;
+
     private JScrollPane hotelListScrollPane;
+
     private JTable hotelListTable;
 
     /**
@@ -55,7 +59,7 @@ public class ViewPanel extends JPanel implements ActionListener{
         hotelListTable.setModel(tableModel);
 
         // Display Hotel Details in Table
-        for(int i = 0; i < this.controller.getHotelObjects().size(); i++) {
+        for (int i = 0; i < this.controller.getHotelObjects().size(); i++) {
             tableModel.addRow(new Object[] {this.controller.getHotelObjects().get(i).getName(),
                                             this.controller.getHotelObjects().get(i).getBaseRate(),
                                             this.controller.getHotelObjects().get(i).getRoomList().size(),
@@ -85,17 +89,17 @@ public class ViewPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
-        else if(hotelListTable.getSelectedRow() == -1) {
+        else if (hotelListTable.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "No Hotel Selected!");
         }
-        else if(event.getSource() == viewReservationButton) {
+        else if (event.getSource() == viewReservationButton) {
             System.out.println("View Reservation");
             new SubFrame(new ReservationListPanel(controller, hotelListTable.getSelectedRow()));
         }
-        else if(event.getSource() == viewRoomButton) {
+        else if (event.getSource() == viewRoomButton) {
             System.out.println("View Room");
             new SubFrame(new RoomListPanel(controller, hotelListTable.getSelectedRow()));
         }

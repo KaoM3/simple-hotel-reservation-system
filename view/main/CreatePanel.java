@@ -19,15 +19,25 @@ import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
 
-
 public class CreatePanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
-    private JButton cancelButton, confirmButton;
+
+    private JButton cancelButton;
+    private JButton confirmButton;
+
     private JScrollPane hotelListScrollPane;
+
     private JTable hotelListTable;
-    private JLabel hotelNameLabel, roomNameLabel, roomTypeLabel;
-    private JTextField hotelNameTextField, roomNameTextField;
+
+    private JLabel hotelNameLabel;
+    private JLabel roomNameLabel;
+    private JLabel roomTypeLabel;
+
+    private JTextField hotelNameTextField;
+    private JTextField roomNameTextField;
+
     private JComboBox<String> roomTypeDropDown;
+
     private Integer roomTypeInput;
 
     /**
@@ -68,7 +78,7 @@ public class CreatePanel extends JPanel implements ActionListener {
         hotelListTable.setEnabled(false);
         
         // ADD OBJECT TO TABLE
-        for(int i = 0; i < controller.getHotelObjects().size(); i++) {
+        for (int i = 0; i < controller.getHotelObjects().size(); i++) {
             hotelListModel.addRow(new Object[] {controller.getHotelObjects().get(i).getName()});
         }
 
@@ -131,13 +141,13 @@ public class CreatePanel extends JPanel implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == confirmButton) {
-            if(!(roomNameTextField.getText().length() == 0) && !(hotelNameTextField.getText().length() == 0)) {
+        if (event.getSource() == confirmButton) {
+            if (!(roomNameTextField.getText().length() == 0) && !(hotelNameTextField.getText().length() == 0)) {
                 confirmButtonFunction();
             }
             refreshPanel();
         }
-        if(event.getSource() == cancelButton) {
+        if (event.getSource() == cancelButton) {
             System.out.println("CancelButton");
             refreshPanel();
         }
@@ -148,7 +158,7 @@ public class CreatePanel extends JPanel implements ActionListener {
      */
     public void confirmButtonFunction() {
         String failString = "Creation of hotel failed! Your hotel name may be a duplicate or invalid.\nNames should be 3 to 20 characters long, no special characters.\nPlease double check your inputs.";
-        if(!this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput)) {
+        if (!this.controller.createNewHotel(hotelNameTextField.getText(), roomNameTextField.getText(), roomTypeInput)) {
             JOptionPane.showMessageDialog(null, failString);
         }
     }
@@ -168,7 +178,7 @@ public class CreatePanel extends JPanel implements ActionListener {
      *  Gets called everytime the dropdown selection is changed. Sets the room type of the created room
      */
     private void roomTypeDropDownItemStateChanged(ItemEvent event) {
-        if(event.getStateChange() == ItemEvent.SELECTED) {
+        if (event.getStateChange() == ItemEvent.SELECTED) {
             switch (roomTypeDropDown.getSelectedIndex()) {
                 case 0:
                     this.roomTypeInput = 1;

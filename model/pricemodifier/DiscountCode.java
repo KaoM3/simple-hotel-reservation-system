@@ -22,7 +22,7 @@ public enum DiscountCode {
     STAY4_GET1 {
         @Override
         public double applyDiscount(int checkIn, int checkOut, double price, double firstDayPrice) {
-            if(checkOut - checkIn >= 5) {
+            if (checkOut - checkIn >= 5) {
                 return price - firstDayPrice;
             }
             return price;
@@ -32,7 +32,7 @@ public enum DiscountCode {
     PAYDAY {
         @Override
         public double applyDiscount(int checkIn, int checkOut, double price, double firstDayPrice) {
-            if(checkIn <= 15 && 15 < checkOut || checkIn <= 30 && 30 < checkOut) {
+            if (checkIn <= 15 && 15 < checkOut || checkIn <= 30 && 30 < checkOut) {
                 return price * 0.93;
             }
             return price;

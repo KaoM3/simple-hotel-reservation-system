@@ -14,10 +14,15 @@ import model.hotel.room.Room;
 
 public class RoomListPanel extends JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
+
     private JButton refreshButton;
+
     private JScrollPane listScrollPane;
+
     private JLabel headerLabel;
+
     private JTable roomTable;
 
     public RoomListPanel(HotelReservationSystemController controller, int index) {
@@ -46,14 +51,14 @@ public class RoomListPanel extends JPanel implements ActionListener {
         roomTable.setEnabled(false);
 
         // Display Hotel Details in Table
-        for(Room room : controller.getHotelRoomList(controller.getHotel(index))) {
+        for (Room room : controller.getHotelRoomList(controller.getHotel(index))) {
             String roomType;
 
-            if(room.getMultiplier() == 1.0) {
+            if (room.getMultiplier() == 1.0) {
                 roomType = "STANDARD";
-            } else if(room.getMultiplier() == 1.2) {
+            } else if (room.getMultiplier() == 1.2) {
                 roomType = "DELUXE";
-            } else if(room.getMultiplier() == 1.35) {
+            } else if (room.getMultiplier() == 1.35) {
                 roomType = "EXECUTIVE";
             } else {
                 roomType = "null";
@@ -85,7 +90,7 @@ public class RoomListPanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
     }

@@ -13,17 +13,22 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
+import model.hotel.Hotel;
 
 public class PriceModifierPanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
+
     private int index;
+
     private JLabel headerLabel;
+
     private JButton applyChangesButton;
     private JButton refreshTableButton;
     private JButton resetPriceButton;
-    private JScrollPane priceScrollPane;
-    private JTable priceTable;
 
+    private JScrollPane priceScrollPane;
+
+    private JTable priceTable;
 
     /**
     * Creates new form PriceModifierPanel
@@ -54,11 +59,13 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         priceTable.setEnabled(true);
         priceTable.setCellSelectionEnabled(true);
 
-        for(int i = 1; i <= 31; i++) {
-            tableModel.addRow(new String[] {Integer.toString(i), Double.toString(controller.getHotel(index).getReservationManager().getPriceModifier().getMultiplier(i))});
-
+        for (int i = 1; i <= 31; i++) {
+            int day = i;
+            Hotel hotel = controller.getHotel(index);
+            double multiplier = hotel.getReservationManager().getPriceModifier().getMultiplier(day);
+            tableModel.addRow(new Object[] {String.valueOf(day), String.valueOf(multiplier)});
         }
-        
+
         priceScrollPane.setViewportView(priceTable);
 
         add(priceScrollPane);
@@ -89,10 +96,10 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
     /** Updates the hashmap */
     private void updateModelPrice() {
         // Changes below an error wont apply to proper edits below
-        for(int i = 0; i < 31; i++) {
+        for (int i = 0; i < 31; i++) {
             try {
                 double newPrice = Double.valueOf(priceTable.getModel().getValueAt(i, 1).toString());
-                if(!controller.updateDatePrice(controller.getHotel(index), i + 1, newPrice)) {
+                if (!controller.updateDatePrice(controller.getHotel(index), i + 1, newPrice)) {
                     String failString = String.format("Update Failed: Double should be positive [Date %d]", i + 1); 
                     JOptionPane.showMessageDialog(null, failString);
                 }
@@ -106,26 +113,26 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
 
     /** Resets all date modifier to 1 */
     private void resetModelPrice() {
-        for(int i = 0; i < 31; i++) {
+        for (int i = 0; i < 31; i++) {
             controller.updateDatePrice(controller.getHotel(index), i + 1, 1.0);
         }
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == applyChangesButton) {
+        if (event.getSource() == applyChangesButton) {
             System.out.println("apply");
             updateModelPrice();
             refreshPanel();
         }
-        else if(event.getSource() == resetPriceButton) {
+        else if (event.getSource() == resetPriceButton) {
             System.out.println("reset price");
-            if(JOptionPane.showConfirmDialog(priceScrollPane, "Reset all multipliers to 1.0?", "Reset Multipliers", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
+            if (JOptionPane.showConfirmDialog(priceScrollPane, "Reset all multipliers to 1.0?", "Reset Multipliers", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 resetModelPrice();
             }
             refreshPanel();
         }
-        else if(event.getSource() == refreshTableButton) {
+        else if (event.getSource() == refreshTableButton) {
             System.out.println("refresh");
             refreshPanel();
         }

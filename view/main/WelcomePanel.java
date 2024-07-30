@@ -7,7 +7,6 @@ public class WelcomePanel extends javax.swing.JPanel {
     }
 
     private void initComponents() {
-
         pageHeading = new javax.swing.JLabel();
         viewInfo = new javax.swing.JLabel();
         manageInfo3 = new javax.swing.JLabel();

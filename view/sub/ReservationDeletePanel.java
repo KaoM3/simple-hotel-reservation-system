@@ -19,10 +19,16 @@ import model.reservation.Reservation;
 
 public class ReservationDeletePanel extends JPanel implements ActionListener, ListSelectionListener {
     private final HotelReservationSystemController controller;
+
     private final int index;
-    private JButton refreshButton, deleteButton;
+
+    private JButton refreshButton;
+    private JButton deleteButton;
+
     private JScrollPane listScrollPane;
+
     private JLabel headerLabel;
+
     private JTable reservationTable;
 
     public ReservationDeletePanel(HotelReservationSystemController controller, int index) {
@@ -57,7 +63,7 @@ public class ReservationDeletePanel extends JPanel implements ActionListener, Li
         selectionModel.addListSelectionListener(this);
 
         // Display Hotel Details in Table
-        for(Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
+        for (Reservation reservation : controller.getHotelReservationList(controller.getHotel(index))) {
             tableModel.addRow(new Object[] {reservation.getRoom().getName(),
                                             reservation.getGuestName(),
                                             reservation.getCheckIn(),
@@ -85,11 +91,11 @@ public class ReservationDeletePanel extends JPanel implements ActionListener, Li
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == refreshButton) {
+        if (event.getSource() == refreshButton) {
             refreshPanel();
         }
-        else if(event.getSource() == deleteButton) {
-            if(reservationTable.getSelectedRow() != -1) {
+        else if (event.getSource() == deleteButton) {
+            if (reservationTable.getSelectedRow() != -1) {
                 controller.deleteReservation(controller.getHotel(index), reservationTable.getSelectedRow());
             }
         }

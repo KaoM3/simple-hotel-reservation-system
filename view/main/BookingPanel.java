@@ -28,31 +28,42 @@ import model.hotel.room.StandardRoom;
 
 public class BookingPanel extends JPanel implements ActionListener, ListSelectionListener {
     private HotelReservationSystemController controller;
+
     private JLabel checkInLabel;
-    private JTextField checkInTextField;
     private JLabel checkOutLabel;
-    private JTextField checkOutTextField;
-    private JButton confirmReservationButton;
     private JLabel discountCodeLabel;
-    private JTextField discountCodeTextField;
     private JLabel guestNameLabel;
-    private JTextField guestNameTextField;
     private JLabel hotelHeading;
-    private JScrollPane hotelScrollPane;
-    private JTable hotelTable;
     private JLabel reservationHeading;
-    private JScrollPane roomScrollPane;
-    private JTable roomTable;
-    private JButton roomTableButton;
     private JLabel selectedRoomLabel;
-    private JTextField selectedRoomTextField;
-    private JTextField totalPriceField;
     private JLabel totalPriceLabel;
     private JLabel availableRoomsLabel;
+
+    private JTextField checkInTextField;
+    private JTextField checkOutTextField;
+    private JTextField discountCodeTextField;
+    private JTextField guestNameTextField;
+    private JTextField selectedRoomTextField;
+    private JTextField totalPriceField;
+
+    private JButton confirmReservationButton;
+    private JButton roomTableButton;
+
+    private JScrollPane hotelScrollPane;
+    private JScrollPane roomScrollPane;
+
+    private JTable hotelTable;
+    private JTable roomTable;
+
     private DefaultTableModel roomTableModel;
-    private ListSelectionModel roomSelectionModel, hotelSelectionModel;
-    private int hotelIndex, roomIndex;
-    private int checkIn, checkOut;
+
+    private ListSelectionModel roomSelectionModel;
+    private ListSelectionModel hotelSelectionModel;
+
+    private int hotelIndex;
+    private int roomIndex;
+    private int checkIn;
+    private int checkOut;
 
     public BookingPanel(HotelReservationSystemController controller) {
         this.controller = controller;
@@ -255,7 +266,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
     }
 
     @Override
-    public void actionPerformed(ActionEvent event) {
+    public void actionPerformed(ActionEvent event, boolean bookingSuccessful) {
         if (hotelIndex == -1) {
             JOptionPane.showMessageDialog(null, "No hotel selected!");
             return;
@@ -279,14 +290,15 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
             Room    room = hotel.getRoomList().get(roomIndex);
             String  discountCode = discountCodeTextField.getText();
 
-            boolean bookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
+            boolean isBookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
 
-            if (bookingSuccessful) {
-                JOptionPane.showMessageDialog(null, "Reservation booking successful!");
-                refreshPanel();
-            } else {
+            if (!isBookingSuccessful) {
                 JOptionPane.showMessageDialog(null, "Reservation booking failed!\nPlease double check your inputs.");
+                return;
             }
+
+            JOptionPane.showMessageDialog(null, "Reservation booking successful!");
+            refreshPanel();
         }
     }
 

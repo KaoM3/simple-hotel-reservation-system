@@ -11,13 +11,16 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import controller.HotelReservationSystemController;
+
 /**
  *
  * @author Rafael
  */
 public class SideButtonPanel extends javax.swing.JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
+
     private final MainFrame frame;
+
     private JButton bookButton;
     private JButton createButton;
     private JButton manageButton;
@@ -70,17 +73,17 @@ public class SideButtonPanel extends javax.swing.JPanel implements ActionListene
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == createButton) {
+        if (event.getSource() == createButton) {
             frame.setMainPanel(new CreatePanel(controller));
         }
-        else if(event.getSource() == viewButton) {
+        else if (event.getSource() == viewButton) {
             frame.setMainPanel(new ViewPanel(controller));
         }
-        else if(event.getSource() == manageButton) {
+        else if (event.getSource() == manageButton) {
             // TODO: Add Manage
             frame.setMainPanel(new ManagePanel(controller));
         }
-        else if(event.getSource() == bookButton) {
+        else if (event.getSource() == bookButton) {
             // TODO: Add book
             frame.setMainPanel(new BookingPanel(controller));
         }

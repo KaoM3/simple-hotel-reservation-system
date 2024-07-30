@@ -172,32 +172,26 @@ public class ManagePanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if(hotelTable.getSelectedRow() == -1) {
             System.out.println("No Hotel Selected");
-            JOptionPane.showMessageDialog(renameLabel, "No Hotel Selected");
+            JOptionPane.showMessageDialog(null, "No Hotel Selected");
         }
         else if(event.getSource() == confirmUpdateButton) {
+            System.out.println("Confirm Update Price Button");
             try {
                 double newPrice = Double.parseDouble(newPriceField.getText());
-                controller.updateBaseRate(controller.getHotel(hotelTable.getSelectedRow()), newPrice);
-                basePriceHeading.setText(String.format("Hotel Base Rate: %.2f",
-                                                this.controller.getHotel(hotelTable.getSelectedRow())
-                                                .getBaseRate()));
-            } catch (Exception e) {
+                confirmUpdateButtonFunction(newPrice);
+            } catch (NumberFormatException error) {
+                System.out.println(error);
                 JOptionPane.showMessageDialog(null, "Enter a valid double value!");
+                newPriceField.setText("");
             }
-            System.out.println("OK 1");
         }
         else if(event.getSource() == confirmRenameButton) {
-            if(controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
-                JOptionPane.showMessageDialog(null, "Rename unsuccessful!");
-            }
-            refreshPanel();
-            System.out.println("OK 2");
-            
+            System.out.println("Confirm Rename Button");
+            confirmRenameButtonFunction();
         }
         else if(event.getSource() == deleteButton) {
-            // TODO: Add implementation
             System.out.println("delete");
-            
+            deleteButtonFunction();
         }
         else if(event.getSource() == modifyRoomListButton) {
             System.out.println("modifyRoom");
@@ -212,7 +206,61 @@ public class ManagePanel extends JPanel implements ActionListener {
             new SubFrame(new ReservationDeletePanel(controller, hotelTable.getSelectedRow()));
         }
     }       
+
+    /**
+     * Implementation for update base price functionality
+     */
+    private void confirmUpdateButtonFunction(double newPrice) {
+
+        if(newPrice < 100) {
+            JOptionPane.showMessageDialog(null, "New rate cannot be less than 100.");
+        }
+        else {
+            controller.updateBaseRate(controller.getHotel(hotelTable.getSelectedRow()), newPrice);
+            basePriceHeading.setText(String.format("Hotel Base Rate: %.2f",
+                                            this.controller.getHotel(hotelTable.getSelectedRow())
+                                            .getBaseRate()));
+        }
+    }
+
+    /**
+     * Implementation for rename hotel functionality
+     */
+    private void confirmRenameButtonFunction() {
+        String confirmationString = String.format("Rename [%s] to [%s]?",
+                                                controller.getHotel(hotelTable.getSelectedRow()).getName(),
+                                                newNameField.getText());
+        
+        int confirmation = JOptionPane.showConfirmDialog(null,
+                                        confirmationString,
+                                        "Confirm Hotel Rename",
+                                        JOptionPane.YES_NO_OPTION);
+
+        if(confirmation == JOptionPane.NO_OPTION) {
+            return;
+        }
+
+        if(controller.renameHotel(controller.getHotel(hotelTable.getSelectedRow()), newNameField.getText()) == false) {
+            JOptionPane.showMessageDialog(null, "Invalid Name!");
+        }
+        refreshPanel();
+    }
     
+    /**
+     * Implementation for delete hotel functionality
+     */
+    private void deleteButtonFunction() {
+        int confirmation = JOptionPane.showConfirmDialog(null,
+                                        String.format("Delete Hotel: [%s]?", controller.getHotel(hotelTable.getSelectedRow()).getName()),
+                                        "Confirm Hotel Deletion",
+                                        JOptionPane.YES_NO_OPTION);
+
+        if(confirmation == JOptionPane.OK_OPTION) {
+            controller.deleteHotel(controller.getHotel(hotelTable.getSelectedRow()));
+            refreshPanel();
+        }
+    }
+
     @Override
     public String getName() {
         return "Manage Hotel";

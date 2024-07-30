@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -18,6 +20,7 @@ import controller.HotelReservationSystemController;
 public class PriceModifierPanel extends JPanel implements ActionListener {
     private HotelReservationSystemController controller;
     private int index;
+    private JLabel headerLabel;
     private JButton applyChangesButton;
     private JButton refreshTableButton;
     private JButton resetPriceButton;
@@ -41,6 +44,7 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         applyChangesButton = new JButton();
         refreshTableButton = new JButton();
         resetPriceButton = new JButton();
+        headerLabel = new JLabel();
 
         setLayout(null);
 
@@ -71,7 +75,7 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         priceScrollPane.setViewportView(priceTable);
 
         add(priceScrollPane);
-        priceScrollPane.setBounds(20, 20, 360, 390);
+        priceScrollPane.setBounds(20, 60, 360, 350);
 
         applyChangesButton.setText("Apply Changes");
         applyChangesButton.addActionListener(this);
@@ -87,6 +91,12 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         resetPriceButton.addActionListener(this);
         add(resetPriceButton);
         resetPriceButton.setBounds(190, 430, 90, 23);
+        
+        headerLabel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        headerLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        headerLabel.setText(String.format("Editing Date Price: [%s]", controller.getHotel(index).getName()));
+        add(headerLabel);
+        headerLabel.setBounds(20, 20, 360, 30);
     }                                 
 
     public void handleSelection(ListSelectionEvent event) {
@@ -126,7 +136,9 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         }
         else if(event.getSource() == resetPriceButton) {
             System.out.println("reset price");
-            resetModelPrice();
+            if(JOptionPane.showConfirmDialog(priceScrollPane, "Reset all multipliers to 1.0?") == JOptionPane.OK_OPTION) {
+                resetModelPrice();
+            }
             refreshPanel();
         }
         else if(event.getSource() == refreshTableButton) {

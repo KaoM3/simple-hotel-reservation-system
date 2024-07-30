@@ -90,4 +90,9 @@ public class HotelReservationSystemController {
         HotelService hotelService = new HotelService(hotel);
         hotelService.removeRoom(hotel.getRoomByIndex(index));
     }
+
+    public void deleteHotel(Hotel hotel) {
+        HotelManagerService hotelManagerService = new HotelManagerService(model);
+        hotelManagerService.removeHotel(hotel.getName());
+    }
 }

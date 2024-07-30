@@ -17,6 +17,35 @@ public class ReservationManagerService {
     }
 
     /**
+     * Calculates the cost of a reservation, but does not add a reservation yet
+     * @param room is the room object
+     * @param checkIn is the check in date
+     * @param checkOut is the check out date
+     * @param discountCode is the discount code used
+     * @return total cost of the reservation
+     */
+    public double calculateReservationCost(Room room, int checkIn, int checkOut, String discountCode) {
+        // Instantiate Necessary Services
+        PriceModifierService priceModifierService = new PriceModifierService(this.reservationManager.getPriceModifier());
+
+        // Calculate base price (rooms total price per night multiplied by date price modifier)
+        HashMap<Integer, Double> priceBreakdown = new HashMap<>();
+        double totalPrice = 0;
+        for(int date = checkIn; date < checkOut; date++) {
+            priceBreakdown.put(date, room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date));
+            totalPrice += room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date);
+        }
+
+        // Apply discount code if discount code is valid
+        if(priceModifierService.getDiscountCode(discountCode) != null) {
+            totalPrice = priceModifierService.getDiscountCode(discountCode)
+                                        .applyDiscount(checkIn, checkOut, totalPrice, priceBreakdown.get(checkIn));
+        }
+        
+        return totalPrice;
+    }
+
+    /**
      * Creates a new reservation object and adds it to this reservationManager's reservation list
      * @param guestName is the name of the guest
      * @param room is the room object

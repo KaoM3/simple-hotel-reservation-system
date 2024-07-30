@@ -4,10 +4,10 @@
  */
 package view.main;
 
-import java.util.*;
+import controller.HotelReservationSystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,16 +19,17 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import controller.HotelReservationSystemController;
-import model.hotel.*;
-import model.hotel.room.*;
+import model.hotel.Hotel;
+import model.hotel.room.DeluxeRoom;
+import model.hotel.room.ExecutiveRoom;
+import model.hotel.room.Room;
+import model.hotel.room.StandardRoom;
 
 /**
  *
  * @author Rafael
  */
-public class BookingPanel extends JPanel implements ActionListener {
+public class BookingPanel extends JPanel implements ActionListener, ListSelectionListener {
     private HotelReservationSystemController controller;
     private JLabel checkInLabel;
     private JTextField checkInTextField;
@@ -52,6 +53,9 @@ public class BookingPanel extends JPanel implements ActionListener {
     private JLabel totalPriceLabel;
     private JLabel availableRoomsLabel;
     private DefaultTableModel roomTableModel;
+    private ListSelectionModel roomSelectionModel, hotelSelectionModel;
+    private int hotelIndex, roomIndex;
+    private int checkIn, checkOut;
 
     /**
      * Creates new form BookingPanel
@@ -86,6 +90,9 @@ public class BookingPanel extends JPanel implements ActionListener {
         availableRoomsLabel = new JLabel();
         roomTableModel = new DefaultTableModel(0, 0);
 
+        roomIndex = -1;
+        hotelIndex = -1;
+
         setLayout(null);
 
         // Initializing Empty Room Table
@@ -94,12 +101,8 @@ public class BookingPanel extends JPanel implements ActionListener {
         roomTable.setModel(roomTableModel);
 
         // Adding a selection model to room table (updates every time the selection is changed)
-        ListSelectionModel roomSelectionModel = roomTable.getSelectionModel();
-        roomSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                handleRoomSelection(event);
-            }
-        });
+        roomSelectionModel = roomTable.getSelectionModel();
+        roomSelectionModel.addListSelectionListener(this);
 
         roomScrollPane.setViewportView(roomTable);
         add(roomScrollPane);
@@ -139,12 +142,8 @@ public class BookingPanel extends JPanel implements ActionListener {
         }
 
         hotelTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        ListSelectionModel hotelSelectionModel = hotelTable.getSelectionModel();
-        hotelSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                handleHotelSelection(event);
-            }
-        });
+        hotelSelectionModel = hotelTable.getSelectionModel();
+        hotelSelectionModel.addListSelectionListener(this);
 
         hotelScrollPane.setViewportView(hotelTable);
 
@@ -218,24 +217,19 @@ public class BookingPanel extends JPanel implements ActionListener {
      * Updates the labels whenever a new row is selected in roomTable
      */
     public void handleRoomSelection(ListSelectionEvent event) {
+        roomIndex = 0;
         // Display room selected
-        int hotelIndex = hotelTable.getSelectedRow();
         Hotel hotel = controller.getHotel(hotelIndex);
-        int roomIndex = roomTable.getSelectedRow();
         Room room = hotel.getRoomList().get(roomIndex);
         selectedRoomTextField.setText(room.getName());
 
         // Display total price
-        int checkIn, checkOut;
         String discountCode;
-        try {
-            checkIn = Integer.parseInt(checkInTextField.getText());
-            checkOut = Integer.parseInt(checkOutTextField.getText());
+
+        if(isDateInt()) {
             discountCode = discountCodeTextField.getText();
             double totalPrice = controller.getTotalReservationPrice(hotel, room, checkIn, checkOut, discountCode);
             totalPriceField.setText(Double.toString(totalPrice));
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Invalid date!");
         }
     }
 
@@ -243,10 +237,16 @@ public class BookingPanel extends JPanel implements ActionListener {
      * Updates the labels whenever a new row is selected in hotelTable
      */
     public void handleHotelSelection(ListSelectionEvent event) {
-        hotelHeading.setText("Selected Hotel: " + this.controller.getHotel(hotelTable.getSelectedRow()).getName());
+        if(isDateInt()) {
+            updateRoomList(this.controller.getHotel(hotelIndex), checkIn, checkOut);
+        } else {
+            roomTableModel.setRowCount(0);
+        }
+        hotelHeading.setText("Selected Hotel: " + this.controller.getHotel(hotelIndex).getName());
     }
 
     public void updateRoomList(Hotel hotel, int checkIn, int checkOut) {
+        System.out.println("UPDATEROOMLIST RUN");
         List<Room> availableRooms = hotel.filterRooms(checkIn, checkOut);
 
         roomTableModel.setRowCount(0);
@@ -272,28 +272,54 @@ public class BookingPanel extends JPanel implements ActionListener {
         roomTableModel.setColumnIdentifiers(roomTableHeader);
         roomTable.setModel(roomTableModel);
     }
+
+    private boolean isDateInt() {
+        try {
+            checkIn = Integer.parseInt(checkInTextField.getText());
+            checkOut = Integer.parseInt(checkOutTextField.getText());
+            return true;
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Invalid date!");
+            return false;
+        }
+    }
+
+    @Override
+    public void valueChanged(ListSelectionEvent event) {
+        if(event.getValueIsAdjusting()) {
+            return;
+        }
+
+        if(event.getSource() == hotelSelectionModel) {
+            hotelIndex = hotelTable.getSelectedRow();
+            System.out.printf("h:%d",hotelIndex);
+            handleHotelSelection(event);
+        }
+        else if(event.getSource() == roomSelectionModel) {
+            System.out.printf("r:%d",roomIndex);
+            roomIndex = roomTable.getSelectedRow();
+            handleRoomSelection(event);
+        }
+    }
     
     @Override
     public void actionPerformed(ActionEvent event) {
-        if (hotelTable.getSelectedRow() == -1) {
+        if (hotelIndex == -1) {
             JOptionPane.showMessageDialog(null, "No hotel selected!");
             return;
         }
 
         if (event.getSource() == roomTableButton) {
-            int hotelIndex = hotelTable.getSelectedRow();
             Hotel hotel = controller.getHotel(hotelIndex);
-            int checkIn, checkOut;
 
-            try {
-                checkIn = Integer.parseInt(checkInTextField.getText());
-                checkOut = Integer.parseInt(checkOutTextField.getText());
+            if(isDateInt()) {
                 updateRoomList(hotel, checkIn, checkOut);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(null, "Invalid date1!");
+                System.out.println("Refresh room table");
             }
-
-            System.out.println("Refresh room table");
+            else {
+                JOptionPane.showMessageDialog(null, "Invalid date!");
+            }
+            
         }
         else if (event.getSource() == confirmReservationButton) {
             // TODO: Add Implementation

@@ -61,9 +61,9 @@ public class HotelReservationSystemController {
         System.out.println(hotelService.createAndAddRoom(roomName, roomType));
     }
 
-    public void updateDatePrice(Hotel hotel, int date, double multiplier) {
+    public boolean updateDatePrice(Hotel hotel, int date, double multiplier) {
         PriceModifierService modifierService = new PriceModifierService(hotel.getReservationManager().getPriceModifier());
-        System.out.println(modifierService.updateDatePriceModifier(date, multiplier));
+        return modifierService.updateDatePriceModifier(date, multiplier);
     }
 
     public void updateBaseRate(Hotel hotel, double newBaseRate) {

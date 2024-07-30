@@ -10,9 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import controller.HotelReservationSystemController;
@@ -47,31 +44,21 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         headerLabel = new JLabel();
 
         setLayout(null);
-
-        // TODO: Add Display Data for Price Modifier
+        
+        // Display Data for price modifier
         DefaultTableModel tableModel = new DefaultTableModel();
         String[] headers = {"Date", "Price Multiplier"};
         tableModel.setColumnIdentifiers(headers);
         
         priceTable.setModel(tableModel);
-        priceTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         priceTable.setEnabled(true);
         priceTable.setCellSelectionEnabled(true);
 
-        
         for(int i = 1; i <= 31; i++) {
-            tableModel.addRow(new Object[] {i, controller.getHotel(index).getReservationManager().getPriceModifier().getMultiplier(i)});
+            tableModel.addRow(new String[] {Integer.toString(i), Double.toString(controller.getHotel(index).getReservationManager().getPriceModifier().getMultiplier(i))});
 
         }
-
-        ListSelectionModel tableSelectionModel = priceTable.getSelectionModel();
-
-        tableSelectionModel.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent event) {
-                handleSelection(event);
-            }
-        });
-
+        
         priceScrollPane.setViewportView(priceTable);
 
         add(priceScrollPane);
@@ -97,25 +84,22 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         headerLabel.setText(String.format("Editing Date Price: [%s]", controller.getHotel(index).getName()));
         add(headerLabel);
         headerLabel.setBounds(20, 20, 360, 30);
-    }                                 
-
-    public void handleSelection(ListSelectionEvent event) {
-
     }
 
     /** Updates the hashmap */
     private void updateModelPrice() {
         // Changes below an error wont apply to proper edits below
         for(int i = 0; i < 31; i++) {
-            System.out.println(priceTable.getModel().getValueAt(i, 1));
             try {
-                controller.updateDatePrice(controller.getHotel(index),
-                                            i + 1,
-                                            Double.valueOf((String)priceTable.getModel().getValueAt(i, 1)));
-            } catch (Exception e) {
-                controller.updateDatePrice(controller.getHotel(index),
-                                            i + 1,
-                                            (double)priceTable.getModel().getValueAt(i, 1));
+                double newPrice = Double.valueOf(priceTable.getModel().getValueAt(i, 1).toString());
+                if(!controller.updateDatePrice(controller.getHotel(index), i + 1, newPrice)) {
+                    String failString = String.format("Update Failed: Double should be positive [Date %d]", i + 1); 
+                    JOptionPane.showMessageDialog(null, failString);
+                }
+            } catch (NumberFormatException error) {
+                System.out.println(error);
+                String failString = String.format("Update Failed: Invalid double [Date %d]", i + 1);
+                JOptionPane.showMessageDialog(null, failString);
             }
         }
     }
@@ -131,8 +115,8 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == applyChangesButton) {
             System.out.println("apply");
-            // This throws an exception if no value at :(
             updateModelPrice();
+            refreshPanel();
         }
         else if(event.getSource() == resetPriceButton) {
             System.out.println("reset price");

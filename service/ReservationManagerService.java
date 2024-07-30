@@ -54,12 +54,11 @@ public class ReservationManagerService {
      * @param discountCode is the discount code used
      */
     public boolean createAndAddReservation(String guestName, Room room, int checkIn, int checkOut, String discountCode) {
-
-        if(!isGuestNameValid(guestName) || room == null || checkIn >= checkOut) {
+        if (!isGuestNameValid(guestName) || room == null || checkIn >= checkOut) {
             return false;
         }
 
-        if(!this.reservationManager.isRoomAvailableOnDate(room.getName(), checkIn, checkOut)) {
+        if (!this.reservationManager.isRoomAvailableOnDate(room.getName(), checkIn, checkOut)) {
             return false;
         }
 
@@ -69,13 +68,13 @@ public class ReservationManagerService {
         // Calculate base price (rooms total price per night multiplied by date price modifier)
         HashMap<Integer, Double> priceBreakdown = new HashMap<>();
         double totalPrice = 0;
-        for(int date = checkIn; date < checkOut; date++) {
+        for (int date = checkIn; date < checkOut; date++) {
             priceBreakdown.put(date, room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date));
             totalPrice += room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date);
         }
 
         // Apply discount code if discount code is valid
-        if(priceModifierService.getDiscountCode(discountCode) != null) {
+        if (priceModifierService.getDiscountCode(discountCode) != null) {
             totalPrice = priceModifierService.getDiscountCode(discountCode)
                                         .applyDiscount(checkIn, checkOut, totalPrice, priceBreakdown.get(checkIn));
         }

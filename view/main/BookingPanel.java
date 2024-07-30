@@ -184,7 +184,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         Room room = hotel.getRoomList().get(roomIndex);
         selectedRoomTextField.setText(room.getName());
 
-        if (isDateInt()) {
+        if (isDateValid()) {
             String discountCode = discountCodeTextField.getText();
             double totalPrice = controller.getTotalReservationPrice(hotel, room, checkIn, checkOut, discountCode);
             totalPriceField.setText(Double.toString(totalPrice));
@@ -192,7 +192,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
     }
 
     public void handleHotelSelection(ListSelectionEvent event) {
-        if (isDateInt()) {
+        if (isDateValid()) {
             updateRoomList(controller.getHotel(hotelIndex), checkIn, checkOut);
         } else {
             roomTableModel.setRowCount(0);
@@ -221,15 +221,22 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         roomTable.setModel(roomTableModel);
     }
 
-    private boolean isDateInt() {
+    private boolean isDateValid() {
+        boolean isDateAnInt = false;
+
         try {
             checkIn = Integer.parseInt(checkInTextField.getText());
             checkOut = Integer.parseInt(checkOutTextField.getText());
-            return true;
+            isDateAnInt = true;
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid date!");
             return false;
         }
+
+        boolean isDateWithinBounds = checkIn >= 1 && checkIn <= 30 && checkOut >= 2 && checkOut <= 31;
+        boolean isTimespanValid = checkIn < checkOut;
+
+        return isDateAnInt && isDateWithinBounds && isTimespanValid;
     }
 
     @Override
@@ -255,15 +262,43 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         }
 
         if (event.getSource() == roomTableButton) {
-            if (isDateInt()) {
-                updateRoomList(controller.getHotel(hotelIndex), checkIn, checkOut);
-            } else {
+            if (!isDateValid()) {
                 JOptionPane.showMessageDialog(null, "Invalid date!");
+                return;
             }
+
+            updateRoomList(controller.getHotel(hotelIndex), checkIn, checkOut);
         } else if (event.getSource() == confirmReservationButton) {
-            // TODO: Add Implementation
-            System.out.println("Confirm Booking");
+            if (hotelIndex == -1 || roomIndex == -1 || !isDateValid()) {
+                JOptionPane.showMessageDialog(null, "No room selected!");
+                return;
+            }
+
+            Hotel   hotel = controller.getHotel(hotelIndex);
+            String  guestName = guestNameTextField.getText();
+            Room    room = hotel.getRoomList().get(roomIndex);
+            String  discountCode = discountCodeTextField.getText();
+
+            boolean bookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
+
+            if (bookingSuccessful) {
+                JOptionPane.showMessageDialog(null, "Reservation booking successful!");
+                refreshPanel();
+            } else {
+                JOptionPane.showMessageDialog(null, "Reservation booking failed!\nPlease double check your inputs.");
+            }
         }
+    }
+
+    /**
+     * Refreshes this panel.
+     */
+    private void refreshPanel() {
+        System.out.println("Refreshing Panel...");
+        this.removeAll();
+        this.initComponents();
+        this.repaint();
+        this.revalidate();
     }
 
     @Override

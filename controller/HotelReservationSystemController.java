@@ -101,4 +101,9 @@ public class HotelReservationSystemController {
         ReservationManagerService reservationService = new ReservationManagerService(hotel.getReservationManager());
         return reservationService.calculateReservationCost(room, checkIn, checkOut, discountCode);
     }
+
+    public boolean createAndAddReservation(Hotel hotel, String guestName, Room room, int checkIn, int checkOut, String discountCode) {
+        ReservationManagerService reservationService = new ReservationManagerService(hotel.getReservationManager());
+        return reservationService.createAndAddReservation(guestName, room, checkIn, checkOut, discountCode);
+    }
 }

@@ -1,23 +1,22 @@
 package view.sub;
 
+import controller.HotelReservationSystemController;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-
-import controller.HotelReservationSystemController;
 import model.reservation.Reservation;
 
 public class ReservationListPanel extends JPanel implements ActionListener {
     private final HotelReservationSystemController controller;
     private final int index;
-    private JButton refreshButton;
+    private JButton refreshButton, detailsButton;
     private JScrollPane listScrollPane;
     private JLabel headerLabel;
     private JTable reservationTable;
@@ -31,10 +30,11 @@ public class ReservationListPanel extends JPanel implements ActionListener {
 
     private void initComponents() {
         
-        listScrollPane = new javax.swing.JScrollPane();
-        reservationTable = new javax.swing.JTable();
-        headerLabel = new javax.swing.JLabel();
-        refreshButton = new javax.swing.JButton();
+        listScrollPane = new JScrollPane();
+        reservationTable = new JTable();
+        headerLabel = new JLabel();
+        refreshButton = new JButton();
+        detailsButton = new JButton();
 
         setPreferredSize(new java.awt.Dimension(600, 480));
         setLayout(null);
@@ -71,12 +71,23 @@ public class ReservationListPanel extends JPanel implements ActionListener {
         refreshButton.addActionListener(this);
         add(refreshButton);
         refreshButton.setBounds(480, 440, 100, 23);
+
+        detailsButton.setText("View Details");
+        detailsButton.addActionListener(this);
+        add(detailsButton);
+        detailsButton.setBounds(330, 440, 130, 23);
     }
 
     @Override
     public void actionPerformed(ActionEvent event) {
         if(event.getSource() == refreshButton) {
             refreshPanel();
+        }
+        else if(reservationTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "No Reservation Selected!");
+        }
+        else if(event.getSource() == detailsButton) {
+            new SubFrame(new ReservationDetailsPanel(controller, index, reservationTable.getSelectedRow()));
         }
     }
 

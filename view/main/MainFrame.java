@@ -54,6 +54,8 @@ public class MainFrame extends JFrame {
         getContentPane().add(sideButtons1);
         getContentPane().add(mainPanel);
 
+        setMainPanel(new WelcomePanel());
+
         pack();
     }
 

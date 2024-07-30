@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.List;
-
 import model.hotel.Hotel;
 import model.hotel.HotelManager;
 import model.hotel.room.Room;
@@ -93,8 +92,8 @@ public class HotelReservationSystemController {
         return hotelService.removeRoom(hotel.getRoomByIndex(index));
     }
 
-    public void deleteHotel(Hotel hotel) {
+    public boolean deleteHotel(Hotel hotel) {
         HotelManagerService hotelManagerService = new HotelManagerService(model);
-        hotelManagerService.removeHotel(hotel.getName());
+        return hotelManagerService.removeHotel(hotel.getName());
     }
 }

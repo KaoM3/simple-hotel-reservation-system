@@ -1,7 +1,9 @@
 package view.sub;
 
+import java.awt.Dimension;
 import java.util.HashMap;
 
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -9,7 +11,7 @@ import javax.swing.table.DefaultTableModel;
 import controller.HotelReservationSystemController;
 import model.reservation.Reservation;
 
-public class ReservationDetailsPanel extends javax.swing.JPanel {
+public class ReservationDetailsPanel extends JPanel {
     private HotelReservationSystemController controller;
     private int index, resIndex;
     private JScrollPane listScrollPane;
@@ -56,6 +58,16 @@ public class ReservationDetailsPanel extends javax.swing.JPanel {
 
         listScrollPane.setViewportView(detailsTable);
         add(listScrollPane);
-        listScrollPane.setBounds(20, 20, 560, 200);
-    }       
+        listScrollPane.setBounds(20, 20, 260, 200);
+    }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(300, 240);
+    }
+
+    @Override
+    public String getName() {
+        return "Reservation Details";
+    }
 }

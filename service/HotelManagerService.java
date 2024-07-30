@@ -41,7 +41,10 @@ public class HotelManagerService {
      */
     public boolean removeHotel(String hotelName) {
         try {
-            return this.hotelManager.getHotelList().remove(this.hotelManager.getHotelByName(hotelName));
+            if(this.hotelManager.getHotelByName(hotelName).getReservationManager().getReservationList().size() <= 0) {
+                return this.hotelManager.getHotelList().remove(this.hotelManager.getHotelByName(hotelName));
+            }
+            return false;
         } catch (NullPointerException error) {
             System.out.println(error);
             return false;

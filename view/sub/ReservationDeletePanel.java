@@ -65,9 +65,9 @@ public class ReservationDeletePanel extends JPanel implements ActionListener, Li
                                             reservation.getTotalPrice()});
         }
 
+        reservationTable.setModel(tableModel);
         
         listScrollPane.setViewportView(reservationTable);
-
         add(listScrollPane);
         listScrollPane.setBounds(20, 60, 560, 360);
 

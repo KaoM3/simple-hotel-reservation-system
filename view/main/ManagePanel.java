@@ -256,7 +256,11 @@ public class ManagePanel extends JPanel implements ActionListener {
                                         JOptionPane.YES_NO_OPTION);
 
         if(confirmation == JOptionPane.OK_OPTION) {
-            controller.deleteHotel(controller.getHotel(hotelTable.getSelectedRow()));
+            if(controller.deleteHotel(controller.getHotel(hotelTable.getSelectedRow())) == false) {
+                JOptionPane.showMessageDialog(null, "Hotel cannot be deleted!");
+            } else {
+                JOptionPane.showMessageDialog(null, "Hotel successfully deleted!");                
+            }
             refreshPanel();
         }
     }

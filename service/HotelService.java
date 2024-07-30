@@ -55,20 +55,21 @@ public class HotelService {
             return false;
         }
 
-        if(roomType == STANDARD) {
-            newRoom = new StandardRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else if(roomType == DELUXE) {
-            newRoom = new DeluxeRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else if(roomType == EXECUTIVE) {
-            newRoom = new ExecutiveRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else {
-            return false;
+        switch (roomType) {
+            case STANDARD:
+                newRoom = new StandardRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            case DELUXE:
+                newRoom = new DeluxeRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            case EXECUTIVE:
+                newRoom = new ExecutiveRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            default:
+                return false;
         }
         return true;
     }

@@ -4,7 +4,6 @@
  */
 package view.main;
 
-import controller.HotelReservationSystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -19,16 +18,14 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
+
+import controller.HotelReservationSystemController;
 import model.hotel.Hotel;
 import model.hotel.room.DeluxeRoom;
 import model.hotel.room.ExecutiveRoom;
 import model.hotel.room.Room;
 import model.hotel.room.StandardRoom;
 
-/**
- *
- * @author Rafael
- */
 public class BookingPanel extends JPanel implements ActionListener, ListSelectionListener {
     private HotelReservationSystemController controller;
     private JLabel checkInLabel;
@@ -57,37 +54,33 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
     private int hotelIndex, roomIndex;
     private int checkIn, checkOut;
 
-    /**
-     * Creates new form BookingPanel
-     */
     public BookingPanel(HotelReservationSystemController controller) {
         this.controller = controller;
         initComponents();
     }
-                  
-    private void initComponents() {
 
+    private void initComponents() {
         roomScrollPane = new JScrollPane();
         roomTable = new JTable();
-        reservationHeading = new JLabel();
-        totalPriceLabel = new JLabel();
+        reservationHeading = new JLabel("Reservation Information");
+        totalPriceLabel = new JLabel("Total Price:");
         totalPriceField = new JTextField();
-        roomTableButton = new JButton();
+        roomTableButton = new JButton("Find Available Rooms");
         hotelScrollPane = new JScrollPane();
         hotelTable = new JTable();
-        guestNameLabel = new JLabel();
-        guestNameTextField = new JTextField();
-        checkInLabel = new JLabel();
-        checkInTextField = new JTextField();
-        checkOutLabel = new JLabel();
-        checkOutTextField = new JTextField();
-        discountCodeLabel = new JLabel();
-        discountCodeTextField = new JTextField();
-        confirmReservationButton = new JButton();
-        hotelHeading = new JLabel();
-        selectedRoomLabel = new JLabel();
+        guestNameLabel = new JLabel("Guest Name:");
+        guestNameTextField = new JTextField("Name");
+        checkInLabel = new JLabel("Check In:");
+        checkInTextField = new JTextField("Date");
+        checkOutLabel = new JLabel("Check Out:");
+        checkOutTextField = new JTextField("Date");
+        discountCodeLabel = new JLabel("Discount Code:");
+        discountCodeTextField = new JTextField("Code");
+        confirmReservationButton = new JButton("Confirm Reservation");
+        hotelHeading = new JLabel("No Selected Hotel");
+        selectedRoomLabel = new JLabel("Selected Room:");
         selectedRoomTextField = new JTextField();
-        availableRoomsLabel = new JLabel();
+        availableRoomsLabel = new JLabel("Available Rooms");
         roomTableModel = new DefaultTableModel(0, 0);
 
         roomIndex = -1;
@@ -95,12 +88,10 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
 
         setLayout(null);
 
-        // Initializing Empty Room Table
-        String roomTableHeader[] = {"Room", "Room Type"};
+        String[] roomTableHeader = {"Room", "Room Type"};
         roomTableModel.setColumnIdentifiers(roomTableHeader);
         roomTable.setModel(roomTableModel);
 
-        // Adding a selection model to room table (updates every time the selection is changed)
         roomSelectionModel = roomTable.getSelectionModel();
         roomSelectionModel.addListSelectionListener(this);
 
@@ -108,37 +99,25 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         add(roomScrollPane);
         roomScrollPane.setBounds(20, 190, 220, 270);
 
-        reservationHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        reservationHeading.setText("Reservation Information");
+        reservationHeading.setFont(new java.awt.Font("Segoe UI", 1, 14));
         add(reservationHeading);
         reservationHeading.setBounds(260, 300, 280, 20);
 
-        totalPriceLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        totalPriceLabel.setText("Total Price:");
-        add(totalPriceLabel);
-        totalPriceLabel.setBounds(260, 370, 100, 30);
-
-        totalPriceField.setText("");
+        totalPriceField.setEditable(false);
         add(totalPriceField);
         totalPriceField.setBounds(370, 370, 170, 30);
-        totalPriceField.setEditable(false);
 
         roomTableButton.addActionListener(this);
-        roomTableButton.setText("Find Available Rooms");
         add(roomTableButton);
         roomTableButton.setBounds(370, 260, 170, 23);
 
-        // Initializing Empty Hotel Table
-        String hotelNameHeader[] = {"Select a Hotel"};
+        String[] hotelNameHeader = {"Select a Hotel"};
         DefaultTableModel hotelListModel = new DefaultTableModel(0, 1);
-
         hotelListModel.setColumnIdentifiers(hotelNameHeader);
         hotelTable.setModel(hotelListModel);
-        hotelTable.setEnabled(true);
 
-        // Add Objects to Table
-        for (int i = 0; i < controller.getHotelObjects().size(); i++) {
-            hotelListModel.addRow(new Object[] {controller.getHotelObjects().get(i).getName()});
+        for (Hotel hotel : controller.getHotelObjects()) {
+            hotelListModel.addRow(new Object[]{hotel.getName()});
         }
 
         hotelTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -146,136 +125,98 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         hotelSelectionModel.addListSelectionListener(this);
 
         hotelScrollPane.setViewportView(hotelTable);
-
         add(hotelScrollPane);
         hotelScrollPane.setBounds(20, 30, 220, 110);
 
-        guestNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        guestNameLabel.setText("Guest Name:");
+        guestNameLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         add(guestNameLabel);
         guestNameLabel.setBounds(260, 90, 100, 30);
-
-        guestNameTextField.setText("Name");
         add(guestNameTextField);
         guestNameTextField.setBounds(370, 90, 170, 30);
 
-        checkInLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        checkInLabel.setText("Check In:");
+        checkInLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         add(checkInLabel);
         checkInLabel.setBounds(260, 130, 100, 30);
-
-        checkInTextField.setText("Date");
         add(checkInTextField);
         checkInTextField.setBounds(370, 130, 170, 30);
 
-        checkOutLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        checkOutLabel.setText("Check Out:");
+        checkOutLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         add(checkOutLabel);
         checkOutLabel.setBounds(260, 170, 100, 30);
-
-        checkOutTextField.setText("Date");
         add(checkOutTextField);
         checkOutTextField.setBounds(370, 170, 170, 30);
 
-        discountCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        discountCodeLabel.setText("Discount Code:");
+        discountCodeLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         add(discountCodeLabel);
         discountCodeLabel.setBounds(260, 210, 100, 30);
-
-        discountCodeTextField.setText("Code");
         add(discountCodeTextField);
         discountCodeTextField.setBounds(370, 210, 170, 30);
 
         confirmReservationButton.addActionListener(this);
-        confirmReservationButton.setText("Confirm Reservation");
         add(confirmReservationButton);
         confirmReservationButton.setBounds(370, 430, 170, 23);
 
-        hotelHeading.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        hotelHeading.setText("No Selected Hotel");
+        hotelHeading.setFont(new java.awt.Font("Segoe UI", 1, 14));
         add(hotelHeading);
         hotelHeading.setBounds(260, 40, 280, 20);
 
-        selectedRoomLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        selectedRoomLabel.setText("Selected Room:");
+        selectedRoomLabel.setFont(new java.awt.Font("Segoe UI", 0, 14));
         add(selectedRoomLabel);
         selectedRoomLabel.setBounds(260, 330, 100, 30);
-
-        selectedRoomTextField.setText("");
+        selectedRoomTextField.setEditable(false);
         add(selectedRoomTextField);
         selectedRoomTextField.setBounds(370, 330, 170, 30);
-        selectedRoomTextField.setEditable(false);
 
-        availableRoomsLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        availableRoomsLabel.setFont(new java.awt.Font("Segoe UI", 1, 14));
         availableRoomsLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        availableRoomsLabel.setText("Available Rooms");
         add(availableRoomsLabel);
         availableRoomsLabel.setBounds(20, 156, 220, 30);
     }
 
-    /**
-     * Updates the labels whenever a new row is selected in roomTable
-     */
     public void handleRoomSelection(ListSelectionEvent event) {
-        if(hotelIndex == -1) {
-            return;
-        } else if(roomIndex == -1) {
+        if (hotelIndex == -1 || roomIndex == -1) {
             selectedRoomTextField.setText("");
             totalPriceField.setText("");
             return;
         }
-        
-        // Display room selected
+
         Hotel hotel = controller.getHotel(hotelIndex);
         Room room = hotel.getRoomList().get(roomIndex);
         selectedRoomTextField.setText(room.getName());
 
-        // Display total price
-        String discountCode;
-
-        if(isDateInt()) {
-            discountCode = discountCodeTextField.getText();
+        if (isDateInt()) {
+            String discountCode = discountCodeTextField.getText();
             double totalPrice = controller.getTotalReservationPrice(hotel, room, checkIn, checkOut, discountCode);
             totalPriceField.setText(Double.toString(totalPrice));
         }
     }
 
-    /**
-     * Updates the labels whenever a new row is selected in hotelTable
-     */
     public void handleHotelSelection(ListSelectionEvent event) {
-        if(isDateInt()) {
-            updateRoomList(this.controller.getHotel(hotelIndex), checkIn, checkOut);
+        if (isDateInt()) {
+            updateRoomList(controller.getHotel(hotelIndex), checkIn, checkOut);
         } else {
             roomTableModel.setRowCount(0);
         }
-        hotelHeading.setText("Selected Hotel: " + this.controller.getHotel(hotelIndex).getName());
+        hotelHeading.setText("Selected Hotel: " + controller.getHotel(hotelIndex).getName());
     }
 
     public void updateRoomList(Hotel hotel, int checkIn, int checkOut) {
-        System.out.println("UPDATEROOMLIST RUN");
         List<Room> availableRooms = hotel.filterRooms(checkIn, checkOut);
-
         roomTableModel.setRowCount(0);
 
-        for (Room r : availableRooms) {
+        for (Room room : availableRooms) {
             String roomType = "ERROR";
-
-            if (r instanceof StandardRoom) {
+            if (room instanceof StandardRoom) {
                 roomType = "STANDARD";
-            } else if (r instanceof DeluxeRoom) {
+            } else if (room instanceof DeluxeRoom) {
                 roomType = "DELUXE";
-            } else if (r instanceof ExecutiveRoom) {
+            } else if (room instanceof ExecutiveRoom) {
                 roomType = "EXECUTIVE";
             }
-
-            roomTableModel.addRow(new Object[] {r.getName(),
-                                                roomType});
-
-            System.out.println(r.getName() + " " + roomType);
+            roomTableModel.addRow(new Object[]{room.getName(), roomType});
         }
 
-        String roomTableHeader[] = {"Room", "Room Type"};
+        String[] roomTableHeader = {"Room", "Room Type"};
         roomTableModel.setColumnIdentifiers(roomTableHeader);
         roomTable.setModel(roomTableModel);
     }
@@ -285,7 +226,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
             checkIn = Integer.parseInt(checkInTextField.getText());
             checkOut = Integer.parseInt(checkOutTextField.getText());
             return true;
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Invalid date!");
             return false;
         }
@@ -293,22 +234,19 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
 
     @Override
     public void valueChanged(ListSelectionEvent event) {
-        if(event.getValueIsAdjusting()) {
+        if (event.getValueIsAdjusting()) {
             return;
         }
 
-        if(event.getSource() == hotelSelectionModel) {
+        if (event.getSource() == hotelSelectionModel) {
             hotelIndex = hotelTable.getSelectedRow();
-            System.out.printf("h:%d",hotelIndex);
             handleHotelSelection(event);
-        }
-        else if(event.getSource() == roomSelectionModel) {
+        } else if (event.getSource() == roomSelectionModel) {
             roomIndex = roomTable.getSelectedRow();
-            System.out.printf("r:%d",roomIndex);
             handleRoomSelection(event);
         }
     }
-    
+
     @Override
     public void actionPerformed(ActionEvent event) {
         if (hotelIndex == -1) {
@@ -317,18 +255,12 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         }
 
         if (event.getSource() == roomTableButton) {
-            Hotel hotel = controller.getHotel(hotelIndex);
-
-            if(isDateInt()) {
-                updateRoomList(hotel, checkIn, checkOut);
-                System.out.println("Refresh room table");
-            }
-            else {
+            if (isDateInt()) {
+                updateRoomList(controller.getHotel(hotelIndex), checkIn, checkOut);
+            } else {
                 JOptionPane.showMessageDialog(null, "Invalid date!");
             }
-            
-        }
-        else if (event.getSource() == confirmReservationButton) {
+        } else if (event.getSource() == confirmReservationButton) {
             // TODO: Add Implementation
             System.out.println("Confirm Booking");
         }

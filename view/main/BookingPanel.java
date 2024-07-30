@@ -118,7 +118,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         add(totalPriceLabel);
         totalPriceLabel.setBounds(260, 370, 100, 30);
 
-        totalPriceField.setText("Total Price");
+        totalPriceField.setText("");
         add(totalPriceField);
         totalPriceField.setBounds(370, 370, 170, 30);
         totalPriceField.setEditable(false);
@@ -201,7 +201,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         add(selectedRoomLabel);
         selectedRoomLabel.setBounds(260, 330, 100, 30);
 
-        selectedRoomTextField.setText("Room Name");
+        selectedRoomTextField.setText("");
         add(selectedRoomTextField);
         selectedRoomTextField.setBounds(370, 330, 170, 30);
         selectedRoomTextField.setEditable(false);
@@ -217,7 +217,14 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
      * Updates the labels whenever a new row is selected in roomTable
      */
     public void handleRoomSelection(ListSelectionEvent event) {
-        roomIndex = 0;
+        if(hotelIndex == -1) {
+            return;
+        } else if(roomIndex == -1) {
+            selectedRoomTextField.setText("");
+            totalPriceField.setText("");
+            return;
+        }
+        
         // Display room selected
         Hotel hotel = controller.getHotel(hotelIndex);
         Room room = hotel.getRoomList().get(roomIndex);
@@ -296,8 +303,8 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
             handleHotelSelection(event);
         }
         else if(event.getSource() == roomSelectionModel) {
-            System.out.printf("r:%d",roomIndex);
             roomIndex = roomTable.getSelectedRow();
+            System.out.printf("r:%d",roomIndex);
             handleRoomSelection(event);
         }
     }

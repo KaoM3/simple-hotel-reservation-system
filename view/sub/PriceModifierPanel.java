@@ -136,7 +136,7 @@ public class PriceModifierPanel extends JPanel implements ActionListener {
         }
         else if(event.getSource() == resetPriceButton) {
             System.out.println("reset price");
-            if(JOptionPane.showConfirmDialog(priceScrollPane, "Reset all multipliers to 1.0?") == JOptionPane.OK_OPTION) {
+            if(JOptionPane.showConfirmDialog(priceScrollPane, "Reset all multipliers to 1.0?", "Reset Multipliers", JOptionPane.YES_NO_OPTION) == JOptionPane.OK_OPTION) {
                 resetModelPrice();
             }
             refreshPanel();

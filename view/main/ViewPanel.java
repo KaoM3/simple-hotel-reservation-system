@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -84,12 +85,15 @@ public class ViewPanel extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        if(event.getSource() == viewReservationButton) {
+        if(event.getSource() == refreshButton) {
+            refreshPanel();
+        }
+        else if(hotelListTable.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "No Hotel Selected!");
+        }
+        else if(event.getSource() == viewReservationButton) {
             System.out.println("View Reservation");
             new SubFrame(new ReservationListPanel(controller, hotelListTable.getSelectedRow()));
-        }
-        else if(event.getSource() == refreshButton) {
-            refreshPanel();
         }
         else if(event.getSource() == viewRoomButton) {
             System.out.println("View Room");

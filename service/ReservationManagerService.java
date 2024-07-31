@@ -59,7 +59,6 @@ public class ReservationManagerService {
         }
 
         if (!this.reservationManager.isRoomAvailableOnDate(room.getName(), checkIn, checkOut)) {
-            System.out.println("OOF OOF OOF");
             return false;
         }
 

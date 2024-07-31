@@ -1,6 +1,7 @@
 package service;
 
-import model.pricemodifier.*;
+import model.pricemodifier.DiscountCode;
+import model.pricemodifier.PriceModifier;
 
 /**
  * Contains all the business logic for editing the data inside a {@code PriceModifier}
@@ -25,11 +26,11 @@ public class PriceModifierService {
      */
     public boolean updateDatePriceModifier(Integer date, Double modifier) {
         
-        if(modifier == null) {
+        if (modifier == null || modifier <= 0) {
             return false;
         }
 
-        if(this.priceModifier.getDatePriceModifier().containsKey(date)) {
+        if (this.priceModifier.getDatePriceModifier().containsKey(date)) {
             this.priceModifier.getDatePriceModifier().replace(date, modifier);
             return true;
         }
@@ -42,13 +43,13 @@ public class PriceModifierService {
      * @return DiscountCode object if match can be found, null otherwise
      */
     public DiscountCode getDiscountCode(String inputCode) {
-        if(inputCode == null) {
+        if (inputCode == null) {
             return null;
         }
 
         // Check if discount code matches with enum
-        for(DiscountCode discountCode : DiscountCode.values()) {
-            if(discountCode.name().contentEquals(inputCode)) {
+        for (DiscountCode discountCode : DiscountCode.values()) {
+            if (discountCode.name().contentEquals(inputCode)) {
                 return discountCode;
             }
         }

@@ -60,7 +60,7 @@ public class ModelTesting {
     public void createNewReservation(String hotelName, String roomName, String guestName, int checkIn, int checkOut, String discount) {
         ReservationManagerService reservationService = new ReservationManagerService(this.model.getHotelByName(hotelName).getReservationManager());
         
-        reservationService.createAndAddReservation(guestName, this.model.getHotelByName(hotelName).getRoomByName(roomName), checkIn, checkOut, discount);
+        System.out.println(reservationService.createAndAddReservation(guestName, this.model.getHotelByName(hotelName).getRoomByName(roomName), checkIn, checkOut, discount));
     }
 
     public void removeReservation(String hotelName, int index) {
@@ -98,7 +98,7 @@ public class ModelTesting {
         for(Reservation reservation : hotel.getReservationManager().getReservationList()) {
             System.out.println(String.format("%s: %s %d %d %f", reservation.getGuestName(),
             reservation.getRoom().getName(),
-            reservation.getCheckin(),
+            reservation.getCheckIn(),
             reservation.getCheckOut(),
             reservation.getTotalPrice()));
         }

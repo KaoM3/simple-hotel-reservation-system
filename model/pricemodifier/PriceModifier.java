@@ -16,7 +16,7 @@ public class PriceModifier {
     public PriceModifier() {
         datePriceModifier = new HashMap<Integer, Double>();
 
-        for(int i = 1; i <= 31; i++) {
+        for (int i = 1; i <= 31; i++) {
             datePriceModifier.put(i, 1.0);
         }
     }

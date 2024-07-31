@@ -47,24 +47,29 @@ public class HotelService {
         Room    newRoom;
         double  basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
+        if (this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
+            return false;
+        }
+        
+        if (this.hotel.getRoomList().size() >= 50) {
             return false;
         }
 
-        if(roomType == STANDARD) {
-            newRoom = new StandardRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else if(roomType == DELUXE) {
-            newRoom = new DeluxeRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else if(roomType == EXECUTIVE) {
-            newRoom = new ExecutiveRoom(roomName, basePriceOfRoom);
-            this.hotel.getRoomList().add(newRoom);
-        }
-        else {
-            return false;
+        switch (roomType) {
+            case STANDARD:
+                newRoom = new StandardRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            case DELUXE:
+                newRoom = new DeluxeRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            case EXECUTIVE:
+                newRoom = new ExecutiveRoom(roomName, basePriceOfRoom);
+                this.hotel.getRoomList().add(newRoom);
+                break;
+            default:
+                return false;
         }
         return true;
     }
@@ -77,14 +82,18 @@ public class HotelService {
      */
     public boolean createAndAddRoom(String roomName, String roomType) {
         Room    newRoom;
-        double basePriceOfRoom = this.hotel.getBaseRate();
+        double  basePriceOfRoom = this.hotel.getBaseRate();
 
-        if(roomType == null || this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
+        if (roomType == null || this.hotel.getRoomByName(roomName) != null || !isRoomNameValid(roomName)) {
             return false;
         }
 
-        for(RoomType type : RoomType.values()) {
-            if(type.name().contentEquals(roomType)) {
+        if (this.hotel.getRoomList().size() >= 50) {
+            return false;
+        }
+
+        for (RoomType type : RoomType.values()) {
+            if (type.name().contentEquals(roomType)) {
                 newRoom = type.constructRoom(roomName, basePriceOfRoom);
                 this.hotel.getRoomList().add(newRoom);
                 return true;
@@ -100,11 +109,14 @@ public class HotelService {
      * @return true if successful, false otherwise
      */
     public boolean removeRoom(Room room) {
-
-        for(Reservation reservation : this.hotel.getReservationManager().getReservationList()) {
-            if(reservation.getRoom().getName().contentEquals(room.getName())) {
+        for (Reservation reservation : this.hotel.getReservationManager().getReservationList()) {
+            if (reservation.getRoom().getName().contentEquals(room.getName())) {
                 return false;
             }
+        }
+
+        if (this.hotel.getRoomList().size() == 1) {
+            return false;
         }
 
         try {
@@ -121,7 +133,7 @@ public class HotelService {
      * @return true if successful, false otherwise
      */
     public boolean renameHotel(String name) {
-        if(isRoomNameValid(name)) {
+        if (isRoomNameValid(name)) {
             this.hotel.setName(name);
             return true;
         }
@@ -135,13 +147,12 @@ public class HotelService {
      * @return true if baseRate is valid, false otherwise
      */
     public boolean updateBaseRate(double baseRate) {
-        
-        if(baseRate < 100) {
+        if (baseRate < 100) {
             return false;
         }
         
         this.hotel.setBaseRate(baseRate);
-        for(Room room : this.hotel.getRoomList()) {
+        for (Room room : this.hotel.getRoomList()) {
             room.setBasePrice(baseRate);
         }
 
@@ -155,18 +166,10 @@ public class HotelService {
      * @return true if string is valid, false otherwise.
      */
     private boolean isRoomNameValid(String roomName) {
-        if(roomName.charAt(0) == ' ' || roomName.charAt(roomName.length()-1) == ' ') {
-            return false;
-        }
+        boolean hasWhiteSpace = roomName.charAt(0) == ' ' || roomName.charAt(roomName.length()-1) == ' ';
+        boolean isValidLength = roomName.length() >= 3 && roomName.length() <= 20 && roomName != null;
+        boolean hasValidChars = roomName.matches("[ a-zA-z0-9]+");
 
-        else if(roomName.length() < 3 || roomName.length() > 20 || roomName == null) {
-            return false;
-        }
-
-        if(roomName.matches("[ a-zA-z0-9]+")) {
-            return true;
-        }
-
-        return false;
+        return !hasWhiteSpace && isValidLength && hasValidChars;
     }
 }

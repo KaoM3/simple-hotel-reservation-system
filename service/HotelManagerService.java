@@ -22,11 +22,11 @@ public class HotelManagerService {
      */
     public boolean createAndAddHotel(String hotelName) {
 
-        if(!isHotelNameValid(hotelName)) {
+        if (!isHotelNameValid(hotelName)) {
             return false;
         }
 
-        if(this.hotelManager.getHotelByName(hotelName) == null) {
+        if (this.hotelManager.getHotelByName(hotelName) == null) {
             Hotel newHotel = new Hotel(hotelName);
             this.hotelManager.getHotelList().add(newHotel);
             return true;
@@ -41,7 +41,10 @@ public class HotelManagerService {
      */
     public boolean removeHotel(String hotelName) {
         try {
-            return this.hotelManager.getHotelList().remove(this.hotelManager.getHotelByName(hotelName));
+            if (this.hotelManager.getHotelByName(hotelName).getReservationManager().getReservationList().size() <= 0) {
+                return this.hotelManager.getHotelList().remove(this.hotelManager.getHotelByName(hotelName));
+            }
+            return false;
         } catch (NullPointerException error) {
             System.out.println(error);
             return false;
@@ -55,18 +58,10 @@ public class HotelManagerService {
      * @return true if string is valid, false otherwise.
      */
     private boolean isHotelNameValid(String hotelName) {
-        if(hotelName.charAt(0) == ' ' || hotelName.charAt(hotelName.length()-1) == ' ') {
-            return false;
-        }
+        boolean hasWhiteSpace = hotelName.charAt(0) == ' ' || hotelName.charAt(hotelName.length()-1) == ' ';
+        boolean isValidLength = hotelName.length() >= 3 && hotelName.length() <= 20 && hotelName != null;
+        boolean hasValidChars = hotelName.matches("[ a-zA-z0-9]+");
 
-        else if(hotelName.length() < 3 || hotelName.length() > 20 || hotelName == null) {
-            return false;
-        }
-
-        if(hotelName.matches("[ a-zA-z0-9]+")) {
-            return true;
-        }
-
-        return false;
+        return !hasWhiteSpace && isValidLength && hasValidChars;
     }
 }

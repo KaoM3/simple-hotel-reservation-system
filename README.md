@@ -22,7 +22,7 @@ The Hotel Reservation System is a Java-based application designed to manage hote
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/yourusername/hotel-reservation-system.git
+   git clone https://github.com/KaoM3/CCPROG3-MCO2-Draft.git
 2. Open the project in your preferred IDE.
 3. Build the project to download the necessary dependencies and compile the code.
 

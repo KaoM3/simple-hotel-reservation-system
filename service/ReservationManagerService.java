@@ -31,13 +31,13 @@ public class ReservationManagerService {
         // Calculate base price (rooms total price per night multiplied by date price modifier)
         HashMap<Integer, Double> priceBreakdown = new HashMap<>();
         double totalPrice = 0;
-        for(int date = checkIn; date < checkOut; date++) {
+        for (int date = checkIn; date < checkOut; date++) {
             priceBreakdown.put(date, room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date));
             totalPrice += room.getTotalPrice() * this.reservationManager.getPriceModifier().getMultiplier(date);
         }
 
         // Apply discount code if discount code is valid
-        if(priceModifierService.getDiscountCode(discountCode) != null) {
+        if (priceModifierService.getDiscountCode(discountCode) != null) {
             totalPrice = priceModifierService.getDiscountCode(discountCode)
                                         .applyDiscount(checkIn, checkOut, totalPrice, priceBreakdown.get(checkIn));
         }
@@ -115,7 +115,7 @@ public class ReservationManagerService {
     public double getHotelEarnings() {
         double totalEarnings = 0;
 
-        for(Reservation reservation : this.reservationManager.getReservationList()) {
+        for (Reservation reservation : this.reservationManager.getReservationList()) {
             totalEarnings += reservation.getTotalPrice();
         }
 
@@ -129,18 +129,10 @@ public class ReservationManagerService {
      * @return true if string is valid, false otherwise.
      */
     private boolean isGuestNameValid(String guestName) {
-        if(guestName.charAt(0) == ' ' || guestName.charAt(guestName.length()-1) == ' ') {
-            return false;
-        }
+        boolean hasWhiteSpace = guestName.charAt(0) == ' ' || guestName.charAt(guestName.length()-1) == ' ';
+        boolean isValidLength = guestName.length() >= 3 && guestName.length() <= 20 && guestName != null;
+        boolean hasValidChars = guestName.matches("[ a-zA-z0-9]+");
 
-        else if(guestName.length() < 3 || guestName.length() > 20 || guestName == null) {
-            return false;
-        }
-
-        if(guestName.matches("[ a-zA-z0-9]+")) {
-            return true;
-        }
-
-        return false;
+        return !hasWhiteSpace && isValidLength && hasValidChars;
     }
 }

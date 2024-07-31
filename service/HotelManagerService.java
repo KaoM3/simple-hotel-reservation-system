@@ -58,18 +58,10 @@ public class HotelManagerService {
      * @return true if string is valid, false otherwise.
      */
     private boolean isHotelNameValid(String hotelName) {
-        if (hotelName.charAt(0) == ' ' || hotelName.charAt(hotelName.length()-1) == ' ') {
-            return false;
-        }
+        boolean hasWhiteSpace = hotelName.charAt(0) == ' ' || hotelName.charAt(hotelName.length()-1) == ' ';
+        boolean isValidLength = hotelName.length() >= 3 && hotelName.length() <= 20 && hotelName != null;
+        boolean hasValidChars = hotelName.matches("[ a-zA-z0-9]+");
 
-        else if (hotelName.length() < 3 || hotelName.length() > 20 || hotelName == null) {
-            return false;
-        }
-
-        if (hotelName.matches("[ a-zA-z0-9]+")) {
-            return true;
-        }
-
-        return false;
+        return !hasWhiteSpace && isValidLength && hasValidChars;
     }
 }

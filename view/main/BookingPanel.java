@@ -4,10 +4,10 @@
  */
 package view.main;
 
+import controller.HotelReservationSystemController;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
-
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -19,8 +19,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
-import controller.HotelReservationSystemController;
 import model.hotel.Hotel;
 import model.hotel.room.DeluxeRoom;
 import model.hotel.room.ExecutiveRoom;
@@ -197,7 +195,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
         }
 
         Hotel hotel = controller.getHotel(hotelIndex);
-        Room room = hotel.getRoomList().get(roomIndex);
+        Room room = hotel.filterRooms(checkIn, checkOut).get(roomIndex);
         selectedRoomTextField.setText(room.getName());
 
         if (isDateValid()) {
@@ -292,7 +290,7 @@ public class BookingPanel extends JPanel implements ActionListener, ListSelectio
 
             Hotel   hotel = controller.getHotel(hotelIndex);
             String  guestName = guestNameTextField.getText();
-            Room    room = hotel.getRoomList().get(roomIndex);
+            Room    room = hotel.filterRooms(checkIn, checkOut).get(roomIndex);
             String  discountCode = discountCodeTextField.getText();
 
             boolean isBookingSuccessful = controller.createAndAddReservation(hotel, guestName, room, checkIn, checkOut, discountCode);
